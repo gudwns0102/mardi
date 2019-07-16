@@ -83,6 +83,8 @@ PODS:
   - React-RCTWebSocket (0.60.3):
     - React-Core (= 0.60.3)
     - React-fishhook (= 0.60.3)
+  - RNAudio (4.3.0):
+    - React
   - RNCAsyncStorage (1.5.1):
     - React
   - yoga (0.60.3.React)
@@ -110,6 +112,7 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-RCTWebSocket (from `../node_modules/react-native/Libraries/WebSocket`)
+  - RNAudio (from `../node_modules/react-native-audio`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -162,6 +165,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   React-RCTWebSocket:
     :path: "../node_modules/react-native/Libraries/WebSocket"
+  RNAudio:
+    :path: "../node_modules/react-native-audio"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   yoga:
@@ -191,6 +196,7 @@ SPEC CHECKSUMS:
   React-RCTText: 36c0532feb5521cb295ba80e7e44b70cf1c36fc7
   React-RCTVibration: dabb8d59bb47e1d9124b3f77bfdc1b33d42b0a74
   React-RCTWebSocket: f32b93e0953d7c07fd5dd45305406282cfdc95cf
+  RNAudio: 190cf085b4dddd366f4f3f7be1794c78d7d434a3
   RNCAsyncStorage: 6ae5aba8a41bfe0a9f21885ec91faf23ca3fe7ee
   yoga: 88c514f310aff89b94a14c5fbf44b95735af0cb7
 

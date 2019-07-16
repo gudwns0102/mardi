@@ -11,9 +11,12 @@
 import React, { Fragment } from "react";
 import { StatusBar } from "react-native";
 import { BlurView } from "@react-native-community/blur";
+import { AudioRecorder, AudioUtils } from "react-native-audio";
 
 
 const App = () => {
+  console.log(AudioRecorder);
+  AudioRecorder.startRecording();
   return (
     <Fragment>
       <StatusBar barStyle="dark-content" />
