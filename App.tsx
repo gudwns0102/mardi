@@ -8,21 +8,27 @@
  * @format
  */
 
+import _ from "lodash";
 import React, { Fragment } from "react";
 import { StatusBar } from "react-native";
-import { BlurView } from "@react-native-community/blur";
-import HTMLView, { HTMLViewNode } from "react-native-htmlview";
-
-
+import ImagePicker from "react-native-image-picker";
 
 const App = () => {
+  const options = {
+    title: "사진 선택",
+    takePhotoButtonTitle: "",
+    cancelButtonTitle: "취소"
+  };
+
+  ImagePicker.launchCamera(options, response => {
+    if (_.some([response.didCancel, response.error, response.customButton])) {
+      return;
+    }
+  });
+
   return (
     <Fragment>
       <StatusBar barStyle="dark-content" />
-      <BlurView blurAmount={17} blurType="light" />
-      <HTMLView 
-              value={`<span>test</span>`}
-      />
     </Fragment>
   );
 };
