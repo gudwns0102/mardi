@@ -97,6 +97,8 @@ PODS:
     - React
   - RNRate (1.0.1):
     - React
+  - RNSVG (9.5.3):
+    - React
   - yoga (0.60.3.React)
 
 DEPENDENCIES:
@@ -129,6 +131,7 @@ DEPENDENCIES:
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNRate (from `../node_modules/react-native-rate/ios`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -194,6 +197,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNRate:
     :path: "../node_modules/react-native-rate/ios"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -228,6 +233,7 @@ SPEC CHECKSUMS:
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
   RNGestureHandler: 7ccf2f3f60458e084f9ada01fbaf610f6fef073c
   RNRate: 72b5c9c2e62de9a01710918eb83d75fb99b44c7b
+  RNSVG: 4834be1d644eb77f0e3f6de851881b83758a3124
   yoga: 88c514f310aff89b94a14c5fbf44b95735af0cb7
 
 PODFILE CHECKSUM: 5169434232804c456fd7468ea086a22e4eba8ce0
