@@ -1,36 +1,21 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/emin93/react-native-template-typescript
- *
- * @format
- */
+import React from "react";
+import { View, Text } from "react-native";
+import { createStackNavigator, createAppContainer } from "react-navigation";
 
-import _ from "lodash";
-import React, { Fragment } from "react";
-import { StatusBar } from "react-native";
-import ImagePicker from "react-native-image-picker";
+class HomeScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Text>Home Screen</Text>
+      </View>
+    );
+  }
+}
 
-const App = () => {
-  const options = {
-    title: "사진 선택",
-    takePhotoButtonTitle: "",
-    cancelButtonTitle: "취소"
-  };
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: HomeScreen
+  }
+});
 
-  ImagePicker.launchCamera(options, response => {
-    if (_.some([response.didCancel, response.error, response.customButton])) {
-      return;
-    }
-  });
-
-  return (
-    <Fragment>
-      <StatusBar barStyle="dark-content" />
-    </Fragment>
-  );
-};
-
-export default App;
+export default createAppContainer(AppNavigator);
