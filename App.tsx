@@ -11,17 +11,18 @@
 import React, { Fragment } from "react";
 import { StatusBar } from "react-native";
 import { BlurView } from "@react-native-community/blur";
-import * as RNFS from "react-native-fs";
+import HTMLView, { HTMLViewNode } from "react-native-htmlview";
 
 
 
 const App = () => {
-  console.log(RNFS);
-  RNFS.readDir(RNFS.CachesDirectoryPath).then(console.log);
   return (
     <Fragment>
       <StatusBar barStyle="dark-content" />
       <BlurView blurAmount={17} blurType="light" />
+      <HTMLView 
+              value={`<span>test</span>`}
+      />
     </Fragment>
   );
 };
