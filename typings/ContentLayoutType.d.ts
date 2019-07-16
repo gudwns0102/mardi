@@ -1,0 +1,1 @@
+type ContentLayoutType = "CARD" | "LIST";

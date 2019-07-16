@@ -1,0 +1,1 @@
+type ContentSortType = "LATEST" | "TREND";
