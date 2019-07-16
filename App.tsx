@@ -11,12 +11,13 @@
 import React, { Fragment } from "react";
 import { StatusBar } from "react-native";
 import { BlurView } from "@react-native-community/blur";
-import { AudioRecorder, AudioUtils } from "react-native-audio";
+import * as RNFS from "react-native-fs";
+
 
 
 const App = () => {
-  console.log(AudioRecorder);
-  AudioRecorder.startRecording();
+  console.log(RNFS);
+  RNFS.readDir(RNFS.CachesDirectoryPath).then(console.log);
   return (
     <Fragment>
       <StatusBar barStyle="dark-content" />
