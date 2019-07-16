@@ -5,9 +5,11 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* mardiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mardiTests.m */; };
 		0B6561CF82EBA5D3440A43FF /* libPods-mardi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C46240899C8DEA5F8631E5 /* libPods-mardi.a */; };
+		1175B4F3D5754554AD1289D5 /* SpoqaHanSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B3811CE555641EB9FC21661 /* SpoqaHanSans-Bold.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -16,11 +18,11 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* mardiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mardiTests.m */; };
+		2FA98AE496D6482494B7F3B9 /* SpoqaHanSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71AA424719F541BF9449541A /* SpoqaHanSans-Regular.ttf */; };
 		597DAF507AF7A87B753DCDA6 /* libPods-mardiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4573CEC9EA492C9A45F6B20F /* libPods-mardiTests.a */; };
 		6E7F92E0BB80E6B93415BBDA /* libPods-mardi-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6A722A67CA1286BB1C2DDE /* libPods-mardi-tvOS.a */; };
+		C4A68A2122DE236B00D6A1E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4A68A2022DE236B00D6A1E3 /* GoogleService-Info.plist */; };
 		CB15599D31CACFBCD44B0EB6 /* libPods-mardi-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF576E52FD982D3985C9CDC /* libPods-mardi-tvOSTests.a */; };
-		1175B4F3D5754554AD1289D5 /* SpoqaHanSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B3811CE555641EB9FC21661 /* SpoqaHanSans-Bold.ttf */; };
-		2FA98AE496D6482494B7F3B9 /* SpoqaHanSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71AA424719F541BF9449541A /* SpoqaHanSans-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,18 +60,19 @@
 		2D02E4901E0B4A5D006451C7 /* mardi-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mardi-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E36EA6DCAC1AD9C37CBC833 /* Pods-mardi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardi.release.xcconfig"; path = "Pods/Target Support Files/Pods-mardi/Pods-mardi.release.xcconfig"; sourceTree = "<group>"; };
 		3729342CD0536C0CBF737167 /* Pods-mardi-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardi-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mardi-tvOSTests/Pods-mardi-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		3B3811CE555641EB9FC21661 /* SpoqaHanSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpoqaHanSans-Bold.ttf"; path = "../assets/fonts/SpoqaHanSans-Bold.ttf"; sourceTree = "<group>"; };
 		45053AAE5796AF7DFF82CE76 /* Pods-mardi-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardi-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mardi-tvOS/Pods-mardi-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		4573CEC9EA492C9A45F6B20F /* libPods-mardiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mardiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B6A722A67CA1286BB1C2DDE /* libPods-mardi-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mardi-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		71AA424719F541BF9449541A /* SpoqaHanSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpoqaHanSans-Regular.ttf"; path = "../assets/fonts/SpoqaHanSans-Regular.ttf"; sourceTree = "<group>"; };
 		8E56769B392B8DB7771D1C9C /* Pods-mardiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mardiTests/Pods-mardiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		947AFCAA663174B3F848B79B /* Pods-mardi-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardi-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-mardi-tvOS/Pods-mardi-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		A93493EDB4330EFF373FD620 /* Pods-mardi-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardi-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mardi-tvOSTests/Pods-mardi-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C4A68A2022DE236B00D6A1E3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CDF576E52FD982D3985C9CDC /* libPods-mardi-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mardi-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D36599A50A4A21CDB37371DB /* Pods-mardiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mardiTests/Pods-mardiTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		3B3811CE555641EB9FC21661 /* SpoqaHanSans-Bold.ttf */ = {isa = PBXFileReference; name = "SpoqaHanSans-Bold.ttf"; path = "../assets/fonts/SpoqaHanSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		71AA424719F541BF9449541A /* SpoqaHanSans-Regular.ttf */ = {isa = PBXFileReference; name = "SpoqaHanSans-Regular.ttf"; path = "../assets/fonts/SpoqaHanSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,8 +138,18 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				C4A68A2022DE236B00D6A1E3 /* GoogleService-Info.plist */,
 			);
 			name = mardi;
+			sourceTree = "<group>";
+		};
+		2A777BB7BAE540CCA92CEE1E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3B3811CE555641EB9FC21661 /* SpoqaHanSans-Bold.ttf */,
+				71AA424719F541BF9449541A /* SpoqaHanSans-Regular.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -200,16 +213,6 @@
 			);
 			name = Pods;
 			sourceTree = "<group>";
-		};
-		2A777BB7BAE540CCA92CEE1E /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				3B3811CE555641EB9FC21661 /* SpoqaHanSans-Bold.ttf */,
-				71AA424719F541BF9449541A /* SpoqaHanSans-Regular.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -321,6 +324,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -351,6 +355,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				C4A68A2122DE236B00D6A1E3 /* GoogleService-Info.plist in Resources */,
 				1175B4F3D5754554AD1289D5 /* SpoqaHanSans-Bold.ttf in Resources */,
 				2FA98AE496D6482494B7F3B9 /* SpoqaHanSans-Regular.ttf in Resources */,
 			);
