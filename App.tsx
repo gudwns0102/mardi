@@ -10,13 +10,14 @@
 
 import React, { Fragment } from "react";
 import { StatusBar } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
+import { BlurView } from "@react-native-community/blur";
+
 
 const App = () => {
-  AsyncStorage.getItem("ACCESS_TOKEN").then(console.log);
   return (
     <Fragment>
       <StatusBar barStyle="dark-content" />
+      <BlurView blurAmount={17} blurType="light" />
     </Fragment>
   );
 };
