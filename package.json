@@ -34,6 +34,7 @@
     "react-native-linear-gradient": "^2.5.4",
     "react-native-rate": "^1.1.7",
     "react-native-shadow": "^1.2.2",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^9.5.3",
     "react-native-video": "^4.4.4",
     "react-native-webview": "^5.12.1",

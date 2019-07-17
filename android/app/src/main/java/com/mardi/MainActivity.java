@@ -5,6 +5,8 @@ import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
+import org.devio.rn.splashscreen.SplashScreen;
+import android.os.Bundle;
 
 public class MainActivity extends ReactActivity {
 
@@ -17,6 +19,16 @@ public class MainActivity extends ReactActivity {
         return "mardi";
     }
 
+    @Override
+    public void invokeDefaultOnBackPressed() {
+        moveTaskToBack(true);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.show(this);  // here
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected ReactActivityDelegate createReactActivityDelegate() {
@@ -25,6 +37,7 @@ public class MainActivity extends ReactActivity {
             protected ReactRootView createRootView() {
             return new RNGestureHandlerEnabledRootView(MainActivity.this);
             }
+
         };
     }
 }

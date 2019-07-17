@@ -3,6 +3,7 @@ import React from "react";
 import { Linking } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import styled from "styled-components/native";
+import Splash from "react-native-splash-screen";
 
 import { images } from "assets/images";
 import { ILinkingScreenProps, withLinking } from "src/hocs/withLinking";
@@ -100,6 +101,10 @@ export class SplashScreen extends React.Component<IProps> {
     } catch (error) {
       navigateAuthLandingScreen(this.navigation);
     }
+  }
+
+  public componentWillUnmount() {
+    Splash.hide();
   }
 
   public get navigation() {
