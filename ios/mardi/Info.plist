@@ -17,11 +17,24 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb1513457468801059</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>9</string>
+	<key>FacebookAppID</key>
+	<string>1513457468801059</string>
+	<key>FacebookDisplayName</key>
+	<string>mardi</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -37,8 +50,21 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>mardi에서 아바타 및 배경화면 등록을 위해 카메라 접근을 요청합니다.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>mardi에서 음성 컨텐츠를 녹음하기 위해 마이크 접근을 요청합니다.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>mardi에서 아바타 및 배경화면 등록을 위해 사진첩 접근을 요청합니다.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>mardi에서 아바타 및 배경화면 등록을 위해 사진첩 접근을 요청합니다.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SpoqaHanSans-Bold.ttf</string>
+		<string>SpoqaHanSans-Regular.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -53,18 +79,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SpoqaHanSans-Bold.ttf</string>
-		<string>SpoqaHanSans-Regular.ttf</string>
-	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>mardi에서 아바타 및 배경화면 등록을 위해 카메라 접근을 요청합니다.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>mardi에서 음성 컨텐츠를 녹음하기 위해 마이크 접근을 요청합니다.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>mardi에서 아바타 및 배경화면 등록을 위해 사진첩 접근을 요청합니다.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>mardi에서 아바타 및 배경화면 등록을 위해 사진첩 접근을 요청합니다.</string>
 </dict>
 </plist>

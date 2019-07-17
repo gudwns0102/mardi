@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "allowJs": true,
+    "module":"esnext",
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "isolatedModules": true,
@@ -12,7 +11,10 @@
     "noEmit": true,
     "strict": true,
     "target": "esnext",
-    "typeRoots": ["node_modules/@types", "typings"]
+    "sourceMap": true,
+    "typeRoots": ["./typings", "./node_modules/@types"],
+    "skipLibCheck": true,
+    "baseUrl": "."
   },
   "exclude": [
     "node_modules",
