@@ -45,7 +45,6 @@ const { width } = Dimensions.get("window");
 
 const List = styled<ComponentClass<FlatListProps<IContent>>>(FlatList)`
   width: 100%;
-  flex: 1;
 `;
 
 const ContentCardViewItem = styled(ContentCard).attrs({
@@ -98,9 +97,6 @@ class C extends React.Component<IProps> {
             onRefresh={this.onRefresh}
           />
         }
-        contentContainerStyle={{
-          paddingBottom: 54
-        }}
         {...props}
       />
     );

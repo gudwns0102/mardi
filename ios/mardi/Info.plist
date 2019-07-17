@@ -25,7 +25,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb1513457468801059</string>
+				<string>mardi</string>
 			</array>
 		</dict>
 	</array>
@@ -64,6 +64,10 @@
 	<array>
 		<string>SpoqaHanSans-Bold.ttf</string>
 		<string>SpoqaHanSans-Regular.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

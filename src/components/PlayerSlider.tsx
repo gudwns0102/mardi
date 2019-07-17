@@ -112,7 +112,7 @@ export class PlayerSlider extends React.Component<IProps, IState> {
           100;
 
         props.onSlidingEnd(releasePercent);
-        this.setState({ isSliding: false });
+        setTimeout(() => this.setState({ isSliding: false }), 300);
       }
     });
   }

@@ -98,17 +98,6 @@ const Image = styled.Image`
   border-radius: 8px;
 `;
 
-const Avatar = styled.Image`
-  position: absolute;
-  left: 4px;
-  bottom: 4px;
-  width: 24px;
-  height: 24px;
-  border-radius: 12px;
-  border-width: 1px;
-  border-color: white;
-`;
-
 const ContentDurationWrapper = styled.View`
   position: absolute;
   right: 4px;
@@ -158,12 +147,10 @@ export function ContentListViewCard({
   ...props
 }: IProps) {
   const question = content.question;
-  const avatarSource = _.get(content.user, ["photo"], null);
 
   const backgroundSource = content.image
     ? { uri: content.image }
     : getPatternByIndex(content.default_image_pattern_idx);
-  const source = avatarSource ? { uri: avatarSource } : images.user;
 
   return (
     <Container {...props}>
@@ -179,12 +166,10 @@ export function ContentListViewCard({
         )}
         <Content>{content.title}</Content>
         <ContentBottomRow>
-          <StyledButton onPress={onHeartPress}>
-            <Icon
-              source={content.heart_by_me ? images.listLike : images.listLike}
-            />
-            <Count>{shrinkValue(content.num_hearts)}</Count>
-          </StyledButton>
+          <Icon
+            source={content.heart_by_me ? images.listLike : images.listLike}
+          />
+          <Count>{shrinkValue(content.num_hearts)}</Count>
           <Icon source={images.listComment} />
           <Count>{shrinkValue(content.num_replies)}</Count>
         </ContentBottomRow>

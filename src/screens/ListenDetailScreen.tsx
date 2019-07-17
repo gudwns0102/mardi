@@ -2,7 +2,6 @@ import _ from "lodash";
 import { inject, observer } from "mobx-react";
 import React from "react";
 import { Share, View } from "react-native";
-import { BoxShadow } from "react-native-shadow";
 import { NavigationScreenProp } from "react-navigation";
 import styled from "styled-components/native";
 import uuid from "uuid";
@@ -11,11 +10,9 @@ import { images } from "assets/images";
 import { BackButton } from "src/components/buttons/BackButton";
 import { Button } from "src/components/buttons/Button";
 import { IconButton } from "src/components/buttons/IconButton";
-import { ContentCard } from "src/components/cards/ContentCard";
 import { ReplyList } from "src/components/lists/ReplyList";
 import { PlainHeader } from "src/components/PlainHeader";
 import { Text } from "src/components/Text";
-import { Bold } from "src/components/texts/Bold";
 import { HedaerText } from "src/components/texts/HeaderText";
 import { environment } from "src/config/environment";
 import { injectLoading } from "src/decorators/injectLoading";
@@ -38,8 +35,8 @@ import { IRootStore } from "src/stores/RootStore";
 import { IToastStore } from "src/stores/ToastStore";
 import { IUserStore } from "src/stores/UserStore";
 import { colors } from "src/styles/colors";
-import { deviceHeight, deviceWidth } from "src/utils/Dimensions";
-import { shrinkValue } from "src/utils/Number";
+import { deviceHeight } from "src/utils/Dimensions";
+import { ContentList } from "src/components/lists/ContentList";
 
 interface IInjectProps {
   audioStore: IAudioStore;
@@ -77,82 +74,6 @@ const HeaderRightButtonWrapper = styled.View`
   align-items: center;
 `;
 
-const BodyContainer = styled.View`
-  width: 100%;
-  padding: 6px 16px 16px;
-  background-color: #ebebeb;
-`;
-
-const ButtonRow = styled.View`
-  flex-direction: row;
-  margin-top: 12px;
-`;
-
-const BodyButton = styled(Button)`
-  flex-direction: row;
-  height: 36px;
-  border-radius: 8px;
-  background-color: white;
-`;
-
-const HeartButton = styled(BodyButton).attrs({ shadow: true })`
-  width: 86px;
-  padding: 6px;
-`;
-
-const CommentButton = styled(BodyButton).attrs({ shadow: true })`
-  width: 86px;
-  padding: 6px;
-  margin: 0 8px;
-`;
-
-const PlayButton = styled(BodyButton)`
-  flex: 1;
-  background-color: rgb(25, 86, 212);
-  padding-left: 6px;
-  padding-right: 8px;
-`;
-
-const ButtonText = styled(Bold)``;
-
-const HeartButtonText = styled(ButtonText)`
-  flex: 1;
-  font-size: 14px;
-  color: rgb(155, 155, 155);
-  text-align: center;
-`;
-
-const CommentButtonText = styled(ButtonText)`
-  flex: 1;
-  font-size: 14px;
-  color: rgb(155, 155, 155);
-  text-align: center;
-`;
-
-const PlayButtonText = styled(ButtonText)`
-  flex: 1;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-`;
-
-const HeartIcon = styled.Image`
-  width: 24px;
-  height: 24px;
-  margin-right: 6px;
-`;
-
-const CommentIcon = styled.Image.attrs({ source: images.btnContentsComment })`
-  width: 24px;
-  height: 24px;
-  margin-right: 6px;
-`;
-
-const PlayIcon = styled.Image`
-  width: 21px;
-  height: 21px;
-`;
-
 const FooterContainer = styled.View`
   flex: 1;
   padding: 0 20px;
@@ -177,31 +98,13 @@ const FooterButtonText = styled(Text)`
 
 const CharIcon = styled.Image.attrs({ source: images.char })`
   width: 24px;
-  width: 24px;
   margin-right: 4px;
 `;
 
 const MikeIcon = styled.Image.attrs({ source: images.speakGray })`
   width: 24px;
-  width: 24px;
   margin-right: 4px;
 `;
-
-const ShadowButtonWrapper = styled.View`
-  flex: 1;
-`;
-
-const shadowOptions = {
-  width: deviceWidth - 86 * 2 - 16 - 40,
-  height: 36,
-  color: "#1956d4",
-  border: 10,
-  radius: 8,
-  opacity: 0.2,
-  x: 0,
-  y: 2,
-  style: { position: "absolute", left: 5 }
-};
 
 @inject(
   ({ store }: { store: IRootStore }): IInjectProps => ({
@@ -262,8 +165,6 @@ export class ListenDetailScreen extends React.Component<IProps, any> {
   }
 
   public render() {
-    const { audioStore, contentStore } = this.props;
-
     const content = this.content;
 
     if (!content) {
@@ -271,14 +172,10 @@ export class ListenDetailScreen extends React.Component<IProps, any> {
     }
 
     const replies = this.replyBundle.replyArray;
-    const isPlaying =
-      audioStore.playing && audioStore.currentAudio
-        ? audioStore.currentAudio.id === content.id
-        : false;
 
     return (
       <>
-        <PlainHeader style={{ backgroundColor: "#EBEBEB" }}>
+        <PlainHeader>
           <BackButton onPress={this.goBack} />
           <HedaerText>한마디</HedaerText>
           <HeaderRightButtonWrapper>
@@ -287,54 +184,10 @@ export class ListenDetailScreen extends React.Component<IProps, any> {
           </HeaderRightButtonWrapper>
         </PlainHeader>
         <Container>
-          <BodyContainer>
-            <ContentCard
-              content={content}
-              showFooterIcons={false}
-              playing={isPlaying}
-              disabled={true}
-              onAvatarPress={_.partial(
-                this.navigateUserProfile,
-                content.user.uuid
-              )}
-              onQuestionPress={this.navigateSearchQuestion}
-            />
-            <ButtonRow>
-              <HeartButton
-                onPress={_.partial(contentStore.clickHeart, content.id)}
-              >
-                <HeartIcon
-                  source={
-                    content.heart_by_me
-                      ? images.btnContentsLikeOn
-                      : images.btnContentsLikeOff
-                  }
-                />
-                <HeartButtonText>
-                  {shrinkValue(content.num_hearts)}
-                </HeartButtonText>
-              </HeartButton>
-              <CommentButton
-                onPress={_.partial(this.onReplyPress, "audio", true)}
-              >
-                <CommentIcon />
-                <CommentButtonText>
-                  {shrinkValue(this.replyBundle.count || content.num_replies)}
-                </CommentButtonText>
-              </CommentButton>
-              <ShadowButtonWrapper>
-                <BoxShadow setting={shadowOptions} />
-                <PlayButton onPress={this.onPlayPress}>
-                  <PlayIcon
-                    source={isPlaying ? images.btnContentsPlaying : images.play}
-                  />
-                  <PlayButtonText>
-                    {content.num_played.toLocaleString()}
-                  </PlayButtonText>
-                </PlayButton>
-              </ShadowButtonWrapper>
-            </ButtonRow>
-          </BodyContainer>
+          <ContentList 
+            contentBundle={this.contentBundle}
+            onEndReached={undefined}
+          />
           <FooterContainer>
             <FooterButtonRow>
               <FooterButton
@@ -458,7 +311,7 @@ export class ListenDetailScreen extends React.Component<IProps, any> {
     const { navigation } = this.props;
     const content = this.content;
     navigation.goBack(null);
-    navigateContentEditScreen(navigation, {
+    setTimeout(() => navigateContentEditScreen(navigation, {
       type: "FROM_CONTENT_DETAIL",
       questionId: _.get(content, ["question", "id"], undefined),
       questionText: _.get(content, ["question", "text"], ""),
@@ -467,7 +320,7 @@ export class ListenDetailScreen extends React.Component<IProps, any> {
       contentId: content!.id,
       patternIndex: content!.default_image_pattern_idx,
       backgroundIndex: content!.default_image_color_idx
-    });
+    }), 100);
   };
 
   private onDeletePress = async () => {

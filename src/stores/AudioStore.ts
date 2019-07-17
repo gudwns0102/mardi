@@ -166,9 +166,6 @@ export const AudioStore = types
       currentTime: number;
       playableDuration: number;
     }) => {
-      if (Math.abs(self.currentTime - currentTime) > 2) {
-        return;
-      }
       self.currentTime = currentTime;
       self.playableDuration = playableDuration;
     };
@@ -193,21 +190,22 @@ export const AudioStore = types
       if (self.reachEnd) {
         return;
       }
-      _.invoke(audioStoreRef.current, ["root", "seek"], seconds);
+      _.invoke(audioStoreRef.current, ["seek"], seconds);
       self.currentTime = Math.min(Math.max(0, seconds), self.playableDuration);
+      return self.currentTime;
     };
 
     const rewind = () => {
-      seek(self.currentTime - 5);
+      return seek(self.currentTime - 5);
     };
 
     const fastforward = () => {
-      seek(self.currentTime + 5);
+      return seek(self.currentTime + 5);
     };
 
     const seekByPercent = (percent: number) => {
       const absoluteSeconds = (self.playableDuration * percent) / 100;
-      seek(absoluteSeconds);
+      return seek(absoluteSeconds);
     };
 
     const pushInstantAudio = (audio: string) => {

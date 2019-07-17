@@ -61,7 +61,7 @@ export class SplashScreen extends React.Component<IProps> {
   };
 
   public async componentDidMount() {
-    const { appStore, authStore, userStore } = this.props;
+    const { appStore, authStore, userStore, getInitialURL, handleDeepLink } = this.props;
     await authStore.initialize(this.navigation);
 
     const isValidAppVersion = await appStore.validateAppVersion();
@@ -82,7 +82,19 @@ export class SplashScreen extends React.Component<IProps> {
       return;
     }
 
+    
+
     try {
+      const initialURL = await getInitialURL();
+
+      if (initialURL) {
+        const { isNavigatingAction } = await handleDeepLink(initialURL);
+
+        if (isNavigatingAction) {
+          return;
+        }
+      }
+      
       await userStore.fetchClient();
       navigateListenScreen(this.navigation);
     } catch (error) {

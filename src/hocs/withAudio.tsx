@@ -71,7 +71,7 @@ export const withAudio = <T extends object>(
                       audioStore.onAudioProgress(e);
 
                       this.isListenProgress = true;
-                      setTimeout(() => (this.isListenProgress = false), 18);
+                      setTimeout(() => (this.isListenProgress = false), 14);
 
                       if (
                         !this.isHalfPlayed &&
@@ -87,8 +87,9 @@ export const withAudio = <T extends object>(
                       this.onEndAudio();
                     }}
                     playInBackground={true}
-                    progressUpdateInterval={20}
+                    progressUpdateInterval={16}
                     ignoreSilentSwitch="ignore"
+                    audioOnly={true}
                   />
                 </React.Fragment>
               );
@@ -109,6 +110,7 @@ export const withAudio = <T extends object>(
                   onEnd={audioStore.onInstantAudioEnd}
                   playInBackground={true}
                   ignoreSilentSwitch="ignore"
+                  audioOnly={true}
                 />
               );
             }}

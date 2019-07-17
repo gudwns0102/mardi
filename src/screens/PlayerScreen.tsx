@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { Share, StatusBar, View } from "react-native";
+import { Share, View } from "react-native";
 import { NavigationScreenProp, SafeAreaView } from "react-navigation";
 import styled from "styled-components/native";
 
@@ -225,6 +225,7 @@ export class PlayerScreen extends React.Component<IProps, any> {
       return <View />;
     }
 
+    const { currentTime } = audioStore;
     const backgroundImageSource = audio.image
       ? {
           uri: audio.image
@@ -233,7 +234,6 @@ export class PlayerScreen extends React.Component<IProps, any> {
 
     const questionText = _.get(audio.title, ["text"], null);
     const avatarSource = audio.photo;
-    const { currentTime, playableDuration } = audioStore;
 
     return (
       <React.Fragment>
