@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>42029809606-82cli2hh6dbla1uuvp3qgu6gvv70fo8s.apps.googleusercontent.com</string>
+	<string>457021245853-bhj1i075lmftcj5j7r7cem9hiq628vjj.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.42029809606-82cli2hh6dbla1uuvp3qgu6gvv70fo8s</string>
+	<string>com.googleusercontent.apps.457021245853-bhj1i075lmftcj5j7r7cem9hiq628vjj</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAIDpxpL4qModwCM37V_jzsmmjmFltIhHI</string>
+	<string>AIzaSyDUvD_gdI_LtLaxnh9yiSUKcnhhui1ojTs</string>
 	<key>GCM_SENDER_ID</key>
-	<string>42029809606</string>
+	<string>457021245853</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.mardi.life</string>
 	<key>PROJECT_ID</key>
-	<string>mardi-staging</string>
+	<string>mardi-3a9ac</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mardi-staging.appspot.com</string>
+	<string>mardi-3a9ac.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:42029809606:ios:6df19c310a3fe5e4</string>
+	<string>1:457021245853:ios:6df19c310a3fe5e4</string>
 	<key>DATABASE_URL</key>
-	<string>https://mardi-staging.firebaseio.com</string>
+	<string>https://mardi-3a9ac.firebaseio.com</string>
 </dict>
 </plist>
