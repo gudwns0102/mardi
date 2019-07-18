@@ -21,7 +21,7 @@
 		2FA98AE496D6482494B7F3B9 /* SpoqaHanSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71AA424719F541BF9449541A /* SpoqaHanSans-Regular.ttf */; };
 		597DAF507AF7A87B753DCDA6 /* libPods-mardiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4573CEC9EA492C9A45F6B20F /* libPods-mardiTests.a */; };
 		6E7F92E0BB80E6B93415BBDA /* libPods-mardi-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6A722A67CA1286BB1C2DDE /* libPods-mardi-tvOS.a */; };
-		C4A68A2122DE236B00D6A1E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4A68A2022DE236B00D6A1E3 /* GoogleService-Info.plist */; };
+		C4A68A4E22E0978D00D6A1E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4A68A4D22E0978D00D6A1E3 /* GoogleService-Info.plist */; };
 		CB15599D31CACFBCD44B0EB6 /* libPods-mardi-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF576E52FD982D3985C9CDC /* libPods-mardi-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
@@ -68,7 +68,7 @@
 		8E56769B392B8DB7771D1C9C /* Pods-mardiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mardiTests/Pods-mardiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		947AFCAA663174B3F848B79B /* Pods-mardi-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardi-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-mardi-tvOS/Pods-mardi-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		A93493EDB4330EFF373FD620 /* Pods-mardi-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardi-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mardi-tvOSTests/Pods-mardi-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C4A68A2022DE236B00D6A1E3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C4A68A4D22E0978D00D6A1E3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CDF576E52FD982D3985C9CDC /* libPods-mardi-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mardi-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D36599A50A4A21CDB37371DB /* Pods-mardiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mardiTests/Pods-mardiTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -138,7 +138,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				C4A68A2022DE236B00D6A1E3 /* GoogleService-Info.plist */,
+				C4A68A4D22E0978D00D6A1E3 /* GoogleService-Info.plist */,
 			);
 			name = mardi;
 			sourceTree = "<group>";
@@ -364,7 +364,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				C4A68A2122DE236B00D6A1E3 /* GoogleService-Info.plist in Resources */,
+				C4A68A4E22E0978D00D6A1E3 /* GoogleService-Info.plist in Resources */,
 				1175B4F3D5754554AD1289D5 /* SpoqaHanSans-Bold.ttf in Resources */,
 				2FA98AE496D6482494B7F3B9 /* SpoqaHanSans-Regular.ttf in Resources */,
 			);
