@@ -13,7 +13,7 @@ const production = {
   privacyPolicy: "https://mardi.life/privacy-policy",
   termsOfUse: "https://mardi.life/terms-of-use",
   share: (id: number) => `https://mardi.life/share?id=${id}`,
-  onesignal: "2db2de67-a189-4fb1-8fc5-b7031dbd268d",
+  onesignal: "bb903933-c204-46f6-be9e-4986d437b912",
   aboutMardi:
     "https://mardi-v2.s3.ap-northeast-2.amazonaws.com/uploads/mardi.mp3"
 };
