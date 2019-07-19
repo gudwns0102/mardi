@@ -1,35 +1,43 @@
 {
   "project_info": {
-    "project_number": "457021245853",
-    "firebase_url": "https://mardi-3a9ac.firebaseio.com",
-    "project_id": "mardi-3a9ac",
-    "storage_bucket": "mardi-3a9ac.appspot.com"
+    "project_number": "282946785314",
+    "firebase_url": "https://mardi-1a984.firebaseio.com",
+    "project_id": "mardi-1a984",
+    "storage_bucket": "mardi-1a984.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:457021245853:android:e8b38ecbc473b4d7",
+        "mobilesdk_app_id": "1:282946785314:android:e8b38ecbc473b4d7",
         "android_client_info": {
           "package_name": "com.mardi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "457021245853-6lta03es0cabh2slhem12t4fsk5ctlf7.apps.googleusercontent.com",
+          "client_id": "282946785314-93kbu0imi61gl1pvkkpejcdgcroo03qt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyChishOHxulEkh7v3O--mKGCVKDtpAuDiQ"
+          "current_key": "AIzaSyBQuSCcGvYW6Ek9mYcYmE12BVPp6D7PxMs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "457021245853-6lta03es0cabh2slhem12t4fsk5ctlf7.apps.googleusercontent.com",
+              "client_id": "282946785314-93kbu0imi61gl1pvkkpejcdgcroo03qt.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "282946785314-jutrmcpolqeqirsj2r5bqc96l6intpka.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mardi.life",
+                "app_store_id": "1435152474"
+              }
             }
           ]
         }
