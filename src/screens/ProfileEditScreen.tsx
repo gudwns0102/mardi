@@ -252,7 +252,7 @@ export class ProfileEditScreen extends React.Component<IProps, IState> {
     navigation.goBack(null);
   };
 
-  // @injectLoading
+  @injectLoading
   private onSavePress = async () => {
     const { navigation, contentStore, userStore, toastStore } = this.props;
     const {

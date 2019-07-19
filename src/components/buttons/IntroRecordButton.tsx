@@ -5,8 +5,6 @@ import { Button, IButtonProps } from "src/components/buttons/Button";
 import { Text } from "src/components/Text";
 import { colors } from "src/styles/colors";
 
-interface IProps extends Omit<IButtonProps, "children"> {}
-
 const Record = styled(Button)`
   height: 50px;
   padding-left: 17px;
@@ -30,7 +28,7 @@ const RecordText = styled(Text).attrs({ type: "bold" })`
   color: ${colors.black};
 `;
 
-export function IntroRecordButton(props: IProps) {
+export function IntroRecordButton(props: IButtonProps) {
   return (
     <Record {...props} activeOpacity={1}>
       <RedCircle />
