@@ -14,6 +14,7 @@ import {
 } from "src/apis";
 import { getRootStore } from "src/stores/RootStoreHelper";
 import { audioPathToFormUri } from "src/utils/Audio";
+import OneSignal from "react-native-onesignal";
 
 export const UserStore = types
   .model({
@@ -56,10 +57,10 @@ export const UserStore = types
         self.clientId = client.uuid;
         self.users.set(client.uuid, { ...client });
         fetchClientSettings();
-        // const userId: RetrieveAsyncFunc<
-        //   typeof getOnesignalUserId
-        // > = yield getOnesignalUserId();
-        // updateClient({ onesignal_user_id: userId });
+        const userId: RetrieveAsyncFunc<
+          typeof getOnesignalUserId
+        > = yield getOnesignalUserId();
+        updateClient({ onesignal_user_id: userId });
         return client.uuid;
       } catch (error) {
         throw error;
@@ -139,12 +140,12 @@ export const UserStore = types
     };
 
     const getOnesignalUserId = (): Promise<string> => {
-      // return new Promise((resolve, reject) =>
-      //   Onesignal.getPermissionSubscriptionState(status => {
-      //     const { userId } = status;
-      //     resolve(userId);
-      //   })
-      // );
+      return new Promise((resolve, reject) =>
+        OneSignal.getPermissionSubscriptionState(status => {
+          const { userId } = status;
+          resolve(userId);
+        })
+      );
     };
 
     const updateClientKeywords = flow(function*(tags: string[]) {

@@ -9,7 +9,9 @@ export interface IconButtonProps extends IButtonProps {
   imageProps?: ImageProps;
 }
 
-const Container = styled(Button)``;
+const Container = styled(Button)`
+  overflow: hidden;
+`;
 
 const Image = styled.Image`
   width: 100%;

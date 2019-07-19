@@ -11,7 +11,7 @@ interface IProps extends TouchableOpacityProps {
   onClose?: () => void;
 }
 
-const Container = styled.TouchableOpacity.attrs({ activeOpacity: 1 })`
+const Container = styled.TouchableOpacity`
   position: absolute;
   top: 0;
   flex-direction: row;
@@ -42,7 +42,7 @@ const Close = styled(IconButton).attrs({ source: images.btnTextDelete })`
 
 export function ClosableToast({ onClose, onFollowPress, ...props }: IProps) {
   return (
-    <Container {...props}>
+    <Container {...props} activeOpacity={1}>
       <Column>
         <Content>팔로우를 하고 마디를 더 즐겨보세요!</Content>
         <UnderlineContent

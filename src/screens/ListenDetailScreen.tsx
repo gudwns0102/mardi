@@ -427,29 +427,6 @@ export class ListenDetailScreen extends React.Component<IProps, any> {
     });
   };
 
-  private navigateUserProfile = ($uuid: IUser["uuid"]) => {
-    const { navigation, userStore } = this.props;
-    const client = userStore.client;
-
-    if (!client) {
-      return;
-    }
-
-    navigateUserPageScreen(navigation, { uuid: $uuid });
-  };
-
-  private navigateSearchQuestion = () => {
-    const content = this.content;
-    if (!content || !content.question) {
-      return;
-    }
-
-    // navigateSearchQuestionScreen(this.props.navigation, {
-    //   questionId: content.question.id,
-    //   questionText: content.question.text
-    // });
-  };
-
   private goBack = () => {
     const { navigation } = this.props;
     navigation.goBack(null);

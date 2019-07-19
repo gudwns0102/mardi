@@ -3,7 +3,7 @@ const development = {
   privacyPolicy: "https://dev.mardi.life/privacy-policy",
   termsOfUse: "https://dev.mardi.life/terms-of-use",
   share: (id: number) => `https://dev.mardi.life/share?id=${id}`,
-  onesignal: "bb903933-c204-46f6-be9e-4986d437b912",
+  onesignal: "017d3db2-885a-4ea0-830a-fe77837e758f",
   aboutMardi:
     "https://mardi-dev.s3.ap-northeast-2.amazonaws.com/uploads/mardi.aac"
 };

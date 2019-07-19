@@ -17,6 +17,4 @@ type RetrieveAsyncFunc<T extends (...args: any[]) => any> = ReturnType<
   ? U
   : never;
 
-type MardiScreenProps = {
-  statusBarProps?: import("react-native").StatusBarProps;
-};
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;

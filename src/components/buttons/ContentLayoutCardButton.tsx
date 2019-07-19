@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import { Button, IButtonProps } from "src/components/buttons/Button";
 import { colors } from "src/styles/colors";
 
-interface IProps extends Omit<IButtonProps, "children"> {
+interface IProps extends IButtonProps {
   isActive: boolean;
 }
 

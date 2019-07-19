@@ -1,10 +1,10 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
 import _ from "lodash";
 import React from "react";
-// import Onesignal, {
-//   OpenResult,
-//   ReceivedNotification
-// } from "react-native-onesignal";
+import Onesignal, {
+  OpenResult,
+  ReceivedNotification
+} from "react-native-onesignal";
 import {
   NavigationActions,
   NavigationScreenProp,
@@ -23,7 +23,7 @@ interface INotificationData {
   userId?: IUser["uuid"];
 }
 
-// Onesignal.init(environment.onesignal);
+Onesignal.init(environment.onesignal);
 
 export const withOnesignal = <
   T extends { navigation: NavigationScreenProp<any, any> }
@@ -44,9 +44,9 @@ export const withOnesignal = <
     }
 
     public async componentDidMount() {
-      // Onesignal.inFocusDisplaying(2);
-      // Onesignal.addEventListener("received", this.onReceived);
-      // Onesignal.addEventListener("opened", this.onOpened);
+      Onesignal.inFocusDisplaying(2);
+      Onesignal.addEventListener("received", this.onReceived);
+      Onesignal.addEventListener("opened", this.onOpened);
 
       return;
     }
