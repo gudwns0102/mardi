@@ -89,14 +89,19 @@ const InputLabel = styled(Bold)`
 `;
 
 const AuthButton = styled(Button).attrs({
-  textProps: {
-    type: "bold",
-    style: {
-      color: "white"
-    }
-  }
+  shadow: true
 })`
-  background-color: rgb(25, 86, 212);
+  width: 280px;
+  height: 48px;
+  border-radius: 48px;
+  background-color: ${props =>
+    props.disabled ? "rgb(200,200,200)" : "rgb(25, 86, 212)"};
+  margin: 0 18px;
+`;
+
+const AuthButtonText = styled(Bold)`
+  font-size: 16px;
+  color: white;
 `;
 
 const Content = styled(Text)`
@@ -143,7 +148,9 @@ export class ResetPasswordScreen extends React.Component<IProps> {
             secureTextEntry={true}
             style={{ marginBottom: 60 }}
           />
-          <AuthButton onPress={this.onResetPress}>완료</AuthButton>
+          <AuthButton onPress={this.onResetPress}>
+            <AuthButtonText>완료</AuthButtonText>
+          </AuthButton>
         </Container>
         <KeyboardSpacer />
       </>

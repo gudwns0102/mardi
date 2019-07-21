@@ -18,6 +18,7 @@ import { IRootStore } from "src/stores/RootStore";
 import { IToastStore } from "src/stores/ToastStore";
 import { IUserStore } from "src/stores/UserStore";
 import { colors } from "src/styles/colors";
+import { Bold } from "src/components/texts/Bold";
 
 interface IInjectProps {
   authStore: IAuthStore;
@@ -50,12 +51,15 @@ const Header = styled.View`
   z-index: 100;
 `;
 
-const Container = styled.View`
+const Container = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    justifyContent: "center",
+  }
+})`
   width: 100%;
   flex: 1;
-  padding-horizontal: 30px;
+  padding: 0 30px;
   background-color: ${colors.white};
-  justify-content: center;
 `;
 
 const Label = styled(Text).attrs({ type: "bold" })`
@@ -84,11 +88,21 @@ const InputLabel = styled(Text).attrs({ type: "bold" })`
 `;
 
 const AuthButton = styled(Button).attrs({
-  contentStyle: { color: colors.white },
-  fontType: "bold"
+  shadow: true
 })`
-  background-color: ${colors.blue300};
+  width: 280px;
+  height: 48px;
+  border-radius: 48px;
+  background-color: ${props =>
+    props.disabled ? "rgb(200,200,200)" : "rgb(25, 86, 212)"};
+  margin: 0 18px;
 `;
+
+const AuthButtonText = styled(Bold)`
+  font-size: 16px;
+  color: white;
+`;
+
 
 const Content = styled(Text).attrs({ type: "regular" })`
   width: 100%;
@@ -150,7 +164,9 @@ export class ProfileResetPasswordScreen extends React.Component<IProps> {
               secureTextEntry={true}
               style={{ marginBottom: 60 }}
             />
-            <AuthButton onPress={this.onSubmit}>완료</AuthButton>
+          <AuthButton onPress={this.onSubmit}>
+            <AuthButtonText>완료</AuthButtonText>
+          </AuthButton>
           </Container>
         </KeyboardDismissWrapper>
         <KeyboardSpacer />

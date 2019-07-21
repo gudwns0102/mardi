@@ -245,9 +245,8 @@ export class PlayerScreen extends React.Component<IProps, any> {
           }
         >
           <BackgroundImage source={backgroundImageSource} resizeMode="cover" />
-          <SafeAreaView style={{ flex: 1 }}>
             <BodyContainer>
-              <Row style={{ marginBottom: 96 }}>
+              <Row style={{ marginBottom: 96, marginTop: 28 }}>
                 <PlayerAvatar
                   photo={avatarSource}
                   onPress={_.partial(this.onAvatarPress, audio.uuid)}
@@ -298,7 +297,6 @@ export class PlayerScreen extends React.Component<IProps, any> {
               <Padder />
               <ShareButton onPress={this.onSharePress} />
             </FooterContainer>
-          </SafeAreaView>
           <BottomNotch backgroundColor={"rgba(255, 255, 255, 0.6)"} />
         </Container>
       </React.Fragment>

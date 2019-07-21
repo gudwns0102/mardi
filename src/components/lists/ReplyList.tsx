@@ -233,7 +233,7 @@ class ReplyListClass extends React.Component<IProps, any> {
 
   private onTagPress = (text: string) => {
     const { navigation } = this.props;
-    navigation.push("SearchScreen", { defaultText: text });
+    navigation.navigate("SearchScreen", { defaultText: text });
   };
 
   private onUserPress = (uuid: string) => {

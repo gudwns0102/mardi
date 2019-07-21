@@ -44,7 +44,7 @@ const StarContainer = styled.TouchableOpacity.attrs({ activeOpacity: 1 })`
   height: 44px;
   border-top-width: 1px;
   border-bottom-width: 1px;
-  border-color: rgba(63, 63, 63, 0.5);
+  border-color: #9B9B9B;
 `;
 
 const Star = styled(Text)`

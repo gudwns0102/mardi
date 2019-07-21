@@ -173,7 +173,7 @@ export class ListenScreen extends React.Component<IProps> {
             />
           )
         ) : null}
-        {this.NoFollowerBanner}
+        {this.showBanner ? this.NoFollowerBanner : null}
       </Container>
     );
   }

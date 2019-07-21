@@ -101,7 +101,7 @@ const Image = styled.Image`
 const ContentDurationWrapper = styled.View`
   position: absolute;
   right: 4px;
-  top: 2px;
+  top: 4px;
   width: 38px;
   border-radius: 8px;
   align-items: center;
