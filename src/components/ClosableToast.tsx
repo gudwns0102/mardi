@@ -18,11 +18,11 @@ const Container = styled.TouchableOpacity`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 93px;
+  height: 73px;
   padding-left: 19px;
   padding-right: 16px;
-  padding-top: 20px;
   background-color: rgba(25, 86, 212, 0.8);
+  z-index: 10000;
 `;
 
 const Column = styled.View``;

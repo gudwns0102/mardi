@@ -101,6 +101,7 @@ export class AuthVerifyScreen extends React.Component<IProps, any> {
 
     return (
       <Container>
+        <StyledBackButton onPress={this.onBackPress}/>
         <Airplane />
         <VerifyText>
           아래의 이메일 주소로 인증메일을{`\n`}
@@ -110,7 +111,6 @@ export class AuthVerifyScreen extends React.Component<IProps, any> {
         <ResendButton onPress={this.onResendPress}>
           인증메일 재발송
         </ResendButton>
-        <StyledBackButton />
       </Container>
     );
   }

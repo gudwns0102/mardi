@@ -6,7 +6,7 @@ import { Button, IButtonProps } from "src/components/buttons/Button";
 
 export interface IconButtonProps extends IButtonProps {
   source: ImageProps["source"];
-  imageProps?: ImageProps;
+  imageProps?: Omit<ImageProps, "source">;
 }
 
 const Container = styled(Button)`

@@ -22,9 +22,11 @@ const ButtonContainer = styled.View`
 `;
 
 const ReplyButton = styled(IconButton).attrs({
-  iconStyle: {
-    width: 26,
-    height: 26
+  imageProps: {
+    style: {
+      width: 26,
+      height: 26
+    }
   }
 })<{ color: string }>`
   flex: 1;

@@ -4,6 +4,7 @@ import React from "react";
 import { Animated, AsyncStorage, View } from "react-native";
 import { NavigationScreenProp } from "react-navigation";
 import styled from "styled-components/native";
+import { observable } from "mobx";
 
 import { images } from "assets/images";
 import { ContentEmptyList } from "src/components/lists/ContentEmptyList";
@@ -22,6 +23,8 @@ import { IToastStore } from "src/stores/ToastStore";
 import { IUserStore } from "src/stores/UserStore";
 import { AsyncStorageKeys } from "src/utils/AsyncStorage";
 import { isAndroid } from "src/utils/Platform";
+import { ClosableToast } from "src/components/ClosableToast";
+import { CurationCard } from "src/components/cards/CurationCard";
 
 interface IInjectProps {
   audioStore: IAudioStore;
@@ -89,6 +92,7 @@ export class ListenScreen extends React.Component<IProps> {
   public contentBundle: IContentBundle;
   public headerAnimation = new Animated.Value(0);
   public contentListRef = React.createRef<typeof AnimatedContentList>();
+  @observable showBanner = false;
 
   constructor(props: IProps) {
     super(props);
@@ -110,25 +114,13 @@ export class ListenScreen extends React.Component<IProps> {
   }
 
   public showFollowRecommendationToast = async () => {
-    const { userStore, toastStore, navigation } = this.props;
+    const { userStore } = this.props;
     const isClosedBefore = !!(await AsyncStorage.getItem(
       AsyncStorageKeys.FOLLOW_RECOMMEND_TOAST
     ));
 
     if (userStore.client!.num_followings === 0 && !isClosedBefore) {
-      toastStore.openToast({
-        type: "CLOSABLE",
-        content: "",
-        duration: 10000000,
-        onClose: () => {
-          toastStore.closeToast();
-          AsyncStorage.setItem(AsyncStorageKeys.FOLLOW_RECOMMEND_TOAST, "true");
-        },
-        onFollowPress: () => {
-          toastStore.closeToast();
-          navigateFollowRecommendScreen(navigation);
-        }
-      });
+      this.showBanner = true;
     }
   };
 
@@ -163,7 +155,7 @@ export class ListenScreen extends React.Component<IProps> {
         />
         {contentBundle ? (
           contentBundle.hasNoResult ? (
-            this.NoFollowerView
+            this.BeginnerView
           ) : (
             <AnimatedContentList
               ref={this.contentListRef}
@@ -181,11 +173,12 @@ export class ListenScreen extends React.Component<IProps> {
             />
           )
         ) : null}
+        {this.NoFollowerBanner}
       </Container>
     );
   }
 
-  private get NoFollowerView() {
+  private get BeginnerView() {
     return (
       <AnimatedContentEmptyList
         onScroll={Animated.event(
@@ -196,6 +189,21 @@ export class ListenScreen extends React.Component<IProps> {
         data={Array.from({ length: 3 }).map((__, index) => index)}
         ListHeaderComponent={<View style={{ marginTop: HEADER_MAX_HEIGHT }} />}
         onFirstItemPress={this.onContentEmptyCardPress}
+      />
+    );
+  }
+
+  get NoFollowerBanner() {
+    return (
+      <ClosableToast
+        onFollowPress={() => {
+          this.showBanner = false;
+          navigateFollowRecommendScreen(this.props.navigation);
+        }}
+        onClose={() => {
+          this.showBanner = false;
+          AsyncStorage.setItem(AsyncStorageKeys.FOLLOW_RECOMMEND_TOAST, "true");
+        }}
       />
     );
   }

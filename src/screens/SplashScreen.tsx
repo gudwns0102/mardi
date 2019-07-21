@@ -83,8 +83,6 @@ export class SplashScreen extends React.Component<IProps> {
       return;
     }
 
-    
-
     try {
       const initialURL = await getInitialURL();
 
