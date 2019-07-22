@@ -18,7 +18,7 @@ const production = {
     "https://mardi-v2.s3.ap-northeast-2.amazonaws.com/uploads/mardi.mp3"
 };
 
-export const isProduction = () => false; // !__DEV__;
-export const isDevelopment = () => true; // __DEV__;
+export const isProduction = () => !__DEV__;
+export const isDevelopment = () => __DEV__;
 
 export const environment = isProduction() ? production : development;
