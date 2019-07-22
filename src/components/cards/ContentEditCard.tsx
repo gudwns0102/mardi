@@ -61,7 +61,6 @@ const Subtitle = styled(BodyContent).attrs({ numberOfLines: 1 })`
 const Title = styled(BodyContent).attrs({ numberOfLines: 3 })`
   font-size: 19px;
   text-align: center;
-  min-height: 25px;
   width: 287px;
   min-height: 58px;
 `;

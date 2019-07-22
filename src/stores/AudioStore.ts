@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { flow, types } from "mobx-state-tree";
+import { types } from "mobx-state-tree";
 import React from "react";
 import Video from "react-native-video";
 
@@ -39,6 +39,7 @@ export const AudioStore = types
   })
   .actions(self => {
     const { netStatusStore, userStore, toastStore } = getRootStore(self);
+
 
     const getCurrentAudio = () => {
       const length = self.audios.length;
@@ -190,21 +191,25 @@ export const AudioStore = types
 
     const prev = () => {
       if (self.audioHistory.length === 0) {
-        throw new Error("Prev cannot be invoked because there is no audio history");
+        throw new Error(
+          "Prev cannot be invoked because there is no audio history"
+        );
       }
 
       clearAudioMetadata();
       self.audios.unshift(self.audioHistory.pop()!);
-    }
+    };
 
     const next = () => {
       if (self.audios.length <= 1) {
-        throw new Error("Next cannot be invoked because there is no remain audios");
+        throw new Error(
+          "Next cannot be invoked because there is no remain audios"
+        );
       }
 
       clearAudioMetadata();
       self.audioHistory.push(self.audios.shift()!);
-    }
+    };
 
     const seek = (seconds: number) => {
       if (self.reachEnd) {

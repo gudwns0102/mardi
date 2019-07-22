@@ -158,7 +158,7 @@ export class SearchQuestionScreen extends React.Component<IProps, IState> {
   public static options: IScreenOptions = {
     statusBarProps: {
       backgroundColor: "rgba(247, 247, 247, 0.8)"
-    },
+    }
   };
   public contentBundleId: string;
   public contentBundle: IContentBundle;

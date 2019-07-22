@@ -10,6 +10,7 @@ import { images } from "assets/images";
 import { BackButton } from "src/components/buttons/BackButton";
 import { Button } from "src/components/buttons/Button";
 import { IconButton } from "src/components/buttons/IconButton";
+import { ContentList } from "src/components/lists/ContentList";
 import { ReplyList } from "src/components/lists/ReplyList";
 import { PlainHeader } from "src/components/PlainHeader";
 import { Text } from "src/components/Text";
@@ -22,10 +23,7 @@ import { navigateButtonModalScreen } from "src/screens/ButtonModalScreen";
 import { navigateContentEditScreen } from "src/screens/ContentEditScreen";
 import { navigateListenScreen } from "src/screens/ListenScreen";
 import { navigateReplyScreen } from "src/screens/ReplyScreen";
-import {
-  navigateMypageScreen,
-  navigateUserPageScreen
-} from "src/screens/UserPageScreen";
+import { navigateMypageScreen } from "src/screens/UserPageScreen";
 import { IAudioStore } from "src/stores/AudioStore";
 import { IContentBundle } from "src/stores/ContentBundle";
 import { IContentStore } from "src/stores/ContentStore";
@@ -36,7 +34,6 @@ import { IToastStore } from "src/stores/ToastStore";
 import { IUserStore } from "src/stores/UserStore";
 import { colors } from "src/styles/colors";
 import { deviceHeight } from "src/utils/Dimensions";
-import { ContentList } from "src/components/lists/ContentList";
 
 interface IInjectProps {
   audioStore: IAudioStore;
@@ -179,7 +176,7 @@ export class ListenDetailScreen extends React.Component<IProps, any> {
           </HeaderRightButtonWrapper>
         </PlainHeader>
         <Container>
-          <ContentList 
+          <ContentList
             contentBundle={this.contentBundle}
             onEndReached={undefined}
           />
@@ -306,16 +303,20 @@ export class ListenDetailScreen extends React.Component<IProps, any> {
     const { navigation } = this.props;
     const content = this.content;
     navigation.goBack(null);
-    setTimeout(() => navigateContentEditScreen(navigation, {
-      type: "FROM_CONTENT_DETAIL",
-      questionId: _.get(content, ["question", "id"], undefined),
-      questionText: _.get(content, ["question", "text"], ""),
-      defaultContent: content!.title,
-      defaultPhoto: content!.image,
-      contentId: content!.id,
-      patternIndex: content!.default_image_pattern_idx,
-      backgroundIndex: content!.default_image_color_idx
-    }), 100);
+    setTimeout(
+      () =>
+        navigateContentEditScreen(navigation, {
+          type: "FROM_CONTENT_DETAIL",
+          questionId: _.get(content, ["question", "id"], undefined),
+          questionText: _.get(content, ["question", "text"], ""),
+          defaultContent: content!.title,
+          defaultPhoto: content!.image,
+          contentId: content!.id,
+          patternIndex: content!.default_image_pattern_idx,
+          backgroundIndex: content!.default_image_color_idx
+        }),
+      100
+    );
   };
 
   private onDeletePress = async () => {

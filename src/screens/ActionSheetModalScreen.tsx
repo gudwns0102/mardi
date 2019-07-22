@@ -78,8 +78,8 @@ export class ActionSheetModalScreen extends React.Component<IProps> {
             ItemSeparatorComponent={Seperator}
             scrollEnabled={false}
             style={{
-              position: "absolute",
               bottom: 0,
+              position: "absolute",
               width: "100%"
             }}
           />

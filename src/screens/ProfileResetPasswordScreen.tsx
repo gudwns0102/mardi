@@ -12,13 +12,13 @@ import { IconButton } from "src/components/buttons/IconButton";
 import { KeyboardSpacer } from "src/components/KeyboardSpacer";
 import { Text } from "src/components/Text";
 import { TextInput } from "src/components/textinputs/TextInput";
+import { Bold } from "src/components/texts/Bold";
 import { replaceAuthLandingScreen } from "src/screens/AuthLandingScreen";
 import { IAuthStore } from "src/stores/AuthStore";
 import { IRootStore } from "src/stores/RootStore";
 import { IToastStore } from "src/stores/ToastStore";
 import { IUserStore } from "src/stores/UserStore";
 import { colors } from "src/styles/colors";
-import { Bold } from "src/components/texts/Bold";
 
 interface IInjectProps {
   authStore: IAuthStore;
@@ -53,7 +53,7 @@ const Header = styled.View`
 
 const Container = styled.ScrollView.attrs({
   contentContainerStyle: {
-    justifyContent: "center",
+    justifyContent: "center"
   }
 })`
   width: 100%;
@@ -102,7 +102,6 @@ const AuthButtonText = styled(Bold)`
   font-size: 16px;
   color: white;
 `;
-
 
 const Content = styled(Text).attrs({ type: "regular" })`
   width: 100%;
@@ -164,9 +163,9 @@ export class ProfileResetPasswordScreen extends React.Component<IProps> {
               secureTextEntry={true}
               style={{ marginBottom: 60 }}
             />
-          <AuthButton onPress={this.onSubmit}>
-            <AuthButtonText>완료</AuthButtonText>
-          </AuthButton>
+            <AuthButton onPress={this.onSubmit}>
+              <AuthButtonText>완료</AuthButtonText>
+            </AuthButton>
           </Container>
         </KeyboardDismissWrapper>
         <KeyboardSpacer />

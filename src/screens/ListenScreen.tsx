@@ -1,12 +1,14 @@
 import _ from "lodash";
+import { observable } from "mobx";
 import { inject, observer } from "mobx-react";
 import React from "react";
 import { Animated, AsyncStorage, View } from "react-native";
 import { NavigationScreenProp } from "react-navigation";
 import styled from "styled-components/native";
-import { observable } from "mobx";
 
 import { images } from "assets/images";
+import { CurationCard } from "src/components/cards/CurationCard";
+import { ClosableToast } from "src/components/ClosableToast";
 import { ContentEmptyList } from "src/components/lists/ContentEmptyList";
 import { ContentList } from "src/components/lists/ContentList";
 import { PlainHeader } from "src/components/PlainHeader";
@@ -23,8 +25,6 @@ import { IToastStore } from "src/stores/ToastStore";
 import { IUserStore } from "src/stores/UserStore";
 import { AsyncStorageKeys } from "src/utils/AsyncStorage";
 import { isAndroid } from "src/utils/Platform";
-import { ClosableToast } from "src/components/ClosableToast";
-import { CurationCard } from "src/components/cards/CurationCard";
 
 interface IInjectProps {
   audioStore: IAudioStore;
@@ -92,7 +92,7 @@ export class ListenScreen extends React.Component<IProps> {
   public contentBundle: IContentBundle;
   public headerAnimation = new Animated.Value(0);
   public contentListRef = React.createRef<typeof AnimatedContentList>();
-  @observable showBanner = false;
+  @observable public showBanner = false;
 
   constructor(props: IProps) {
     super(props);

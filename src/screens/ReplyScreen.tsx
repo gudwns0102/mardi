@@ -15,17 +15,17 @@ import { PlainHeader } from "src/components/PlainHeader";
 import { Recorder } from "src/components/Recorder";
 import { Text } from "src/components/Text";
 import { Bold } from "src/components/texts/Bold";
+import { injectLoading } from "src/decorators/injectLoading";
 import { IAudioStore } from "src/stores/AudioStore";
 import { IContentStore } from "src/stores/ContentStore";
 import { IReplyBundle } from "src/stores/ReplyBundle";
 import { IReplyStore } from "src/stores/ReplyStore";
 import { IRootStore } from "src/stores/RootStore";
+import { IToastStore } from "src/stores/ToastStore";
 import { IUserStore } from "src/stores/UserStore";
 import { colors } from "src/styles/colors";
 import { isIos } from "src/utils/Platform";
 import { shadow } from "src/utils/Shadow";
-import { injectLoading } from "src/decorators/injectLoading";
-import { IToastStore } from "src/stores/ToastStore";
 
 interface IInjectProps {
   audioStore: IAudioStore;
@@ -316,8 +316,8 @@ export class ReplyScreen extends React.Component<IProps, IState> {
     }, 0);
     toastStore.openToast({
       content: "댓글이 등록되었습니다.",
-      type: "INFO",
-    })
+      type: "INFO"
+    });
   };
 
   private onPostPressFail = () => {

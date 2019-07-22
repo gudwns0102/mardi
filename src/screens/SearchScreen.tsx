@@ -1,10 +1,10 @@
 import _ from "lodash";
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { Keyboard, Alert } from "react-native";
+import { Alert, Keyboard } from "react-native";
 import {
-  NavigationScreenProp,
-  NavigationEventSubscription
+  NavigationEventSubscription,
+  NavigationScreenProp
 } from "react-navigation";
 import styled from "styled-components/native";
 import uuid from "uuid";
@@ -74,7 +74,7 @@ const SearchInputDeleteButton = styled(IconButton)`
 const SearchInput = styled.TextInput.attrs({
   placeholder: "이름 또는 제목을 검색하세요",
   placeholderTextColor: "rgb(180, 180, 180)",
-  returnKeyType: "search",
+  returnKeyType: "search"
 })`
   width: 100%;
   height: 34px;
@@ -235,7 +235,7 @@ export class SearchScreen extends React.Component<IProps, IState> {
             value={text}
             style={{
               color: focused ? "rgb(25, 86, 212)" : "rgb(69, 69, 69)",
-              fontFamily: "SpoqaHanSans-Bold",
+              fontFamily: "SpoqaHanSans-Bold"
             }}
             onChangeText={this.onChangeText}
             onFocus={() => {
@@ -391,7 +391,6 @@ export class SearchScreen extends React.Component<IProps, IState> {
   };
 
   private onChangeText = ($text: string) => {
-    console.log("onChangeText");
     this.setState({ text: $text }, this.resetSearchTimeout);
   };
 

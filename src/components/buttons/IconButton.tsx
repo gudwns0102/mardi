@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 
 import { Button, IButtonProps } from "src/components/buttons/Button";
 
-export interface IconButtonProps extends IButtonProps {
+export interface IIconButtonProps extends IButtonProps {
   source: ImageProps["source"];
   imageProps?: Omit<ImageProps, "source">;
 }
@@ -19,7 +19,7 @@ const Image = styled.Image`
   resize-mode: cover;
 `;
 
-export function IconButton({ source, imageProps, ...props }: IconButtonProps) {
+export function IconButton({ source, imageProps, ...props }: IIconButtonProps) {
   return (
     <Container {...props}>
       <Image {...imageProps} source={source} />
