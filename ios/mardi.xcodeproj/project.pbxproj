@@ -22,6 +22,10 @@
 		597DAF507AF7A87B753DCDA6 /* libPods-mardiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4573CEC9EA492C9A45F6B20F /* libPods-mardiTests.a */; };
 		6E7F92E0BB80E6B93415BBDA /* libPods-mardi-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6A722A67CA1286BB1C2DDE /* libPods-mardi-tvOS.a */; };
 		C4A68A4E22E0978D00D6A1E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4A68A4D22E0978D00D6A1E3 /* GoogleService-Info.plist */; };
+		C4A68A5822E0B18E00D6A1E3 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A68A5722E0B18E00D6A1E3 /* NotificationService.m */; };
+		C4A68A5C22E0B18E00D6A1E3 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C4A68A5422E0B18D00D6A1E3 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C4A68A6222E0B1E500D6A1E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A68A6122E0B1E500D6A1E3 /* UIKit.framework */; };
+		C4A68A6422E0B1F000D6A1E3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A68A6322E0B1F000D6A1E3 /* SystemConfiguration.framework */; };
 		CB15599D31CACFBCD44B0EB6 /* libPods-mardi-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF576E52FD982D3985C9CDC /* libPods-mardi-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +44,28 @@
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
 			remoteInfo = "mardi-tvOS";
 		};
+		C4A68A5A22E0B18E00D6A1E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C4A68A5322E0B18D00D6A1E3;
+			remoteInfo = OneSignalNotificationServiceExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C4A68A6022E0B18E00D6A1E3 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C4A68A5C22E0B18E00D6A1E3 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -69,6 +94,13 @@
 		947AFCAA663174B3F848B79B /* Pods-mardi-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardi-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-mardi-tvOS/Pods-mardi-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		A93493EDB4330EFF373FD620 /* Pods-mardi-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardi-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mardi-tvOSTests/Pods-mardi-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C4A68A4D22E0978D00D6A1E3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C4A68A4F22E0B0CA00D6A1E3 /* mardi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = mardi.entitlements; path = mardi/mardi.entitlements; sourceTree = "<group>"; };
+		C4A68A5422E0B18D00D6A1E3 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4A68A5622E0B18E00D6A1E3 /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
+		C4A68A5722E0B18E00D6A1E3 /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
+		C4A68A5922E0B18E00D6A1E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C4A68A6122E0B1E500D6A1E3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C4A68A6322E0B1F000D6A1E3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		CDF576E52FD982D3985C9CDC /* libPods-mardi-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mardi-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D36599A50A4A21CDB37371DB /* Pods-mardiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mardiTests/Pods-mardiTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -108,6 +140,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C4A68A5122E0B18D00D6A1E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4A68A6422E0B1F000D6A1E3 /* SystemConfiguration.framework in Frameworks */,
+				C4A68A6222E0B1E500D6A1E3 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -131,6 +172,7 @@
 		13B07FAE1A68108700A75B9A /* mardi */ = {
 			isa = PBXGroup;
 			children = (
+				C4A68A4F22E0B0CA00D6A1E3 /* mardi.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -155,6 +197,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C4A68A6322E0B1F000D6A1E3 /* SystemConfiguration.framework */,
+				C4A68A6122E0B1E500D6A1E3 /* UIKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				28C46240899C8DEA5F8631E5 /* libPods-mardi.a */,
@@ -178,6 +222,7 @@
 				13B07FAE1A68108700A75B9A /* mardi */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* mardiTests */,
+				C4A68A5522E0B18E00D6A1E3 /* OneSignalNotificationServiceExtension */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				9414578CAC5A61E61F397311 /* Pods */,
@@ -195,6 +240,7 @@
 				00E356EE1AD99517003FC87E /* mardiTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* mardi-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* mardi-tvOSTests.xctest */,
+				C4A68A5422E0B18D00D6A1E3 /* OneSignalNotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -212,6 +258,16 @@
 				D36599A50A4A21CDB37371DB /* Pods-mardiTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C4A68A5522E0B18E00D6A1E3 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				C4A68A5622E0B18E00D6A1E3 /* NotificationService.h */,
+				C4A68A5722E0B18E00D6A1E3 /* NotificationService.m */,
+				C4A68A5922E0B18E00D6A1E3 /* Info.plist */,
+			);
+			path = OneSignalNotificationServiceExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,10 +303,12 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				CA9BF7E3DA785DECDD99B325 /* [CP] Copy Pods Resources */,
+				C4A68A6022E0B18E00D6A1E3 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C4A68A5B22E0B18E00D6A1E3 /* PBXTargetDependency */,
 			);
 			name = mardi;
 			productName = mardi;
@@ -296,12 +354,30 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* mardi-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		C4A68A5322E0B18D00D6A1E3 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4A68A5D22E0B18E00D6A1E3 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
+			buildPhases = (
+				C4A68A5022E0B18D00D6A1E3 /* Sources */,
+				C4A68A5122E0B18D00D6A1E3 /* Frameworks */,
+				C4A68A5222E0B18D00D6A1E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OneSignalNotificationServiceExtension;
+			productName = OneSignalNotificationServiceExtension;
+			productReference = C4A68A5422E0B18D00D6A1E3 /* OneSignalNotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				DefaultBuildSystemTypeForWorkspace = Original;
 				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -315,6 +391,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -325,6 +404,11 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
+					};
+					C4A68A5322E0B18D00D6A1E3 = {
+						CreatedOnToolsVersion = 10.2.1;
+						DevelopmentTeam = CNUZV9F582;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -346,6 +430,7 @@
 				00E356ED1AD99517003FC87E /* mardiTests */,
 				2D02E47A1E0B4A5D006451C7 /* mardi-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* mardi-tvOSTests */,
+				C4A68A5322E0B18D00D6A1E3 /* OneSignalNotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -379,6 +464,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2D02E48E1E0B4A5D006451C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4A68A5222E0B18D00D6A1E3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -601,6 +693,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C4A68A5022E0B18D00D6A1E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4A68A5822E0B18E00D6A1E3 /* NotificationService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -613,6 +713,11 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* mardi-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
+		};
+		C4A68A5B22E0B18E00D6A1E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C4A68A5322E0B18D00D6A1E3 /* OneSignalNotificationServiceExtension */;
+			targetProxy = C4A68A5A22E0B18E00D6A1E3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -677,6 +782,8 @@
 			baseConfigurationReference = 0EA249540F519E6B06E10D50 /* Pods-mardi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = mardi/mardi.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CNUZV9F582;
@@ -698,6 +805,8 @@
 			baseConfigurationReference = 2E36EA6DCAC1AD9C37CBC833 /* Pods-mardi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = mardi/mardi.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CNUZV9F582;
 				INFOPLIST_FILE = mardi/Info.plist;
@@ -922,6 +1031,60 @@
 			};
 			name = Release;
 		};
+		C4A68A5E22E0B18E00D6A1E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = CNUZV9F582;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-onesignal/ios/**";
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mardi.life.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C4A68A5F22E0B18E00D6A1E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = CNUZV9F582;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-onesignal/ios/**";
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mardi.life.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -966,6 +1129,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C4A68A5D22E0B18E00D6A1E3 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4A68A5E22E0B18E00D6A1E3 /* Debug */,
+				C4A68A5F22E0B18E00D6A1E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,8 +1,11 @@
 import _ from "lodash";
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { Keyboard } from "react-native";
-import { NavigationScreenProp } from "react-navigation";
+import { Alert, Keyboard } from "react-native";
+import {
+  NavigationEventSubscription,
+  NavigationScreenProp
+} from "react-navigation";
 import styled from "styled-components/native";
 import uuid from "uuid";
 
@@ -68,17 +71,15 @@ const SearchInputDeleteButton = styled(IconButton)`
   height: 24px;
 `;
 
-const SearchInput = styled(TextInput).attrs({
+const SearchInput = styled.TextInput.attrs({
   placeholder: "이름 또는 제목을 검색하세요",
   placeholderTextColor: "rgb(180, 180, 180)",
   returnKeyType: "search"
 })`
   width: 100%;
   height: 34px;
-  color: ${colors.blue300};
   font-size: 15px;
-  font-family: SpoqaHanSans-Bold;
-  line-height: 20px;
+  color: rgb(25, 86, 212);
   align-self: center;
   padding: 0 11px;
   border-radius: 8px;
@@ -169,6 +170,7 @@ export class SearchScreen extends React.Component<IProps, IState> {
   public searchContentBundleId: string;
   public curationListRef = React.createRef<any>();
   public searchTimer: any;
+  public focusListener: NavigationEventSubscription | null = null;
 
   constructor(props: IProps) {
     super(props);
@@ -188,18 +190,33 @@ export class SearchScreen extends React.Component<IProps, IState> {
   }
 
   public componentDidMount() {
-    const { questionStore, recommendStore } = this.props;
+    const { questionStore, recommendStore, navigation } = this.props;
     const { text } = this.state;
 
     questionStore.fetchCurations();
     recommendStore.fetchRecommends();
     this.totalContentBundle.initializeContents({ search: text });
+    this.focusListener = navigation.addListener("didFocus", options => {
+      const lastDefaultText = _.get(
+        options.lastState,
+        ["params", "defaultText"],
+        ""
+      );
+      const defaultText = _.get(options.state.params, ["defaultText"], "");
+      if (lastDefaultText !== defaultText || this.state.text !== defaultText) {
+        this.setState({ text: defaultText }, this.resetSearchTimeout);
+      }
+    });
   }
 
   public componentWillUnmount() {
     const { contentStore } = this.props;
     contentStore.clearContentBundle(this.totalContentBundleId);
     contentStore.clearContentBundle(this.searchContentBundleId);
+
+    if (this.focusListener) {
+      this.focusListener.remove();
+    }
   }
 
   public render() {
@@ -217,7 +234,8 @@ export class SearchScreen extends React.Component<IProps, IState> {
           <SearchInput
             value={text}
             style={{
-              color: focused ? "rgb(25, 86, 212)" : "rgb(69, 69, 69)"
+              color: focused ? "rgb(25, 86, 212)" : "rgb(69, 69, 69)",
+              fontFamily: "SpoqaHanSans-Bold"
             }}
             onChangeText={this.onChangeText}
             onFocus={() => {
@@ -228,7 +246,6 @@ export class SearchScreen extends React.Component<IProps, IState> {
               clearTimeout(this.searchTimer);
               this.setState({ focused: false });
             }}
-            onEndEditing={this.onSearchPress}
           />
           <SearchInputDeleteButton
             source={images.btnTextDelete}
@@ -366,11 +383,10 @@ export class SearchScreen extends React.Component<IProps, IState> {
   }
 
   private resetSearchTimeout = () => {
-    const contentBundle = this.searchContentBundle;
     clearTimeout(this.searchTimer);
     this.searchTimer = setTimeout(() => {
       const { text } = this.state;
-      contentBundle.initializeContents({ search: text });
+      this.searchContentBundle.initializeContents({ search: text });
     }, 300);
   };
 

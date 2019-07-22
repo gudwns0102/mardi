@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, ViewProps } from "react-native";
+import { ViewProps } from "react-native";
 import { BoxShadow } from "react-native-shadow";
 import styled from "styled-components/native";
 
@@ -23,24 +23,33 @@ const Container = styled.View`
   height: 64px;
   align-items: center;
   text-align: center;
+  border-radius: 14px;
 `;
 
-const CardContainer = styled.ImageBackground<{
+const TouchableOpacity = styled.TouchableOpacity<{
   activeBackgroundColor: string;
 }>`
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 200px;
   height: 64px;
+  padding: 0 18px;
   border-radius: 14px;
-  padding: 10px 18px;
-  margin-bottom: 10px;
   background-color: ${props => props.activeBackgroundColor};
+  overflow: hidden;
 `;
 
 const Content = styled(Text).attrs({ type: "bold" })`
   font-size: 16px;
   color: ${colors.white};
+`;
+
+const BackgroundImage = styled.Image`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 const createShadowOpt = (color: string) => ({
@@ -58,16 +67,15 @@ export function CurationCard({ curation, onPress, style }: IProps) {
   return (
     <Padding>
       <Container style={style}>
-        <TouchableOpacity onPress={onPress}>
-          <BoxShadow setting={createShadowOpt(getBackgroundById(curation.id))}>
-            <CardContainer
-              source={images.pattern1}
-              activeBackgroundColor={getBackgroundById(curation.id)}
-            >
-              <Content numberOfLines={3}>{curation.question.text}</Content>
-            </CardContainer>
-          </BoxShadow>
-        </TouchableOpacity>
+        <BoxShadow setting={createShadowOpt(getBackgroundById(curation.id))}>
+          <TouchableOpacity
+            onPress={onPress}
+            activeBackgroundColor={getBackgroundById(curation.id)}
+          >
+            <BackgroundImage source={images.pattern1} />
+            <Content numberOfLines={2}>{curation.question.text}</Content>
+          </TouchableOpacity>
+        </BoxShadow>
       </Container>
     </Padding>
   );

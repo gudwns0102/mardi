@@ -12,6 +12,7 @@ import { IconButton } from "src/components/buttons/IconButton";
 import { KeyboardSpacer } from "src/components/KeyboardSpacer";
 import { Text } from "src/components/Text";
 import { TextInput } from "src/components/textinputs/TextInput";
+import { Bold } from "src/components/texts/Bold";
 import { replaceAuthLandingScreen } from "src/screens/AuthLandingScreen";
 import { IAuthStore } from "src/stores/AuthStore";
 import { IRootStore } from "src/stores/RootStore";
@@ -50,12 +51,15 @@ const Header = styled.View`
   z-index: 100;
 `;
 
-const Container = styled.View`
+const Container = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    justifyContent: "center"
+  }
+})`
   width: 100%;
   flex: 1;
-  padding-horizontal: 30px;
+  padding: 0 30px;
   background-color: ${colors.white};
-  justify-content: center;
 `;
 
 const Label = styled(Text).attrs({ type: "bold" })`
@@ -84,10 +88,19 @@ const InputLabel = styled(Text).attrs({ type: "bold" })`
 `;
 
 const AuthButton = styled(Button).attrs({
-  contentStyle: { color: colors.white },
-  fontType: "bold"
+  shadow: true
 })`
-  background-color: ${colors.blue300};
+  width: 280px;
+  height: 48px;
+  border-radius: 48px;
+  background-color: ${props =>
+    props.disabled ? "rgb(200,200,200)" : "rgb(25, 86, 212)"};
+  margin: 0 18px;
+`;
+
+const AuthButtonText = styled(Bold)`
+  font-size: 16px;
+  color: white;
 `;
 
 const Content = styled(Text).attrs({ type: "regular" })`
@@ -150,7 +163,9 @@ export class ProfileResetPasswordScreen extends React.Component<IProps> {
               secureTextEntry={true}
               style={{ marginBottom: 60 }}
             />
-            <AuthButton onPress={this.onSubmit}>완료</AuthButton>
+            <AuthButton onPress={this.onSubmit}>
+              <AuthButtonText>완료</AuthButtonText>
+            </AuthButton>
           </Container>
         </KeyboardDismissWrapper>
         <KeyboardSpacer />

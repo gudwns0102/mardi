@@ -15,11 +15,13 @@ import { PlainHeader } from "src/components/PlainHeader";
 import { Recorder } from "src/components/Recorder";
 import { Text } from "src/components/Text";
 import { Bold } from "src/components/texts/Bold";
+import { injectLoading } from "src/decorators/injectLoading";
 import { IAudioStore } from "src/stores/AudioStore";
 import { IContentStore } from "src/stores/ContentStore";
 import { IReplyBundle } from "src/stores/ReplyBundle";
 import { IReplyStore } from "src/stores/ReplyStore";
 import { IRootStore } from "src/stores/RootStore";
+import { IToastStore } from "src/stores/ToastStore";
 import { IUserStore } from "src/stores/UserStore";
 import { colors } from "src/styles/colors";
 import { isIos } from "src/utils/Platform";
@@ -30,6 +32,7 @@ interface IInjectProps {
   contentStore: IContentStore;
   userStore: IUserStore;
   replyStore: IReplyStore;
+  toastStore: IToastStore;
 }
 
 interface IParams {
@@ -116,7 +119,8 @@ const TaggedUserText = styled(Text)`
     audioStore: store.audioStore,
     contentStore: store.contentStore,
     userStore: store.userStore,
-    replyStore: store.replyStore
+    replyStore: store.replyStore,
+    toastStore: store.toastStore
   })
 )
 @observer
@@ -260,6 +264,7 @@ export class ReplyScreen extends React.Component<IProps, IState> {
     return this.navigation.getParam("showRecorder");
   }
 
+  @injectLoading
   private onPostPress = async () => {
     const { replyStore } = this.props;
     const { mode, text, hidden, tagged_user } = this.state;
@@ -278,6 +283,8 @@ export class ReplyScreen extends React.Component<IProps, IState> {
 
       if (success) {
         this.onPostPressSuccess();
+      } else {
+        this.onPostPressFail();
       }
     } else if (mode === "audio") {
       const success = await replyStore.postAudioReply(this.contentId, {
@@ -288,11 +295,14 @@ export class ReplyScreen extends React.Component<IProps, IState> {
 
       if (success) {
         this.onPostPressSuccess();
+      } else {
+        this.onPostPressFail();
       }
     }
   };
 
   private onPostPressSuccess = () => {
+    const { toastStore } = this.props;
     this.setState({
       text: "",
       recorded: false,
@@ -304,6 +314,18 @@ export class ReplyScreen extends React.Component<IProps, IState> {
       this.initRecorder();
       this.hideRecorder();
     }, 0);
+    toastStore.openToast({
+      content: "댓글이 등록되었습니다.",
+      type: "INFO"
+    });
+  };
+
+  private onPostPressFail = () => {
+    const { toastStore } = this.props;
+    toastStore.openToast({
+      content: "댓글 등록에 실패했습니다.",
+      type: "ERROR"
+    });
   };
 
   private toggleMode = () => {

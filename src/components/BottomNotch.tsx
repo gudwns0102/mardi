@@ -1,5 +1,5 @@
 import React from "react";
-import { Keyboard, Platform } from "react-native";
+import { Keyboard } from "react-native";
 import { getBottomSpace } from "react-native-iphone-x-helper";
 import styled from "styled-components/native";
 

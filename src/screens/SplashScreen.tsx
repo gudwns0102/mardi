@@ -2,8 +2,8 @@ import { inject, observer } from "mobx-react";
 import React from "react";
 import { Linking } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import styled from "styled-components/native";
 import Splash from "react-native-splash-screen";
+import styled from "styled-components/native";
 
 import { images } from "assets/images";
 import { ILinkingScreenProps, withLinking } from "src/hocs/withLinking";
@@ -62,7 +62,13 @@ export class SplashScreen extends React.Component<IProps> {
   };
 
   public async componentDidMount() {
-    const { appStore, authStore, userStore, getInitialURL, handleDeepLink } = this.props;
+    const {
+      appStore,
+      authStore,
+      userStore,
+      getInitialURL,
+      handleDeepLink
+    } = this.props;
     await authStore.initialize(this.navigation);
 
     const isValidAppVersion = await appStore.validateAppVersion();
@@ -83,8 +89,6 @@ export class SplashScreen extends React.Component<IProps> {
       return;
     }
 
-    
-
     try {
       const initialURL = await getInitialURL();
 
@@ -95,7 +99,7 @@ export class SplashScreen extends React.Component<IProps> {
           return;
         }
       }
-      
+
       await userStore.fetchClient();
       navigateListenScreen(this.navigation);
     } catch (error) {

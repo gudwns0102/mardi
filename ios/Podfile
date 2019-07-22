@@ -27,6 +27,10 @@ target 'mardi' do
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  
+  pod 'react-native-onesignal',
+  :path => "../node_modules/react-native-onesignal/react-native-onesignal.podspec",
+  :inhibit_warnings => true
 
   target 'mardiTests' do
     inherit! :search_paths

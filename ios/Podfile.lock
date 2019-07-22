@@ -76,6 +76,7 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - OneSignal (2.10.0)
   - React (0.60.3):
     - React-Core (= 0.60.3)
     - React-DevSupport (= 0.60.3)
@@ -139,6 +140,9 @@ PODS:
     - FBSDKShareKit (~> 5.0.0)
     - React
   - react-native-image-picker (1.0.1):
+    - React
+  - react-native-onesignal (3.2.14):
+    - OneSignal (= 2.10.0)
     - React
   - react-native-splash-screen (3.2.0):
     - React
@@ -212,6 +216,7 @@ DEPENDENCIES:
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-onesignal (from `../node_modules/react-native-onesignal/react-native-onesignal.podspec`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -249,6 +254,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUtilities
     - nanopb
+    - OneSignal
 
 EXTERNAL SOURCES:
   BVLinearGradient:
@@ -281,6 +287,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fbsdk"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-onesignal:
+    :path: "../node_modules/react-native-onesignal/react-native-onesignal.podspec"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
   react-native-video:
@@ -342,6 +350,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 1e45fa601e6280c180880d57010390f6679cd971
   GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  OneSignal: 0f5ff711d9f25da54885e4ab06ef0abc221a46ef
   React: c438ccc7e14e86d4702bb92d7e262f549ffaa995
   React-Core: c76495f5c14e73c0f803b89c3fa83f804da61bd6
   React-cxxreact: f64bc64cf4682d6ea5a064f6017da72482858682
@@ -353,6 +362,7 @@ SPEC CHECKSUMS:
   react-native-blur: c35c1f6c2c76db7108bde7ed343bd2b01d64e0c0
   react-native-fbsdk: c5c43f7c5f28c9097fe9f738c4416875cdbfd104
   react-native-image-picker: 97e6c8436b3a4e83f56b57ff5ab68cdc6834ee00
+  react-native-onesignal: 5bdaf1bd3141482b3376922aa0a854ad796f5683
   react-native-splash-screen: a49be22f0f6648b8416f3bd28258645eeaa5b42b
   react-native-video: 44c6befbc1526283ca1919891fcebe4680feade4
   react-native-webview: ad9581723f4d401c22cb3a371811d4dc9310df56
@@ -375,6 +385,6 @@ SPEC CHECKSUMS:
   RNSVG: 4834be1d644eb77f0e3f6de851881b83758a3124
   yoga: 88c514f310aff89b94a14c5fbf44b95735af0cb7
 
-PODFILE CHECKSUM: 5169434232804c456fd7468ea086a22e4eba8ce0
+PODFILE CHECKSUM: 95285da56f50d91e5921437c90cfd6ecbd94fb38
 
 COCOAPODS: 1.5.3

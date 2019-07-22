@@ -109,7 +109,7 @@ export function QuestionCard({ question, style, ...props }: IProps) {
           {question ? question.new && <NewBadge /> : null}
         </BadgesContainer>
         {question && question.audio && <Play onPress={props.onPlayPress} />}
-        <Content numberOfLines={3}>
+        <Content numberOfLines={2}>
           {question ? question.text : props.questionText}
         </Content>
       </InnerContainer>

@@ -155,6 +155,11 @@ const EmptyText = styled(Text).attrs({ type: "bold" })`
 @withAudioPlayer
 @observer
 export class SearchQuestionScreen extends React.Component<IProps, IState> {
+  public static options: IScreenOptions = {
+    statusBarProps: {
+      backgroundColor: "rgba(247, 247, 247, 0.8)"
+    }
+  };
   public contentBundleId: string;
   public contentBundle: IContentBundle;
 
@@ -179,10 +184,7 @@ export class SearchQuestionScreen extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { navigation } = this.props;
     const { contentLayoutType } = this.state;
-
-    const hasNoContent = this.contentBundle.contentArray.length === 0;
 
     return (
       <>

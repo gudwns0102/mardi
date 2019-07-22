@@ -1,8 +1,8 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "rules": {
-    "object-literal-sort-keys": false,
-    "interface-name": false,
+    "no-bitwise": false,
     "jsx-no-lambda": false,
+    "object-literal-sort-keys": false
   }
 }

@@ -8,7 +8,6 @@ import Onesignal, {
 import {
   NavigationActions,
   NavigationScreenProp,
-  StackActions
 } from "react-navigation";
 
 import { environment } from "src/config/environment";
@@ -59,7 +58,7 @@ export const withOnesignal = <
       }
 
       const { action, contentId, userId } = additionalData as INotificationData;
-      const actionMap: {
+      const actionMap: { 
         [key in NotificationType]: (...args: any[]) => void
       } = {
         none: this.handleNoneAction,
@@ -108,19 +107,19 @@ export const withOnesignal = <
         routeName: "ListenNavigator"
       });
 
-      const navigateAction = StackActions.reset({
-        index: 1,
-        actions: [
-          NavigationActions.navigate({ routeName: "ListenScreen" }),
-          NavigationActions.navigate({
-            routeName: "ListenDetailScreen",
-            params: { contentId }
-          })
-        ]
-      });
+      // const navigateAction = StackActions.reset({
+      //   index: 1,
+      //   actions: [
+      //     NavigationActions.navigate({ routeName: "ListenScreen" }),
+      //     NavigationActions.navigate({
+      //       routeName: "ListenDetailScreen",
+      //       params: { contentId }
+      //     })
+      //   ]
+      // });
 
       mainTabNavigator.dispatch(mainTabAction);
-      navigation.dispatch(navigateAction);
+      mainTabNavigator.push("ListenDetailScreen", { contentId });
     };
 
     public handleNavigateUserAction = (uuid?: IUser["uuid"]) => {

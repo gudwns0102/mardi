@@ -144,8 +144,6 @@ const TouchableWrapper = styled.TouchableOpacity.attrs({ activeOpacity: 1 })`
 `;
 
 const HeartIcon = styled.Image`
-  width: 28px;
-  height: 28px;
 `;
 
 const HeartCount = styled(Bold)`
@@ -265,7 +263,7 @@ export function ContentCard({
             <FooterButtonWrapper>
               <TouchableWrapper onPress={onHeartPress}>
                 <HeartIcon
-                  source={content.heart_by_me ? images.heart : images.heartGray}
+                  source={content.heart_by_me ? images.btnContentsCardLikeOn : images.btnContentsCardLikeOff}
                 />
                 <HeartCount>{shrinkValue(content.num_hearts)}</HeartCount>
               </TouchableWrapper>
