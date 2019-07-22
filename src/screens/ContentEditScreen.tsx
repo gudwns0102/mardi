@@ -97,7 +97,6 @@ const CaptionInput = styled(TextInput).attrs({
 })`
   color: black;
   line-height: 20px;
-  flex: 1;
 `;
 
 const TagTextWrapper = styled.TouchableOpacity.attrs({ activeOpacity: 1 })`

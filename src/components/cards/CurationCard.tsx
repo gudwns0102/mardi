@@ -16,6 +16,7 @@ interface IProps {
 const Padding = styled.View`
   width: 220px;
   height: 64px;
+  padding-left: 10px;
 `;
 
 const Container = styled.View`
