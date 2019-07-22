@@ -131,8 +131,8 @@ export class ReplyCard extends React.Component<IProps> {
     }
   };
 
-  private swipeBack = (animated = false) => {
-    _.invoke(this.scrollViewRef.current, ["root", "scrollTo"], {
+  private swipeBack = (animated = true) => {
+    _.invoke(this.scrollViewRef.current, [ "scrollTo"], {
       x: 0,
       animated
     });

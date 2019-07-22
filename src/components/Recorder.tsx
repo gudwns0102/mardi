@@ -4,6 +4,7 @@ import { AudioRecorder } from "react-native-audio";
 import Video from "react-native-video";
 import { NavigationScreenProp } from "react-navigation";
 import styled from "styled-components/native";
+import { BoxShadow } from "react-native-shadow";
 
 import { images } from "assets/images";
 import { IconButton } from "src/components/buttons/IconButton";
@@ -19,6 +20,7 @@ import { audioPath, clearAudioFile } from "src/utils/Audio";
 import { toMSS } from "src/utils/Number";
 import { isIos } from "src/utils/Platform";
 import { shadow } from "src/utils/Shadow";
+import { deviceWidth } from "src/utils/Dimensions";
 
 export type RecordState = "READY" | "COUNT" | "RECORDING" | "FINISH";
 export type BarRightComponentType = "TIME" | "POST" | "NONE";
@@ -89,6 +91,7 @@ const RecordContainer = styled.TouchableOpacity.attrs({ activeOpacity: 1 })`
   align-items: center;
   padding-top: 39px;
   background-color: rgb(242, 242, 242);
+  z-index: 100;
 `;
 
 const RecordingTimeText = styled(Bold)`
@@ -181,24 +184,36 @@ export class Recorder extends React.Component<IRecorderProps, IState> {
 
     return (
       <Container>
-        <BarContainer onPress={this.toggleBodyContainer}>
-          {showBarButtons && (
-            <ReplyModeButton
-              source={images.btnCommentInputText}
-              onPress={onBarModePress}
+        <BoxShadow
+          setting={{
+            width: deviceWidth,
+            height: 52,
+            color: "#000000",
+            border: 8,
+            opacity: 0.1,
+            x: 0,
+            y: -3
+          }}
+        >
+          <BarContainer onPress={this.toggleBodyContainer}>
+            {showBarButtons && (
+              <ReplyModeButton
+                source={images.btnCommentInputText}
+                onPress={onBarModePress}
+              />
+            )}
+            <TimeProgressBar
+              percent={percent}
+              style={
+                showBarButtons
+                  ? { width: "100%", marginLeft: 15, marginRight: 9 }
+                  : { width: "100%", marginRight: 9 }
+              }
+              content={showBodyContainer ? "" : "음성댓글을 녹음해보세요."}
             />
-          )}
-          <TimeProgressBar
-            percent={percent}
-            style={
-              showBarButtons
-                ? { width: "100%", marginLeft: 15, marginRight: 9 }
-                : { width: "100%", marginRight: 9 }
-            }
-            content={showBodyContainer ? "" : "음성댓글을 녹음해보세요."}
-          />
-          {this.BarRightComponent}
-        </BarContainer>
+            {this.BarRightComponent}
+          </BarContainer>
+        </BoxShadow>
         {showBodyContainer ? (
           <RecordContainer>
             <RecordingTimeText>

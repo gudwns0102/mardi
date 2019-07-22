@@ -286,7 +286,7 @@ export class ProfileEditScreen extends React.Component<IProps, IState> {
     } catch (error) {
       toastStore.openToast({
         type: "ERROR",
-        content: "프로필 업데이트에 실패하였습니다."
+        content: error.message
       });
     }
   };

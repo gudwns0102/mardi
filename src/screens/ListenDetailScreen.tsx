@@ -166,11 +166,6 @@ export class ListenDetailScreen extends React.Component<IProps, any> {
 
   public render() {
     const content = this.content;
-
-    if (!content) {
-      return <View />;
-    }
-
     const replies = this.replyBundle.replyArray;
 
     return (
@@ -204,7 +199,7 @@ export class ListenDetailScreen extends React.Component<IProps, any> {
               </FooterButton>
             </FooterButtonRow>
           </FooterContainer>
-          {replies && (
+          {content && replies ? (
             <ReplyList
               style={{ minHeight: deviceHeight - 400 }}
               replyBundle={this.replyBundle}
@@ -213,7 +208,7 @@ export class ListenDetailScreen extends React.Component<IProps, any> {
               scrollEnabled={false}
               onPress={_.partial(this.onReplyPress, "audio", false)}
             />
-          )}
+          ) : null}
         </Container>
       </>
     );

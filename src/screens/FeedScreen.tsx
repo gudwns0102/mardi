@@ -3,11 +3,9 @@ import React from "react";
 import { RefreshControl } from "react-native";
 import { getBottomSpace } from "react-native-iphone-x-helper";
 import { NavigationScreenProp } from "react-navigation";
-import styled from "styled-components/native";
 
 import FeedList from "src/components/lists/FeedList";
 import { PlainHeader } from "src/components/PlainHeader";
-import { Text } from "src/components/Text";
 import { HedaerText } from "src/components/texts/HeaderText";
 import { IFeedStore } from "src/stores/FeedStore";
 import { IRootStore } from "src/stores/RootStore";
@@ -21,12 +19,6 @@ interface IInjectProps {
 interface IProps extends IInjectProps {
   navigation: NavigationScreenProp<any, any>;
 }
-
-const CloseText = styled(Text)`
-  font-size: 16px;
-  line-height: 27px;
-  color: rgb(177, 177, 177);
-`;
 
 @inject(
   ({ store }: { store: IRootStore }): IInjectProps => ({
@@ -48,6 +40,9 @@ export class FeedScreen extends React.Component<IProps> {
     feedStore.initializeFeeds();
 
     navigation.addListener("didFocus", () => {
+      if (userStore.client && userStore.client.has_unread_feeds) {
+        feedStore.initializeFeeds();
+      }
       userStore.upsertUserById(userStore.clientId!, {
         has_unread_feeds: false
       });
@@ -76,11 +71,6 @@ export class FeedScreen extends React.Component<IProps> {
       </>
     );
   }
-
-  private goBack = () => {
-    const { navigation } = this.props;
-    navigation.goBack(null);
-  };
 }
 
 export function navigateFeedScreen(navigation: NavigationScreenProp<any, any>) {

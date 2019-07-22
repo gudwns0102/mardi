@@ -32,6 +32,7 @@ export const AudioStore = types
     currentTime: types.optional(types.number, 0),
     playableDuration: types.optional(types.number, 0),
     reachEnd: types.optional(types.boolean, false),
+    audioHistory: types.optional(types.array(types.frozen<IAudio>()), []),
 
     instantAudio: types.maybeNull(types.string),
     instantPlaying: types.optional(types.boolean, false)
@@ -119,6 +120,7 @@ export const AudioStore = types
       if (!alreadyHasAudio || !incomingAudioIsCurrentAudio) {
         clearAudioMetadata();
         self.audios.replace([createAudioFromContent(content)]);
+        self.audioHistory.clear();
         return;
       } else if (!currentAudioIsReachEnd) {
         self.playing = !self.playing;
@@ -171,7 +173,7 @@ export const AudioStore = types
     };
 
     const onAudioEnd = () => {
-      self.audios.shift();
+      self.audioHistory.push(self.audios.shift()!);
 
       const currentAudio = getCurrentAudio();
 
@@ -185,6 +187,24 @@ export const AudioStore = types
         self.playing = true;
       }
     };
+
+    const prev = () => {
+      if (self.audioHistory.length === 0) {
+        throw new Error("Prev cannot be invoked because there is no audio history");
+      }
+
+      clearAudioMetadata();
+      self.audios.unshift(self.audioHistory.pop()!);
+    }
+
+    const next = () => {
+      if (self.audios.length <= 1) {
+        throw new Error("Next cannot be invoked because there is no remain audios");
+      }
+
+      clearAudioMetadata();
+      self.audioHistory.push(self.audios.shift()!);
+    }
 
     const seek = (seconds: number) => {
       if (self.reachEnd) {
@@ -255,6 +275,7 @@ export const AudioStore = types
       self.audios.replace(
         contents.map(content => createAudioFromContent(content))
       );
+      self.audioHistory.clear();
       clearAudioMetadata();
     };
 
@@ -277,7 +298,9 @@ export const AudioStore = types
       onInstantAudioEnd,
       updateAudioIfExist,
       pushAudios,
-      clearAudios
+      clearAudios,
+      prev,
+      next
     };
   })
   .views(self => {
@@ -290,6 +313,14 @@ export const AudioStore = types
         }
 
         return self.audios[0];
+      },
+
+      get hasPrev() {
+        return self.audioHistory.length > 0;
+      },
+
+      get hasNext() {
+        return self.audios.length > 1;
       }
     };
   });

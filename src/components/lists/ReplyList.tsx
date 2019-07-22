@@ -254,9 +254,13 @@ class ReplyListClass extends React.Component<IProps, any> {
         return;
       }
 
-      _.invoke(ref, ["current", "swipeBack"]);
+      this.swipeBackReplyByRef(ref);
     });
   };
+
+  private swipeBackReplyByRef = (ref: any) => {
+    _.invoke(ref, ["current", "swipeBack"]);
+  }
 }
 
 export const ReplyList = withNavigation(

@@ -55,8 +55,7 @@ const BODY_CONTAINER_PADDING = 48;
 
 const BodyContainer = styled.View`
   flex: 1;
-  padding-top: 12px;
-  padding: 0 ${BODY_CONTAINER_PADDING / 2}px;
+  padding: 12px ${BODY_CONTAINER_PADDING / 2}px 0;
   align-items: center;
 `;
 
@@ -245,58 +244,66 @@ export class PlayerScreen extends React.Component<IProps, any> {
           }
         >
           <BackgroundImage source={backgroundImageSource} resizeMode="cover" />
-            <BodyContainer>
-              <Row style={{ marginBottom: 96, marginTop: 28 }}>
-                <PlayerAvatar
-                  photo={avatarSource}
-                  onPress={_.partial(this.onAvatarPress, audio.uuid)}
-                />
-                <Name numberOfLines={1}>{audio.username}</Name>
-                <TouchableOpacity onPress={this.goBack}>
-                  <Downward />
-                </TouchableOpacity>
-              </Row>
-              <Padder>
-                {questionText && <Subtitle>"{questionText}"</Subtitle>}
-                <Title>{audio.title}</Title>
-              </Padder>
-              <Row style={{ marginBottom: 32, justifyContent: "center" }}>
-                <Prev isActive={true} source={images.btnPlayerPrev} />
-                <Rewind onPress={audioStore.rewind} />
-                <Toggle
-                  source={
-                    audioStore.playing
-                      ? images.btnPlayerPauseBig
-                      : images.btnPlayerPlayBig
-                  }
-                  onPress={audioStore.toggleAudio}
-                />
-                <Fastforward onPress={audioStore.fastforward} />
-                <Next isActive={false} source={images.btnPlayerNext} />
-              </Row>
-              <PlayerSlider
-                currentTime={currentTime}
-                playableDuration={audio.audio_duration}
-                onSlidingEnd={this.onSlidingEnd}
+          <BodyContainer>
+            <Row style={{ marginBottom: 96, marginTop: 28 }}>
+              <PlayerAvatar
+                photo={avatarSource}
+                onPress={_.partial(this.onAvatarPress, audio.uuid)}
               />
-            </BodyContainer>
-            <FooterContainer>
-              <TouchableWrapper onPress={this.onHeartPress}>
-                <Heart
-                  source={
-                    audio.heart_by_me ? images.heart36 : images.heart36Off
-                  }
-                />
-                <HeartCount>{audio.num_hearts}</HeartCount>
-              </TouchableWrapper>
-              <Spacer />
-              <TouchableWrapper onPress={this.onReplyPress}>
-                <Comment />
-                <CommentCount>{audio.num_replies}</CommentCount>
-              </TouchableWrapper>
-              <Padder />
-              <ShareButton onPress={this.onSharePress} />
-            </FooterContainer>
+              <Name numberOfLines={1}>{audio.username}</Name>
+              <TouchableOpacity onPress={this.goBack}>
+                <Downward />
+              </TouchableOpacity>
+            </Row>
+            <Padder>
+              {questionText && <Subtitle>"{questionText}"</Subtitle>}
+              <Title>{audio.title}</Title>
+            </Padder>
+            <Row style={{ marginBottom: 32, justifyContent: "center" }}>
+              <Prev
+                isActive={audioStore.hasPrev}
+                disabled={!audioStore.hasPrev}
+                source={images.btnPlayerPrev}
+                onPress={audioStore.prev}
+              />
+              <Rewind onPress={audioStore.rewind} />
+              <Toggle
+                source={
+                  audioStore.playing
+                    ? images.btnPlayerPauseBig
+                    : images.btnPlayerPlayBig
+                }
+                onPress={audioStore.toggleAudio}
+              />
+              <Fastforward onPress={audioStore.fastforward} />
+              <Next
+                isActive={audioStore.hasNext}
+                disabled={!audioStore.hasNext}
+                source={images.btnPlayerNext}
+                onPress={audioStore.next}
+              />
+            </Row>
+            <PlayerSlider
+              currentTime={currentTime}
+              playableDuration={audio.audio_duration}
+              onSlidingEnd={this.onSlidingEnd}
+            />
+          </BodyContainer>
+          <FooterContainer>
+            <TouchableWrapper onPress={this.onHeartPress}>
+              <Heart
+                source={audio.heart_by_me ? images.heart36 : images.heart36Off}
+              />
+              <HeartCount>{audio.num_hearts}</HeartCount>
+            </TouchableWrapper>
+            <Spacer />
+            <TouchableWrapper onPress={this.onReplyPress}>
+              <Comment />
+              <CommentCount>{audio.num_replies}</CommentCount>
+            </TouchableWrapper>
+            <Padder />
+            <ShareButton onPress={this.onSharePress} />
+          </FooterContainer>
           <BottomNotch backgroundColor={"rgba(255, 255, 255, 0.6)"} />
         </Container>
       </React.Fragment>
