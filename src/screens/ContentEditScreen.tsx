@@ -215,10 +215,11 @@ export class ContentEditScreen extends React.Component<IProps, IState> {
 
   private onCardPress = () => {
     const { navigation } = this.props;
-    const options = {
+    const options: ImagePicker.Options = {
       title: "사진 선택",
       takePhotoButtonTitle: "",
-      cancelButtonTitle: "취소"
+      cancelButtonTitle: "취소",
+      rotation: 360
     };
 
     navigateActionSheetModalScreen(navigation, {

@@ -292,10 +292,11 @@ export class ProfileEditScreen extends React.Component<IProps, IState> {
   };
 
   private onPhotoPress = () => {
-    const options = {
+    const options: ImagePicker.Options = {
       title: "사진 선택",
       takePhotoButtonTitle: "",
-      cancelButtonTitle: "취소"
+      cancelButtonTitle: "취소",
+      rotation: 360
     };
 
     ImagePicker.launchImageLibrary(options, response => {
