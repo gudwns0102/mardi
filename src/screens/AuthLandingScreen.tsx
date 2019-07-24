@@ -42,10 +42,8 @@ const Logo = styled.Image.attrs({
   margin-bottom: 16px;
 `;
 
-const Content = styled(Text)`
+const Spacer = styled.View`
   flex: 1;
-  font-size: 14px;
-  color: white;
 `;
 
 const RoundButton = styled(Button)`
@@ -112,7 +110,7 @@ export class AuthLandingScreen extends React.Component<IProps> {
     return (
       <Container>
         <Logo />
-        <Content>한 명 한 명의 점을 잇는 플랫폼, 마디</Content>
+        <Spacer />
         <FacebookButton onPress={this.onFacebookPress}>
           <FacebookIcon />
           <FacebookText>Continue with Facebook</FacebookText>

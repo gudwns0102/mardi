@@ -80,6 +80,7 @@ const BodyBottomContainer = styled.View`
   position: absolute;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   padding: 0 10px 0 6px;
   bottom: 6px;
@@ -91,6 +92,7 @@ const ContentDurationWrapper = styled.View`
   border-radius: 6px;
   align-items: center;
   justify-content: center;
+  align-self: flex-end;
   background-color: rgba(0, 0, 0, 0.5);
   margin-left: 6px;
 `;
@@ -126,7 +128,6 @@ const Avatar = styled.Image`
 `;
 
 const FooterContent = styled(Bold)`
-  flex: 1;
   font-size: 13px;
   color: white;
 `;
@@ -143,8 +144,7 @@ const TouchableWrapper = styled.TouchableOpacity.attrs({ activeOpacity: 1 })`
   align-items: center;
 `;
 
-const HeartIcon = styled.Image`
-`;
+const HeartIcon = styled.Image``;
 
 const HeartCount = styled(Bold)`
   min-width: 44px;
@@ -246,7 +246,7 @@ export function ContentCard({
             </NowPlayingBadge>
           )}
           <BodyBottomContainer>
-            <TouchableWrapper style={{ flex: 1 }} onPress={onAvatarPress}>
+            <TouchableWrapper onPress={onAvatarPress}>
               <Avatar source={source} />
               <FooterContent numberOfLines={1}>
                 {content.user.username}
@@ -263,7 +263,11 @@ export function ContentCard({
             <FooterButtonWrapper>
               <TouchableWrapper onPress={onHeartPress}>
                 <HeartIcon
-                  source={content.heart_by_me ? images.btnContentsCardLikeOn : images.btnContentsCardLikeOff}
+                  source={
+                    content.heart_by_me
+                      ? images.btnContentsCardLikeOn
+                      : images.btnContentsCardLikeOff
+                  }
                 />
                 <HeartCount>{shrinkValue(content.num_hearts)}</HeartCount>
               </TouchableWrapper>

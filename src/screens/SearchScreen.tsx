@@ -323,11 +323,7 @@ export class SearchScreen extends React.Component<IProps, IState> {
     return (
       <ContentCardListContainer>
         {contentBundle ? (
-          contentBundle.isFirstFetching ? (
-            <HasNoResultContainer>
-              <HasNoResultText>검색결과 없음</HasNoResultText>
-            </HasNoResultContainer>
-          ) : contentBundle.hasNoResult ? (
+          contentBundle.isFirstFetching ? null : contentBundle.hasNoResult ? (
             <HasNoResultContainer>
               <HasNoResultText>검색결과 없음</HasNoResultText>
             </HasNoResultContainer>

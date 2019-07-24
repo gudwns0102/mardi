@@ -27,7 +27,7 @@ class CurationListClass extends React.Component<IProps> {
         keyExtractor={item => item.id.toString()}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingLeft: 20 }}
+        contentContainerStyle={{ paddingLeft: 10 }}
       />
     );
   }

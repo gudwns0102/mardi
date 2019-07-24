@@ -97,7 +97,6 @@ const CaptionInput = styled(TextInput).attrs({
 })`
   color: black;
   line-height: 20px;
-  flex: 1;
 `;
 
 const TagTextWrapper = styled.TouchableOpacity.attrs({ activeOpacity: 1 })`
@@ -216,10 +215,11 @@ export class ContentEditScreen extends React.Component<IProps, IState> {
 
   private onCardPress = () => {
     const { navigation } = this.props;
-    const options = {
+    const options: ImagePicker.Options = {
       title: "사진 선택",
       takePhotoButtonTitle: "",
-      cancelButtonTitle: "취소"
+      cancelButtonTitle: "취소",
+      rotation: 360
     };
 
     navigateActionSheetModalScreen(navigation, {
