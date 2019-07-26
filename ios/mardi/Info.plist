@@ -31,7 +31,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>15</string>
+	<string>17</string>
 	<key>FacebookAppID</key>
 	<string>1513457468801059</string>
 	<key>FacebookDisplayName</key>
@@ -55,8 +55,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>mardi에서 아바타 및 배경화면 등록을 위해 카메라 접근을 요청합니다.</string>
+	<key>NSLocationAlwaysUsageDescription </key>
+	<string>mardi에서 푸시 메세지를 보내기 위해서 위치 정보를 요청합니다.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>mardi에서 푸시 메세지를 보내기 위해서 위치 정보를 요청합니다.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>mardi에서 음성 컨텐츠를 녹음하기 위해 마이크 접근을 요청합니다.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
