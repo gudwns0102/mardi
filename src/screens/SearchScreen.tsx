@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { Alert, Keyboard } from "react-native";
+import { Keyboard } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProp
@@ -18,7 +18,6 @@ import { ContentList } from "src/components/lists/ContentList";
 import { CurationList } from "src/components/lists/CurationList";
 import { RecommendList } from "src/components/lists/RecommendList";
 import { Text } from "src/components/Text";
-import { TextInput } from "src/components/textinputs/TextInput";
 import { withAudioPlayer } from "src/hocs/withAudioPlayer";
 import { navigateListenDetailScreen } from "src/screens/ListenDetailScreen";
 import { navigateSearchQuestionScreen } from "src/screens/SearchQuestionScreen";
@@ -109,7 +108,9 @@ const CurationSectionText = styled(SectionText)`
   margin-bottom: 12px;
 `;
 
-const RecommendSectionText = styled(SectionText)``;
+const RecommendSectionText = styled(SectionText)`
+  margin-bottom: 9px;
+`;
 
 const ContentCardListContainer = styled.View`
   width: 100%;
@@ -203,7 +204,7 @@ export class SearchScreen extends React.Component<IProps, IState> {
         ""
       );
       const defaultText = _.get(options.state.params, ["defaultText"], "");
-      if (lastDefaultText !== defaultText || this.state.text !== defaultText) {
+      if (lastDefaultText !== defaultText) {
         this.setState({ text: defaultText }, this.resetSearchTimeout);
       }
     });
@@ -239,11 +240,9 @@ export class SearchScreen extends React.Component<IProps, IState> {
             }}
             onChangeText={this.onChangeText}
             onFocus={() => {
-              clearTimeout(this.searchTimer);
               this.setState({ focused: true });
             }}
             onBlur={() => {
-              clearTimeout(this.searchTimer);
               this.setState({ focused: false });
             }}
           />
@@ -398,13 +397,6 @@ export class SearchScreen extends React.Component<IProps, IState> {
     });
   };
 
-  private onSearchPress = () => {
-    const { text } = this.state;
-    Keyboard.dismiss();
-    clearTimeout(this.searchTimer);
-    this.searchContentBundle.initializeContents({ search: text });
-  };
-
   private onContentPress = (item: IContent) => {
     const { navigation } = this.props;
     navigateListenDetailScreen(navigation, {
@@ -414,7 +406,6 @@ export class SearchScreen extends React.Component<IProps, IState> {
 
   private onRecommendPress = (item: IRecommend) => {
     Keyboard.dismiss();
-    this.searchContentBundle.clearContents();
     this.setState({ text: item.keyword }, this.resetSearchTimeout);
   };
 
