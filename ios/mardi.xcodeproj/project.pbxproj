@@ -557,21 +557,17 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-mardi/Pods-mardi-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-mardi/Pods-mardi-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mardi/Pods-mardi-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mardi/Pods-mardi-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CB28FFA4FFF71E433BDE0067 /* [CP] Check Pods Manifest.lock */ = {
