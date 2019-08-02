@@ -198,13 +198,25 @@ export class SearchScreen extends React.Component<IProps, IState> {
     recommendStore.fetchRecommends();
     this.totalContentBundle.initializeContents({ search: text });
     this.focusListener = navigation.addListener("didFocus", options => {
-      const lastDefaultText = _.get(
-        options.lastState,
+      const defaultText = _.get(
+        options.action,
         ["params", "defaultText"],
-        ""
+        null
       );
-      const defaultText = _.get(options.state.params, ["defaultText"], "");
-      if (lastDefaultText !== defaultText) {
+      // console.log(options);
+      // const lastDefaultText = _.get(
+      //   options.lastState,
+      //   ["params", "defaultText"],
+      //   ""
+      // );
+      // const defaultText = _.get(options.state.params, ["defaultText"], "");
+      // console.log("lastDefaultText: ", lastDefaultText);
+      // console.log("defaultText: ", defaultText);
+      // console.log("this.state.text: ", this.state.text);
+      // if (lastDefaultText !== defaultText) {
+      //   this.setState({ text: defaultText }, this.resetSearchTimeout);
+      // }
+      if (defaultText !== null) {
         this.setState({ text: defaultText }, this.resetSearchTimeout);
       }
     });

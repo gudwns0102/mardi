@@ -1,6 +1,6 @@
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { Linking } from "react-native";
+import { Linking, Alert } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Splash from "react-native-splash-screen";
 import styled from "styled-components/native";
@@ -72,6 +72,7 @@ export class SplashScreen extends React.Component<IProps> {
     await authStore.initialize(this.navigation);
 
     const isValidAppVersion = await appStore.validateAppVersion();
+
     if (!isValidAppVersion) {
       navigateButtonModalScreen(this.navigation, {
         type: "INFO",
@@ -101,6 +102,7 @@ export class SplashScreen extends React.Component<IProps> {
       }
 
       await userStore.fetchClient();
+
       navigateListenScreen(this.navigation);
     } catch (error) {
       navigateAuthLandingScreen(this.navigation);
