@@ -40,7 +40,6 @@ export const AudioStore = types
   .actions(self => {
     const { netStatusStore, userStore, toastStore } = getRootStore(self);
 
-
     const getCurrentAudio = () => {
       const length = self.audios.length;
 

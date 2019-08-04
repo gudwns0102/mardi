@@ -13,6 +13,9 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <React/RCTLinkingManager.h>
 #import "RNSplashScreen.h"
+#import <AVFoundation/AVFoundation.h>
+
+UIBackgroundTaskIdentifier _bgTaskId;
 
 @import Firebase;
 
@@ -25,6 +28,7 @@
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"mardi"
                                             initialProperties:nil];
+  AVAudioSession *session=[AVAudioSession sharedInstance];
 
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
@@ -33,6 +37,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];
   [RNSplashScreen show];
   return YES;
 }
@@ -63,6 +68,35 @@
   }
   
   return NO;
+}
+
+// react-native-video background streaming: https://github.com/react-native-community/react-native-video/issues/797#issuecomment-374826812
+-(void)applicationWillResignActive:(UIApplication *)application
+{
+ 
+  [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+  AVAudioSession *session=[AVAudioSession sharedInstance];
+  [session setActive:YES error:nil];
+
+  [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+  _bgTaskId=[AppDelegate backgroundPlayerID:_bgTaskId];
+}
+
+
+// react-native-video background streaming: https://github.com/react-native-community/react-native-video/issues/797#issuecomment-374826812
++(UIBackgroundTaskIdentifier)backgroundPlayerID:(UIBackgroundTaskIdentifier)backTaskId
+{
+  AVAudioSession *session=[AVAudioSession sharedInstance];
+  [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+  [session setActive:YES error:nil];
+  [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+  UIBackgroundTaskIdentifier newTaskId=UIBackgroundTaskInvalid;
+  newTaskId=[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+  if(newTaskId!=UIBackgroundTaskInvalid&&backTaskId!=UIBackgroundTaskInvalid)
+  {
+    [[UIApplication sharedApplication] endBackgroundTask:backTaskId];
+  }
+  return newTaskId;
 }
 
 @end
