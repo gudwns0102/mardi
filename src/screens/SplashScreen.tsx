@@ -1,6 +1,6 @@
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { Linking, Alert } from "react-native";
+import { Linking } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Splash from "react-native-splash-screen";
 import styled from "styled-components/native";
