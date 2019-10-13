@@ -42,17 +42,7 @@ export function withToast<T>(Component: ComponentType<T>): any {
           <Observer>
             {() =>
               toastStore.show ? (
-                toastStore.type === "CLOSABLE" ? (
-                  <ClosableToast
-                    style={{
-                      marginTop:
-                        toastStore.marginTop
-                        // + (isIphoneX() ? getStatusBarHeight() : 0)
-                    }}
-                    onClose={toastStore.onClose}
-                    onFollowPress={toastStore.onFollowPress}
-                  />
-                ) : (
+                (
                   <Toast
                     toastType={toastStore.type}
                     onPress={toastStore.closeToast}
