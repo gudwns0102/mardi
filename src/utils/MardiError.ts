@@ -13,6 +13,6 @@ export class MardiError extends Error {
 
     super(primaryMessage);
 
-    this.errors = props.detail;
+    // this.errors = props.detail;
   }
 }

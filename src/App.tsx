@@ -17,7 +17,11 @@ import { AppContainer } from "src/navigators";
 import { getStore } from "src/stores/RootStore";
 import { setupReactotron } from "src/utils/Reactotron";
 
-YellowBox.ignoreWarnings(["Warning: Async Storage"]);
+YellowBox.ignoreWarnings([
+  "Warning: Async Storage",
+  "Warning: Cant't perform",
+  'The "innerRef"'
+]);
 
 function getActiveRouteName(
   route: NavigationLeafRoute<NavigationParams>

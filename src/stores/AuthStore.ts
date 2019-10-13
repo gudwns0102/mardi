@@ -47,6 +47,7 @@ export const AuthStore = types
           return response;
         },
         error => {
+          console.dir(error);
           const errorData = _.get(error, [
             "response",
             "data"

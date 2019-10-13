@@ -11,10 +11,12 @@ interface IProps extends RemoveKeys<FlatListProps<ICuration>, ["renderItem"]> {
 }
 
 const List = styled<ComponentClass<FlatListProps<ICuration>>>(FlatList)`
-  height: 80px;
+  background-color: transparent;
 `;
 
-const Item = styled(CurationCard)``;
+const Item = styled(CurationCard)`
+  height: 64px;
+`;
 
 class CurationListClass extends React.Component<IProps> {
   public render() {
@@ -27,7 +29,12 @@ class CurationListClass extends React.Component<IProps> {
         keyExtractor={item => item.id.toString()}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingLeft: 10 }}
+        contentContainerStyle={{
+          height: "100%",
+          paddingLeft: 10,
+          paddingVertical: 30,
+          alignItems: "center"
+        }}
       />
     );
   }

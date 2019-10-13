@@ -3,14 +3,16 @@ import { observable } from "mobx";
 import { inject, observer } from "mobx-react";
 import React from "react";
 import { Animated, AsyncStorage, View } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 import { NavigationScreenProp } from "react-navigation";
 import styled from "styled-components/native";
 
 import { images } from "assets/images";
-import { CurationCard } from "src/components/cards/CurationCard";
+import { IconButton } from "src/components/buttons/IconButton";
 import { ClosableToast } from "src/components/ClosableToast";
 import { ContentEmptyList } from "src/components/lists/ContentEmptyList";
 import { ContentList } from "src/components/lists/ContentList";
+import { CurationList } from "src/components/lists/CurationList";
 import { PlainHeader } from "src/components/PlainHeader";
 import { withAudioPlayer } from "src/hocs/withAudioPlayer";
 import { withOnesignal } from "src/hocs/withOnesignal";
@@ -20,17 +22,20 @@ import { navigateListenDetailScreen } from "src/screens/ListenDetailScreen";
 import { IAudioStore } from "src/stores/AudioStore";
 import { IContentBundle } from "src/stores/ContentBundle";
 import { IContentStore } from "src/stores/ContentStore";
+import { IQuestionStore } from "src/stores/QuestionStore";
 import { IRootStore } from "src/stores/RootStore";
 import { IToastStore } from "src/stores/ToastStore";
 import { IUserStore } from "src/stores/UserStore";
 import { AsyncStorageKeys } from "src/utils/AsyncStorage";
 import { isAndroid } from "src/utils/Platform";
+import { navigateSearchQuestionScreen } from "./SearchQuestionScreen";
 
 interface IInjectProps {
   audioStore: IAudioStore;
   contentStore: IContentStore;
   userStore: IUserStore;
   toastStore: IToastStore;
+  questionStore: IQuestionStore;
 }
 
 interface IProps extends IInjectProps {
@@ -39,10 +44,6 @@ interface IProps extends IInjectProps {
 
 export const LISTEN_SCREEN_STORE_ID = "LISTEN_SCREEN_STORE_ID";
 
-const HEADER_MAX_HEIGHT = 110;
-const HEADER_MIN_HEIGHT = 45;
-const SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
-
 const Container = styled.View`
   width: 100%;
   flex: 1;
@@ -50,20 +51,34 @@ const Container = styled.View`
 `;
 
 const Header = styled(PlainHeader)`
-  position: absolute;
   width: 100%;
+  height: 44px;
   background-color: #ebebeb;
-  z-index: 10;
 `;
 
-const Logo = styled(Animated.Image)`
-  width: 133px;
-  height: 30px;
+const Logo = styled.Image`
+  width: 91px;
+  height: 20px;
   align-self: center;
   z-index: 100;
 `;
 
-const AnimatedContentList = Animated.createAnimatedComponent(ContentList);
+const SearchButton = styled(IconButton).attrs({
+  source: images.btnCommonSearch
+})`
+  width: 24px;
+  height: 24px;
+`;
+
+const CurationListContainer = styled(LinearGradient)`
+  height: 95px;
+`;
+
+const AnimatedContentList = styled(
+  Animated.createAnimatedComponent(ContentList)
+)`
+  margin-top: 7px;
+`;
 
 const AnimatedContentEmptyList = Animated.createAnimatedComponent(
   ContentEmptyList
@@ -74,7 +89,8 @@ const AnimatedContentEmptyList = Animated.createAnimatedComponent(
     audioStore: store.audioStore,
     contentStore: store.contentStore,
     userStore: store.userStore,
-    toastStore: store.toastStore
+    toastStore: store.toastStore,
+    questionStore: store.questionStore
   })
 )
 @withAudioPlayer
@@ -93,6 +109,7 @@ export class ListenScreen extends React.Component<IProps> {
   public headerAnimation = new Animated.Value(0);
   public contentListRef = React.createRef<typeof AnimatedContentList>();
   @observable public showBanner = false;
+  public curationListRef = React.createRef<any>();
 
   constructor(props: IProps) {
     super(props);
@@ -111,6 +128,7 @@ export class ListenScreen extends React.Component<IProps> {
     });
     this.contentBundle.initializeContents({}, "HOME");
     this.showFollowRecommendationToast();
+    this.props.questionStore.fetchCurations();
   }
 
   public showFollowRecommendationToast = async () => {
@@ -129,30 +147,14 @@ export class ListenScreen extends React.Component<IProps> {
 
     const contentBundle = this.contentBundle;
 
-    const scale = headerAnimation.interpolate({
-      inputRange: [0, SCROLL_DISTANCE],
-      outputRange: [1, 0.6],
-      extrapolate: "clamp"
-    });
-
-    const translateY = headerAnimation.interpolate({
-      inputRange: [0, SCROLL_DISTANCE],
-      outputRange: [HEADER_MAX_HEIGHT / 2, 11],
-      extrapolate: "clamp"
-    });
-
     return (
       <Container>
         <Header>
           <React.Fragment />
-          <React.Fragment />
-          <React.Fragment />
+          <Logo source={images.icLogoBigBlue} />
+          <SearchButton />
         </Header>
-        <Logo
-          source={images.icLogoBigBlue}
-          resizeMode="contain"
-          style={{ transform: [{ scale }, { translateY }] }}
-        />
+        {this.CurationSection}
         {contentBundle ? (
           contentBundle.hasNoResult ? (
             this.BeginnerView
@@ -167,9 +169,6 @@ export class ListenScreen extends React.Component<IProps> {
                 { useNativeDriver: isAndroid() ? false : true }
               )}
               scrollEventThrottle={8}
-              ListHeaderComponent={
-                <View style={{ marginTop: HEADER_MAX_HEIGHT }} />
-              }
             />
           )
         ) : null}
@@ -177,6 +176,31 @@ export class ListenScreen extends React.Component<IProps> {
       </Container>
     );
   }
+
+  private get CurationSection() {
+    const { questionStore } = this.props;
+    const curations = Array.from(questionStore.curations.values());
+
+    return (
+      <CurationListContainer
+        colors={["rgb(235, 235, 235)", "rgb(255, 255, 255)"]}
+      >
+        <CurationList
+          ref={this.curationListRef}
+          data={curations}
+          onCurationPress={this.onCurationPress}
+        />
+      </CurationListContainer>
+    );
+  }
+
+  private onCurationPress = (curation: ICuration, index: number) => {
+    const { navigation } = this.props;
+    navigateSearchQuestionScreen(navigation, {
+      questionId: curation.question.id,
+      questionText: curation.question.text
+    });
+  };
 
   private get BeginnerView() {
     return (
@@ -187,7 +211,6 @@ export class ListenScreen extends React.Component<IProps> {
         )}
         scrollEventThrottle={8}
         data={Array.from({ length: 3 }).map((__, index) => index)}
-        ListHeaderComponent={<View style={{ marginTop: HEADER_MAX_HEIGHT }} />}
         onFirstItemPress={this.onContentEmptyCardPress}
       />
     );

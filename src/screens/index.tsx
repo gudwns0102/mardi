@@ -26,6 +26,7 @@ import { IntroRecordScreen as $IntroRecordScreen } from "src/screens/IntroRecord
 import { KeywordScreen as $KeywordScreen } from "src/screens/KeywordScreen";
 import { ListenDetailScreen as $ListenDetailScreen } from "src/screens/ListenDetailScreen";
 import { ListenScreen as $ListenScreen } from "src/screens/ListenScreen";
+import { MagazineScreen as $MagazineScreen } from "src/screens/MagazineScreen";
 import { PlayerScreen as $PlayerScreen } from "src/screens/PlayerScreen";
 import { ProfileEditScreen as $ProfileEditScreen } from "src/screens/ProfileEditScreen";
 import { ProfileResetPasswordScreen as $ProfileResetPasswordScreen } from "src/screens/ProfileResetPasswordScreen";
@@ -68,7 +69,7 @@ function decorateScreen<
           >
             <NavigationEvents onWillFocus={this.onWillFocus} />
             <StatusBar {...this.statusBarProps} />
-            <Screen {...this.props as any} />
+            <Screen {...(this.props as any)} />
           </Container>
         );
       }
@@ -152,3 +153,4 @@ export const FollowAndContentRecommendScreen = decorateScreen(
 );
 export const FollowRecommendScreen = decorateScreen($FollowRecommendScreen);
 export const PlayerScreen = decorateScreen($PlayerScreen);
+export const MagazineScreen = decorateScreen($MagazineScreen);

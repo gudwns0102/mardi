@@ -21,27 +21,32 @@ export function createBottomTabButton({
   };
 }
 
-export const ListenTabButton = createBottomTabButton({
+export const MagazineTabButton = createBottomTabButton({
   focusSource: images.btnTabHomeOn,
-  source: images.btnTabHomeOff,
+  source: images.btnTabHomeOff
+});
+
+export const ListenTabButton = createBottomTabButton({
+  focusSource: images.btnTabListenOn,
+  source: images.btnTabListenOff
 });
 
 export const SearchTabButton = createBottomTabButton({
   focusSource: images.btnTabSearchOn,
-  source: images.btnTabSearchOff,
+  source: images.btnTabSearchOff
 });
 
 export const QuestionTabButton = createBottomTabButton({
   focusSource: images.btnTabSpeakOn,
-  source: images.btnTabSpeakOff,
+  source: images.btnTabSpeakOff
 });
 
 export const NotiTabButton = createBottomTabButton({
   focusSource: images.btnTabNotiOn,
-  source: images.btnTabNotiOff,
+  source: images.btnTabNotiOff
 });
 
 export const MypageTabButton = createBottomTabButton({
   focusSource: images.btnTabMypageOn,
-  source: images.btnTabMypageOff,
+  source: images.btnTabMypageOff
 });

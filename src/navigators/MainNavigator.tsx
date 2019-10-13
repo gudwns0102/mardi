@@ -12,10 +12,10 @@ import styled from "styled-components/native";
 
 import {
   ListenTabButton,
+  MagazineTabButton,
   MypageTabButton,
   NotiTabButton,
-  QuestionTabButton,
-  SearchTabButton
+  QuestionTabButton
 } from "src/components/buttons/BottomTabButton";
 import * as Screens from "src/screens";
 import { getStore } from "src/stores/RootStore";
@@ -47,8 +47,28 @@ const tabBarVisibleList = [
   "OtherUserScreen",
   "SearchScreen",
   "FeedScreen",
-  "SearchQuestionScreen"
+  "SearchQuestionScreen",
+  "MagazineScreen"
 ];
+
+const MagazineNavigator = createStackNavigator(
+  {
+    MagazineScreen: {
+      screen: Screens.MagazineScreen
+    }
+  },
+  {
+    headerMode: "none",
+
+    transitionConfig: ({ scene, scenes }) => {
+      const last = scenes[scenes.length - 1];
+
+      return {
+        ...fromRight()
+      };
+    }
+  }
+);
 
 const ListenNavigator = createStackNavigator(
   {
@@ -80,27 +100,6 @@ const ListenNavigator = createStackNavigator(
         };
       }
 
-      return {
-        ...fromRight()
-      };
-    }
-  }
-);
-
-const SearchNavigator = createStackNavigator(
-  {
-    SearchScreen: Screens.SearchScreen,
-    ListenDetailScreen: {
-      screen: Screens.ListenDetailScreen
-    },
-    OtherUserScreen: {
-      screen: Screens.UserPageScreen
-    }
-  },
-  {
-    headerMode: "none",
-    transitionConfig: ({ scene, scenes }) => {
-      const last = scenes[scenes.length - 1];
       return {
         ...fromRight()
       };
@@ -164,6 +163,45 @@ const MypageNavigator = createStackNavigator(
 
 const MainTabNavigator = createBottomTabNavigator(
   {
+    MagazineNavigator: {
+      screen: MagazineNavigator,
+      navigationOptions: ({
+        navigation
+      }: {
+        navigation: NavigationScreenProp<any, IMainTabNavigatorParams>;
+      }): NavigationBottomTabScreenOptions => {
+        let tabBarVisible = false;
+        const { routes } = navigation.state;
+        const { routeName: currentRoute, key } = routes[routes.length - 1];
+
+        if (_.includes(tabBarVisibleList, currentRoute)) {
+          tabBarVisible = true;
+        }
+
+        return {
+          tabBarVisible,
+          tabBarIcon: ({ focused }: any) => (
+            <MagazineTabButton focused={focused} />
+          ),
+          tabBarOnPress: ({ defaultHandler }) => {
+            const parentNavigation = navigation.dangerouslyGetParent()!;
+            const { index, routes: parentRoutes } = parentNavigation.state;
+            const prevFocusedTabKey = parentRoutes[index].key;
+            if (
+              prevFocusedTabKey === "ListenNavigator" &&
+              currentRoute === "ListenScreen"
+            ) {
+              const scrollToTop = navigation.getParam("scrollToTop");
+
+              if (scrollToTop) {
+                scrollToTop();
+              }
+            }
+            defaultHandler();
+          }
+        };
+      }
+    },
     ListenNavigator: {
       screen: ListenNavigator,
       navigationOptions: ({
@@ -200,29 +238,6 @@ const MainTabNavigator = createBottomTabNavigator(
             }
             defaultHandler();
           }
-        };
-      }
-    },
-    SearchNavigator: {
-      screen: SearchNavigator,
-      navigationOptions: ({
-        navigation
-      }: {
-        navigation: NavigationScreenProp<any>;
-      }) => {
-        let tabBarVisible = false;
-        const { routes } = navigation.state;
-        const currentRoute = routes[routes.length - 1].routeName;
-
-        if (_.includes(tabBarVisibleList, currentRoute)) {
-          tabBarVisible = true;
-        }
-
-        return {
-          tabBarVisible,
-          tabBarIcon: ({ focused }: any) => (
-            <SearchTabButton focused={focused} />
-          )
         };
       }
     },

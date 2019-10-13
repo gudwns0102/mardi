@@ -9,12 +9,12 @@ import { images } from "assets/images";
 import { ILinkingScreenProps, withLinking } from "src/hocs/withLinking";
 import { navigateAuthLandingScreen } from "src/screens/AuthLandingScreen";
 import { navigateButtonModalScreen } from "src/screens/ButtonModalScreen";
-import { navigateListenScreen } from "src/screens/ListenScreen";
 import { IAppStore } from "src/stores/AppStore";
 import { IAuthStore } from "src/stores/AuthStore";
 import { IRootStore } from "src/stores/RootStore";
 import { IUserStore } from "src/stores/UserStore";
 import { isAndroid } from "src/utils/Platform";
+import { navigateMagazineScreen } from "src/screens/MagazineScreen";
 
 interface IInjectProps {
   appStore: IAppStore;
@@ -103,7 +103,7 @@ export class SplashScreen extends React.Component<IProps> {
 
       await userStore.fetchClient();
 
-      navigateListenScreen(this.navigation);
+      navigateMagazineScreen(this.navigation);
     } catch (error) {
       navigateAuthLandingScreen(this.navigation);
     }

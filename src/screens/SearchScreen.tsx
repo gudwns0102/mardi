@@ -442,9 +442,9 @@ export class SearchScreen extends React.Component<IProps, IState> {
   };
 }
 
-export function navigateSearchScreen(
-  navigation: NavigationScreenProp<any, any>,
-  params: IParams
-) {
-  navigation.push("SearchNavigator", params);
-}
+// export function navigateSearchScreen(
+//   navigation: NavigationScreenProp<any, any>,
+//   params: IParams
+// ) {
+//   navigation.push("SearchNavigator", params);
+// }
