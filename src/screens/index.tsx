@@ -40,6 +40,7 @@ import { SettingScreen as $SettingScreen } from "src/screens/SettingScreen";
 import { SplashScreen as $SplashScreen } from "src/screens/SplashScreen";
 import { UserPageScreen as $UserPageScreen } from "src/screens/UserPageScreen";
 import { WebViewScreen as $WebViewScreen } from "src/screens/WebViewScreen";
+import { PrevMagazineScreen as $PrevMagazineScreen } from "src/screens/PrevMagazineScreen";
 import { isAndroid } from "src/utils/Platform";
 
 const Container = styled(SafeAreaView)<{
@@ -154,3 +155,4 @@ export const FollowAndContentRecommendScreen = decorateScreen(
 export const FollowRecommendScreen = decorateScreen($FollowRecommendScreen);
 export const PlayerScreen = decorateScreen($PlayerScreen);
 export const MagazineScreen = decorateScreen($MagazineScreen);
+export const PrevMagazineScreen = decorateScreen($PrevMagazineScreen);

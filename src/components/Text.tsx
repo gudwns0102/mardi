@@ -1,7 +1,7 @@
 import React from "react";
 import { Text as RNText, TextProps } from "react-native";
 
-type FontType = "regular" | "bold";
+type FontType = "regular" | "bold" | "bradley";
 
 export interface ITextProps extends TextProps {
   type?: FontType;
@@ -9,7 +9,8 @@ export interface ITextProps extends TextProps {
 
 const textTypeToFont = new Map<FontType, string>()
   .set("regular", "SpoqaHanSans-Regular")
-  .set("bold", "SpoqaHanSans-Bold");
+  .set("bold", "SpoqaHanSans-Bold")
+  .set("bradley", "BradleyHandITCTT-Bold");
 
 export class Text extends React.Component<ITextProps> {
   public render() {

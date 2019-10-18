@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* mardiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mardiTests.m */; };
 		0B6561CF82EBA5D3440A43FF /* libPods-mardi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C46240899C8DEA5F8631E5 /* libPods-mardi.a */; };
@@ -27,6 +26,7 @@
 		C4A68A6222E0B1E500D6A1E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A68A6122E0B1E500D6A1E3 /* UIKit.framework */; };
 		C4A68A6422E0B1F000D6A1E3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A68A6322E0B1F000D6A1E3 /* SystemConfiguration.framework */; };
 		CB15599D31CACFBCD44B0EB6 /* libPods-mardi-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF576E52FD982D3985C9CDC /* libPods-mardi-tvOSTests.a */; };
+		3497C0BD8380499785CB4D74 /* BradleyHandITCTT-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CEFD69870C841D3B60A2348 /* BradleyHandITCTT-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +105,7 @@
 		D36599A50A4A21CDB37371DB /* Pods-mardiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mardiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mardiTests/Pods-mardiTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		4CEFD69870C841D3B60A2348 /* BradleyHandITCTT-Bold.ttf */ = {isa = PBXFileReference; name = "BradleyHandITCTT-Bold.ttf"; path = "../assets/fonts/BradleyHandITCTT-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +191,7 @@
 			children = (
 				3B3811CE555641EB9FC21661 /* SpoqaHanSans-Bold.ttf */,
 				71AA424719F541BF9449541A /* SpoqaHanSans-Regular.ttf */,
+				4CEFD69870C841D3B60A2348 /* BradleyHandITCTT-Bold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -452,6 +454,7 @@
 				C4A68A4E22E0978D00D6A1E3 /* GoogleService-Info.plist in Resources */,
 				1175B4F3D5754554AD1289D5 /* SpoqaHanSans-Bold.ttf in Resources */,
 				2FA98AE496D6482494B7F3B9 /* SpoqaHanSans-Regular.ttf in Resources */,
+				3497C0BD8380499785CB4D74 /* BradleyHandITCTT-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
