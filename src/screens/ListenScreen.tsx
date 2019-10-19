@@ -7,7 +7,9 @@ import LinearGradient from "react-native-linear-gradient";
 import { NavigationScreenProp } from "react-navigation";
 import styled from "styled-components/native";
 
+import { BlurView } from "@react-native-community/blur";
 import { images } from "assets/images";
+import { Button } from "src/components/buttons/Button";
 import { IconButton } from "src/components/buttons/IconButton";
 import { ClosableToast } from "src/components/ClosableToast";
 import { ContentEmptyList } from "src/components/lists/ContentEmptyList";
@@ -29,6 +31,7 @@ import { IUserStore } from "src/stores/UserStore";
 import { AsyncStorageKeys } from "src/utils/AsyncStorage";
 import { isAndroid } from "src/utils/Platform";
 import { navigateSearchQuestionScreen } from "./SearchQuestionScreen";
+import { navigateSearchScreen } from "./SearchScreen";
 
 interface IInjectProps {
   audioStore: IAudioStore;
@@ -84,6 +87,45 @@ const AnimatedContentEmptyList = Animated.createAnimatedComponent(
   ContentEmptyList
 );
 
+const RandomButtonContainer = styled.View`
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 109px;
+  height: 34px;
+  border-radius: 14px;
+  background-color: transparent;
+  overflow: hidden;
+`;
+
+const RandomButton = styled(Button).attrs({
+  textProps: {
+    style: {
+      fontSize: 14,
+      color: "#ffffff"
+    },
+    type: "bold"
+  }
+})`
+  width: 103px;
+  height: 28px;
+  border-radius: 14px;
+  background-color: rgb(55, 104, 204);
+`;
+
+const RandomIcon = styled.Image.attrs({ source: images.icListenRandom })`
+  margin-right: 5px;
+`;
+
+const RandomButtonBlurView = styled(BlurView)`
+  position: absolute;
+  width: 109px;
+  height: 34px;
+  background-color: rgba(255, 255, 255, 0.5);
+`;
+
 @inject(
   ({ store }: { store: IRootStore }): IInjectProps => ({
     audioStore: store.audioStore,
@@ -126,7 +168,7 @@ export class ListenScreen extends React.Component<IProps> {
     >).setParams({
       scrollToTop: this.scrollToTop
     });
-    this.contentBundle.initializeContents({}, "HOME");
+    this.contentBundle.initializeContents({});
     this.showFollowRecommendationToast();
     this.props.questionStore.fetchCurations();
   }
@@ -143,6 +185,7 @@ export class ListenScreen extends React.Component<IProps> {
   };
 
   public render() {
+    const { navigation } = this.props;
     const { headerAnimation } = this;
 
     const contentBundle = this.contentBundle;
@@ -152,7 +195,7 @@ export class ListenScreen extends React.Component<IProps> {
         <Header>
           <React.Fragment />
           <Logo source={images.icLogoBigBlue} />
-          <SearchButton />
+          <SearchButton onPress={() => navigateSearchScreen(navigation, {})} />
         </Header>
         {this.CurationSection}
         {contentBundle ? (
@@ -164,15 +207,17 @@ export class ListenScreen extends React.Component<IProps> {
               type="CARD"
               contentBundle={contentBundle}
               onCardPress={this.onCardPress}
-              onScroll={Animated.event(
-                [{ nativeEvent: { contentOffset: { y: headerAnimation } } }],
-                { useNativeDriver: isAndroid() ? false : true }
-              )}
-              scrollEventThrottle={8}
             />
           )
         ) : null}
         {this.showBanner ? this.NoFollowerBanner : null}
+        <RandomButtonContainer>
+          <RandomButtonBlurView blurType="light" blurAmount={17} />
+          <RandomButton>
+            <RandomIcon />
+            랜덤 듣기
+          </RandomButton>
+        </RandomButtonContainer>
       </Container>
     );
   }

@@ -203,19 +203,6 @@ export class SearchScreen extends React.Component<IProps, IState> {
         ["params", "defaultText"],
         null
       );
-      // console.log(options);
-      // const lastDefaultText = _.get(
-      //   options.lastState,
-      //   ["params", "defaultText"],
-      //   ""
-      // );
-      // const defaultText = _.get(options.state.params, ["defaultText"], "");
-      // console.log("lastDefaultText: ", lastDefaultText);
-      // console.log("defaultText: ", defaultText);
-      // console.log("this.state.text: ", this.state.text);
-      // if (lastDefaultText !== defaultText) {
-      //   this.setState({ text: defaultText }, this.resetSearchTimeout);
-      // }
       if (defaultText !== null) {
         this.setState({ text: defaultText }, this.resetSearchTimeout);
       }
@@ -239,7 +226,7 @@ export class SearchScreen extends React.Component<IProps, IState> {
     const showTotalContentSection =
       this.totalContentBundle && !focused && text === "";
     const showSearchContentSection = this.searchContentBundle && text !== "";
-    const showRecommendSection = focused && text === "";
+    const showRecommendSection = text === "";
 
     return (
       <KeyboardDismissWrapper onPress={Keyboard.dismiss}>
@@ -264,8 +251,8 @@ export class SearchScreen extends React.Component<IProps, IState> {
           />
         </SearchInputContainer>
         <BodyContainer>
-          {showCurationSection && this.CurationSection}
-          {showTotalContentSection && this.TotalContentSection}
+          {/* {showCurationSection && this.CurationSection} */}
+          {/* {showTotalContentSection && this.TotalContentSection} */}
           {showSearchContentSection && this.SearchContentSection}
           {showRecommendSection && this.RecommendSection}
         </BodyContainer>
@@ -442,9 +429,9 @@ export class SearchScreen extends React.Component<IProps, IState> {
   };
 }
 
-// export function navigateSearchScreen(
-//   navigation: NavigationScreenProp<any, any>,
-//   params: IParams
-// ) {
-//   navigation.push("SearchNavigator", params);
-// }
+export function navigateSearchScreen(
+  navigation: NavigationScreenProp<any, any>,
+  params: IParams
+) {
+  navigation.push("SearchScreen", params);
+}

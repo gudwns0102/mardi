@@ -19,11 +19,7 @@ interface IProps {
 
 const { width } = Dimensions.get("window");
 
-const Container = styled.ScrollView.attrs({
-  contentContainerStyle: {
-    paddingBottom: 54
-  }
-})`
+const Container = styled.View`
   width: 100%;
   flex: 1;
   background-color: #ebebeb;
@@ -61,7 +57,7 @@ const PageScrollView = styled.ScrollView.attrs({
 const Page = styled.ImageBackground.attrs({ source: images.airplane })`
   justify-content: space-between;
   width: ${width}px;
-  height: 310px;
+  flex: 1;
   padding-top: 9px;
   padding-bottom: 12px;
   background: powderblue;
@@ -141,7 +137,7 @@ const Indicator = styled.View<{ isLast: boolean }>`
   width: 8px;
   height: 8px;
   border-radius: 4px;
-  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.5);
   margin-right: ${props => (props.isLast ? 0 : 10)}px;
   overflow: hidden;
 `;
@@ -155,7 +151,7 @@ const ActiveIndicator = styled(Animated.View)`
 `;
 
 const StyledMagazineCard = styled(MagazineCard)`
-  margin: 0 9px;
+  margin: 0 9px 10px;
 `;
 
 @withAudioPlayer

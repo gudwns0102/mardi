@@ -387,10 +387,10 @@ const CommonStackNavigator = createStackNavigator(
     },
     ContentRecommendScreen: {
       screen: Screens.ContentRecommendScreen
+    },
+    SearchScreen: {
+      screen: Screens.SearchScreen
     }
-    // ModalScreen: {
-    //   screen: Screens.ModalScreen
-    // }
   },
   {
     headerMode: "none"

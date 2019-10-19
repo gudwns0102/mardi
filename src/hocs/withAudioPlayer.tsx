@@ -75,6 +75,14 @@ export const withAudioPlayer = <
                   style={{
                     opacity: this.opacity,
                     display: this.isAnimating ? "flex" : show ? "flex" : "none"
+                    // transform: [
+                    //   {
+                    //     translateY: this.opacity.interpolate({
+                    //       inputRange: [0, 1],
+                    //       outputRange: [54, 0]
+                    //     })
+                    //   }
+                    // ]
                   }}
                 >
                   <AudioPlayer

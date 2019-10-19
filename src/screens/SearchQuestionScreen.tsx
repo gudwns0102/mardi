@@ -6,6 +6,7 @@ import styled from "styled-components/native";
 import uuid from "uuid";
 
 import { images } from "assets/images";
+import { Animated } from "react-native";
 import { BackButton } from "src/components/buttons/BackButton";
 import { Button } from "src/components/buttons/Button";
 import { ContentLayoutSelector } from "src/components/ContentLayoutSelector";
@@ -119,7 +120,7 @@ const AudioButton = styled(Button).attrs({
 })`
   width: 121px;
   height: 36px;
-  border-radius: 12px;
+  border-radius: 18px;
   background-color: rgb(25, 86, 212);
 `;
 
@@ -146,6 +147,21 @@ const EmptyText = styled(Text).attrs({ type: "bold" })`
   color: rgb(25, 86, 212);
 `;
 
+const Header = styled(Animated.View)`
+  position: absolute;
+  top: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 56px;
+  background-color: rgba(246, 246, 246, 0.7);
+`;
+
+const RandomIcon = styled.Image.attrs({ source: images.icListenRandomGray })`
+  margin-right: 10px;
+`;
+
 @inject(
   ({ store }: { store: IRootStore }): IInjectProps => ({
     audioStore: store.audioStore,
@@ -162,6 +178,7 @@ export class SearchQuestionScreen extends React.Component<IProps, IState> {
   };
   public contentBundleId: string;
   public contentBundle: IContentBundle;
+  public scrollY = new Animated.Value(0);
 
   constructor(props: IProps) {
     super(props);
@@ -198,17 +215,20 @@ export class SearchQuestionScreen extends React.Component<IProps, IState> {
         </PlainHeader>
         <BodyContainer>
           <BackgroundImage source={images.pattern4} />
-          <ScrollView>
+          <ScrollView
+            onScroll={Animated.event([
+              {
+                nativeEvent: { contentOffset: { y: this.scrollY } }
+              }
+            ])}
+            scrollEventThrottle={16}
+          >
             <QuestionTextContainer>
               <QuestionText>{this.questionText}</QuestionText>
             </QuestionTextContainer>
             <AudioButtonsRow>
-              <AudioButton onPress={this.onSequentialPlay}>
-                전체 재생
-              </AudioButton>
-              <GrayAudioButton onPress={this.onRandomPlay}>
-                랜덤 재생
-              </GrayAudioButton>
+              {this.PlayButton}
+              {this.RandomButton}
             </AudioButtonsRow>
             <StyledContentLayoutSelector
               numContents={this.contentBundle.count}
@@ -229,8 +249,33 @@ export class SearchQuestionScreen extends React.Component<IProps, IState> {
               }
             />
           </ScrollView>
+          <Header
+            style={{
+              opacity: this.scrollY.interpolate({
+                inputRange: [121, 121],
+                outputRange: [0, 1],
+                extrapolate: "clamp"
+              })
+            }}
+          >
+            {this.PlayButton}
+            {this.RandomButton}
+          </Header>
         </BodyContainer>
       </>
+    );
+  }
+
+  private get PlayButton() {
+    return <AudioButton onPress={this.onSequentialPlay}>전체 듣기</AudioButton>;
+  }
+
+  private get RandomButton() {
+    return (
+      <GrayAudioButton onPress={this.onRandomPlay}>
+        <RandomIcon />
+        랜덤 듣기
+      </GrayAudioButton>
     );
   }
 

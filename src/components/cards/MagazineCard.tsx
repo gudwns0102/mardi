@@ -29,6 +29,7 @@ const Content = styled(Text)`
 
 const Footer = styled.View`
   flex-direction: row;
+  align-items: center;
   width: 100%;
 `;
 

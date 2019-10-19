@@ -26,6 +26,7 @@ const Container = styled.TouchableOpacity`
   flex-direction: row;
   padding: 8px 12px;
   min-height: 56px;
+  background-color: #ffffff;
 `;
 
 const Avatar = styled(IconButton)`
