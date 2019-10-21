@@ -12,6 +12,7 @@ interface IProps extends ViewProps {}
 const Container = styled.View`
   padding: 18px 18px 12px;
   background-color: white;
+  border-radius: 2px;
 `;
 
 const Title = styled(Text).attrs({ type: "bold" })`

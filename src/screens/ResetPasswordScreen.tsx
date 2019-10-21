@@ -13,7 +13,6 @@ import { TextInput } from "src/components/textinputs/TextInput";
 import { Bold } from "src/components/texts/Bold";
 import { replaceAuthLandingScreen } from "src/screens/AuthLandingScreen";
 import { replaceAuthVerifyScreen } from "src/screens/AuthVerifyScreen";
-import { navigateListenScreen } from "src/screens/ListenScreen";
 import { IAuthStore } from "src/stores/AuthStore";
 import { IRootStore } from "src/stores/RootStore";
 import { IToastStore } from "src/stores/ToastStore";
@@ -180,7 +179,7 @@ export class ResetPasswordScreen extends React.Component<IProps> {
 
     if (emailVerified) {
       await userStore.fetchClient();
-      navigateListenScreen(navigation);
+      navigation.navigate("MainNavigator");
       return;
     }
 

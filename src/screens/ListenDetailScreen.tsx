@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { Share, View } from "react-native";
+import { Share } from "react-native";
 import { NavigationScreenProp } from "react-navigation";
 import styled from "styled-components/native";
 import uuid from "uuid";

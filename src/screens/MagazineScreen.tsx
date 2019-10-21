@@ -17,6 +17,8 @@ interface IProps {
   navigation: NavigationScreenProp<any, any>;
 }
 
+const THEME_COLOR = "orange";
+
 const { width } = Dimensions.get("window");
 
 const Container = styled.View`
@@ -30,7 +32,13 @@ const Logo = styled.View`
   align-items: center;
 `;
 
-const LogoImage = styled.Image.attrs({ source: images.icLogoBigBlueCopy30 })``;
+const LogoImage = styled.Image.attrs({
+  source: images.icLogoBigBlue
+})`
+  width: 90px;
+  height: 20px;
+  tint-color: ${THEME_COLOR};
+`;
 
 const LifeText = styled(Text).attrs({ type: "bradley" })`
   font-size: 30px;
@@ -43,7 +51,7 @@ const LifeText = styled(Text).attrs({ type: "bradley" })`
 const PrevText = styled(Text).attrs({ type: "bold" })`
   font-size: 16px;
   line-height: 27px;
-  color: rgb(187, 57, 119);
+  color: ${THEME_COLOR};
 `;
 
 const PageScrollView = styled.ScrollView.attrs({
@@ -68,7 +76,7 @@ const PageTitleContainer = styled.View`
   width: 284px;
   height: 32px;
   padding-left: 9px;
-  background-color: rgb(187, 57, 119);
+  background-color: ${THEME_COLOR};
 `;
 
 const PageTitle = styled(Text).attrs({ type: "bold" })`
@@ -147,7 +155,7 @@ const ActiveIndicator = styled(Animated.View)`
   width: 8px;
   height: 8px;
   border-radius: 4px;
-  background-color: rgb(187, 57, 119);
+  background-color: ${THEME_COLOR};
 `;
 
 const StyledMagazineCard = styled(MagazineCard)`

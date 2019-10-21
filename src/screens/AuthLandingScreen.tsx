@@ -6,11 +6,9 @@ import styled from "styled-components/native";
 
 import { images } from "assets/images";
 import { Button } from "src/components/buttons/Button";
-import { Text } from "src/components/Text";
 import { Bold } from "src/components/texts/Bold";
 import { environment } from "src/config/environment";
 import { navigateAuthScreen } from "src/screens/AuthScreen";
-import { navigateListenScreen } from "src/screens/ListenScreen";
 import { navigateWebViewScreen } from "src/screens/WebViewScreen";
 import { IAuthStore } from "src/stores/AuthStore";
 import { IRootStore } from "src/stores/RootStore";
@@ -141,7 +139,7 @@ export class AuthLandingScreen extends React.Component<IProps> {
     const { navigation, authStore, userStore } = this.props;
     await authStore.signInFacebook();
     await userStore.fetchClient();
-    navigateListenScreen(navigation);
+    navigation.navigate("MainNavigator");
   };
 
   private onEmailPress = () => {

@@ -4,7 +4,6 @@ import React from "react";
 import { Linking } from "react-native";
 
 import { navigateAuthLandingScreen } from "src/screens/AuthLandingScreen";
-import { navigateListenScreen } from "src/screens/ListenScreen";
 import { navigateResetPasswordScreen } from "src/screens/ResetPasswordScreen";
 import { getStore } from "src/stores/RootStore";
 
@@ -48,7 +47,7 @@ export const withLinking = <T extends ILinkingScreenProps & IScreenProps<any>>(
       if (result) {
         const { command, data } = result;
         const commandToActionMap: {
-          [key in CommandType]: () => Promise<{ isNavigatingAction: boolean }>
+          [key in CommandType]: () => Promise<{ isNavigatingAction: boolean }>;
         } = {
           resetPassword: _.partial(this.handleResetPassword, data),
           confirmEmail: _.partial(this.handleConfirmEmail, data)
@@ -79,7 +78,7 @@ export const withLinking = <T extends ILinkingScreenProps & IScreenProps<any>>(
       if (!verification || !fetchClient) {
         navigateAuthLandingScreen(navigation);
       } else {
-        navigateListenScreen(navigation);
+        navigation.navigate("MainNavigator");
       }
 
       return {

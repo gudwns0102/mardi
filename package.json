@@ -22,6 +22,7 @@
     "mobx-state-tree": "^3.14.0",
     "react": "^16.9.0",
     "react-native": "^0.61.2",
+    "react-native-appsflyer": "^1.4.6",
     "react-native-audio": "^4.3.0",
     "react-native-fbsdk": "^1.0.0-rc.4",
     "react-native-firebase": "^5.5.5",

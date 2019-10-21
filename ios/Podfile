@@ -38,6 +38,8 @@ target 'mardi' do
   :path => "../node_modules/react-native-onesignal/react-native-onesignal.podspec",
   :inhibit_warnings => true
 
+  pod 'react-native-appsflyer', :path => '../node_modules/react-native-appsflyer'
+
   target 'mardiTests' do
     inherit! :search_paths
     # Pods for testing

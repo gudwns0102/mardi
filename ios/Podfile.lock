@@ -1,4 +1,5 @@
 PODS:
+  - AppsFlyerFramework (4.10.4)
   - boost-for-react-native (1.63.0)
   - BVLinearGradient (2.5.4):
     - React
@@ -261,6 +262,9 @@ PODS:
     - React-cxxreact (= 0.61.2)
     - React-jsi (= 0.61.2)
   - React-jsinspector (0.61.2)
+  - react-native-appsflyer (1.4.6):
+    - AppsFlyerFramework (~> 4.10.4)
+    - React
   - react-native-blur (0.8.0):
     - React
   - react-native-fbsdk (1.0.0-rc.4):
@@ -369,6 +373,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-appsflyer (from `../node_modules/react-native-appsflyer`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
@@ -399,6 +404,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppsFlyerFramework
     - boost-for-react-native
     - Crashlytics
     - Fabric
@@ -449,6 +455,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-appsflyer:
+    :path: "../node_modules/react-native-appsflyer"
   react-native-blur:
     :path: "../node_modules/@react-native-community/blur"
   react-native-fbsdk:
@@ -503,6 +511,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  AppsFlyerFramework: aeb793095c1b33170ae30bef66652c0645f409be
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BVLinearGradient: 8cbc5155c978f2e43098818c91d206d07aae6d30
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
@@ -536,6 +545,7 @@ SPEC CHECKSUMS:
   React-jsi: 32285a21b1b24c36060493ed3057a34677d58d09
   React-jsiexecutor: 8909917ff7d8f21a57e443a866fd8d4560e50c65
   React-jsinspector: 111d7d342b07a904c400592e02a2b958f1098b60
+  react-native-appsflyer: b6e02c430f9e3e9d057780203c7950f2cc39d447
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-fbsdk: 5f9a64763f847f43f8f5d9d0b544a40e7b308762
   react-native-image-picker: 4ffb12aa6e9a09ac5ada77a8deaf3a3f6495aa34
@@ -563,6 +573,6 @@ SPEC CHECKSUMS:
   RNSVG: 90c76b7cf235654d45e54655b6c189ea4041057c
   Yoga: 14927e37bd25376d216b150ab2a561773d57911f
 
-PODFILE CHECKSUM: 79ea9cad87fab954fa76d67e2ec029aea825db9f
+PODFILE CHECKSUM: 318792fc860f4701658995823c7387a6e3d5d882
 
 COCOAPODS: 1.8.3

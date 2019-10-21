@@ -6,6 +6,7 @@ import Splash from "react-native-splash-screen";
 import styled from "styled-components/native";
 
 import { images } from "assets/images";
+import { initializeAppsFlyer } from "src/config/appsFlyer";
 import { ILinkingScreenProps, withLinking } from "src/hocs/withLinking";
 import { navigateAuthLandingScreen } from "src/screens/AuthLandingScreen";
 import { navigateButtonModalScreen } from "src/screens/ButtonModalScreen";
@@ -14,7 +15,6 @@ import { IAuthStore } from "src/stores/AuthStore";
 import { IRootStore } from "src/stores/RootStore";
 import { IUserStore } from "src/stores/UserStore";
 import { isAndroid } from "src/utils/Platform";
-import { navigateMagazineScreen } from "src/screens/MagazineScreen";
 
 interface IInjectProps {
   appStore: IAppStore;
@@ -69,6 +69,9 @@ export class SplashScreen extends React.Component<IProps> {
       getInitialURL,
       handleDeepLink
     } = this.props;
+
+    initializeAppsFlyer();
+
     await authStore.initialize(this.navigation);
 
     const isValidAppVersion = await appStore.validateAppVersion();
@@ -103,7 +106,7 @@ export class SplashScreen extends React.Component<IProps> {
 
       await userStore.fetchClient();
 
-      navigateMagazineScreen(this.navigation);
+      this.navigation.navigate("MainNavigator");
     } catch (error) {
       navigateAuthLandingScreen(this.navigation);
     }
