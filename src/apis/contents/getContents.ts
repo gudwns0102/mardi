@@ -12,15 +12,8 @@ interface IBody extends IContentParams {
   page_size: number;
 }
 
-interface IResponse {
-  count: number;
-  next: number | null;
-  previous: number | null;
-  results: IContent[];
-}
-
-export function getContentsAPI(data: IBody): Promise<IResponse> {
-  return call({
+export function getContentsAPI(data: IBody) {
+  return call<PageResponse<IContent>>({
     method: "get",
     url: "/contents",
     params: data

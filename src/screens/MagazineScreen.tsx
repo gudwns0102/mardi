@@ -1,19 +1,28 @@
 import { BlurView } from "@react-native-community/blur";
 import _ from "lodash";
 import React from "react";
-import { Animated, Dimensions } from "react-native";
-import { NavigationScreenProp } from "react-navigation";
+import { Animated, Dimensions, ListRenderItem, ViewToken } from "react-native";
+import { FlatList, NavigationScreenProp } from "react-navigation";
 import styled from "styled-components/native";
 
 import { images } from "assets/images";
+import { observable } from "mobx";
+import { inject, observer } from "mobx-react";
+import { getLatestMagazine } from "src/apis/magazines/getLatestMagazine";
 import { MagazineCard } from "src/components/cards/MagazineCard";
 import { PlainHeader } from "src/components/PlainHeader";
 import { Text } from "src/components/Text";
 import { withAudioPlayer } from "src/hocs/withAudioPlayer";
 import { navigatePrevMagazineScreen } from "src/screens/PrevMagazineScreen";
+import { IMagazineStore } from "src/stores/MagazineStore";
+import { IRootStore } from "src/stores/RootStore";
 import { colors } from "src/styles/colors";
 
-interface IProps {
+interface IInjectProps {
+  magazineStore: IMagazineStore;
+}
+
+interface IProps extends IInjectProps {
   navigation: NavigationScreenProp<any, any>;
 }
 
@@ -62,7 +71,12 @@ const PageScrollView = styled.ScrollView.attrs({
   height: 310px;
 `;
 
-const Page = styled.ImageBackground.attrs({ source: images.airplane })`
+const MagazineContentContainer = styled.View`
+  width: 100%;
+  height: 100%;
+`;
+
+const Page = styled.ImageBackground`
   justify-content: space-between;
   width: ${width}px;
   flex: 1;
@@ -162,7 +176,13 @@ const StyledMagazineCard = styled(MagazineCard)`
   margin: 0 9px 10px;
 `;
 
+@inject(
+  ({ store }: { store: IRootStore }): IInjectProps => ({
+    magazineStore: store.magazineStore
+  })
+)
 @withAudioPlayer
+@observer
 export class MagazineScreen extends React.Component<IProps> {
   public static options: IScreenOptions = {
     statusBarProps: {
@@ -170,10 +190,23 @@ export class MagazineScreen extends React.Component<IProps> {
     }
   };
 
+  public magazineContentsRef = React.createRef<any>();
   public scroll = new Animated.Value(0);
+
+  @observable public magazineContentIndex = 0;
+
+  public async componentDidMount() {
+    // this.props.navigation.addListener("didFocus", console.log);
+    this.props.magazineStore.fetchLatestMagazine();
+  }
 
   public render() {
     const { navigation } = this.props;
+
+    if (!this.magazine) {
+      return null;
+    }
+
     return (
       <Container>
         <PlainHeader>
@@ -182,11 +215,28 @@ export class MagazineScreen extends React.Component<IProps> {
             <LogoImage />
             <LifeText>life</LifeText>
           </Logo>
-          <PrevText onPress={() => navigatePrevMagazineScreen(navigation)}>
+          <PrevText
+            onPress={() =>
+              navigatePrevMagazineScreen(navigation, {
+                onPress: ({ magazineContent, index }) => {
+                  this.magazineContentsRef.current!.scrollToIndex({
+                    animated: true,
+                    index
+                  });
+                }
+              })
+            }
+          >
             지난호
           </PrevText>
         </PlainHeader>
-        <PageScrollView
+        <FlatList
+          ref={this.magazineContentsRef}
+          style={{ flex: 1 }}
+          horizontal={true}
+          pagingEnabled={true}
+          data={this.magazine.contents}
+          renderItem={this.renderMagazineContent}
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
           onScroll={Animated.event([
@@ -194,12 +244,11 @@ export class MagazineScreen extends React.Component<IProps> {
               nativeEvent: { contentOffset: { x: this.scroll } }
             }
           ])}
-        >
-          {_.range(3).map(() => this.Page)}
-        </PageScrollView>
+          onViewableItemsChanged={this.onViewableItemChanged}
+        />
         <IndicatorRow>
           <IndicatorContainer>
-            {_.range(3).map(index => (
+            {_.range(this.magazine.contents.length).map(index => (
               <Indicator key={index} isLast={index === 2}>
                 <ActiveIndicator
                   style={{
@@ -217,30 +266,50 @@ export class MagazineScreen extends React.Component<IProps> {
             ))}
           </IndicatorContainer>
         </IndicatorRow>
-        <StyledMagazineCard />
+        <StyledMagazineCard
+          magazineContent={this.magazine.contents[this.magazineContentIndex]}
+        />
       </Container>
     );
   }
 
-  public get Page() {
+  public get magazine() {
+    return this.props.magazineStore.currentMagazine;
+  }
+
+  public renderMagazineContent: ListRenderItem<MagazineContent> = ({
+    item,
+    index
+  }) => {
     return (
-      <Page>
+      <Page source={item.picture ? { uri: item.picture } : images.airplane}>
         <PageTitleContainer>
-          <PageTitle>#13 - 글자가 냐하하</PageTitle>
+          <PageTitle>{item.title}</PageTitle>
         </PageTitleContainer>
         <PageGuideText>재생버튼을 눌러{"\n"}매거진을 들으세요</PageGuideText>
         <PlayButton>
           <PlayButtonBlurView blurAmount={37} blurType="light" />
           <PlayIcon />
-          <PlayText>34</PlayText>
+          <PlayText>{item.num_played || 0}</PlayText>
         </PlayButton>
       </Page>
     );
-  }
+  };
+
+  public onViewableItemChanged = ({
+    viewableItems
+  }: {
+    viewableItems: ViewToken[];
+  }) => {
+    if (viewableItems.length === 1) {
+      this.magazineContentIndex = viewableItems[0].index!;
+    }
+  };
 }
 
 export function navigateMagazineScreen(
-  navigation: NavigationScreenProp<any, any>
+  navigation: NavigationScreenProp<any, any>,
+  params: any
 ) {
-  navigation.navigate("MagazineScreen");
+  navigation.navigate("MagazineScreen", params);
 }

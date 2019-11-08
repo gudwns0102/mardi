@@ -7,7 +7,9 @@ import { Button } from "src/components/buttons/Button";
 import { Text } from "src/components/Text";
 import { shadow } from "src/utils/Shadow";
 
-interface IProps extends ViewProps {}
+interface IProps extends ViewProps {
+  magazineContent: MagazineContent;
+}
 
 const Container = styled.View`
   padding: 18px 18px 12px;
@@ -81,20 +83,17 @@ const ShareIcon = styled.Image.attrs({ source: images.btnCommonShare })`
   height: 24px;
 `;
 
-export function MagazineCard(props: IProps) {
+export function MagazineCard({ magazineContent, ...props }: IProps) {
   return (
     <Container {...props}>
-      <Title numberOfLines={2}>유명한 일반인으로{"\n"}사는 것</Title>
-      <Content numberOfLines={2}>
-        유튜버가 꿈인 시대. 관종과 인플루언서의 시대. 타의로 유명해진 한 소년의
-        고백
-      </Content>
+      <Title numberOfLines={2}>{magazineContent.title}</Title>
+      <Content numberOfLines={2}>{magazineContent.text}</Content>
       <Footer>
         <Avatar />
-        <Name>Kimmy kim</Name>
+        <Name>{magazineContent.title}</Name>
         <CommentButton>
           <CommentIcon />
-          <CommentText>15</CommentText>
+          <CommentText>{magazineContent.num_replies || 0}</CommentText>
         </CommentButton>
         <ShareButton>
           <ShareIcon />

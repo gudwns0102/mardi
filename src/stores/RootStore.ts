@@ -8,6 +8,7 @@ import { ContentStore } from "src/stores/ContentStore";
 import { FeedStore } from "src/stores/FeedStore";
 import { FollowStore } from "src/stores/FollowStore";
 import { LoadingStore } from "src/stores/LoadingStore";
+import { MagazineStore } from "src/stores/MagazineStore";
 import { ModalStore } from "src/stores/ModalStore";
 import { NetStatusStore } from "src/stores/NetStatusStore";
 import { QuestionStore } from "src/stores/QuestionStore";
@@ -27,6 +28,7 @@ export const RootStore = types.model({
   feedStore: types.optional(FeedStore, {}),
   followStore: types.optional(FollowStore, {}),
   loadingStore: types.optional(LoadingStore, {}),
+  magazineStore: types.optional(MagazineStore, {}),
   modalStore: types.optional(ModalStore, {}),
   netStatusStore: types.optional(NetStatusStore, {}),
   questionStore: types.optional(QuestionStore, {}),

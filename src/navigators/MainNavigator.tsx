@@ -55,9 +55,6 @@ const MagazineNavigator = createStackNavigator(
   {
     MagazineScreen: {
       screen: Screens.MagazineScreen
-    },
-    PrevMagazineScreen: {
-      screen: Screens.PrevMagazineScreen
     }
   },
   {
@@ -390,6 +387,9 @@ const CommonStackNavigator = createStackNavigator(
     },
     SearchScreen: {
       screen: Screens.SearchScreen
+    },
+    PrevMagazineScreen: {
+      screen: Screens.PrevMagazineScreen
     }
   },
   {

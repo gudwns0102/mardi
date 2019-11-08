@@ -8,6 +8,7 @@ import { IContentStore } from "src/stores/ContentStore";
 import { IFeedStore } from "src/stores/FeedStore";
 import { IFollowStore } from "src/stores/FollowStore";
 import { ILoadingStore } from "src/stores/LoadingStore";
+import { IMagazineStore } from "src/stores/MagazineStore";
 import { IModalStore } from "src/stores/ModalStore";
 import { INetStatusStore } from "src/stores/NetStatusStore";
 import { IQuestionStore } from "src/stores/QuestionStore";
@@ -26,6 +27,7 @@ export interface IRootStoreType {
   feedStore: IFeedStore;
   followStore: IFollowStore;
   loadingStore: ILoadingStore;
+  magazineStore: IMagazineStore;
   modalStore: IModalStore;
   netStatusStore: INetStatusStore;
   questionStore: IQuestionStore;

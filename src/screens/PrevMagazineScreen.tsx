@@ -1,20 +1,40 @@
 import _ from "lodash";
+import { inject, observer } from "mobx-react";
 import React from "react";
 import { Animated, Dimensions, SectionListData } from "react-native";
 import { NavigationScreenProp, SectionList } from "react-navigation";
 import styled from "styled-components/native";
 
 import { images } from "assets/images";
+import { observable } from "mobx";
+import { getMagazines } from "src/apis/magazines/getMagazines";
+import { getPastMagazines } from "src/apis/magazines/getPastMagazines";
 import { IconButton } from "src/components/buttons/IconButton";
 import { PlainHeader } from "src/components/PlainHeader";
 import { Text } from "src/components/Text";
+import { withAudioPlayer } from "src/hocs/withAudioPlayer";
+import { IMagazineStore } from "src/stores/MagazineStore";
+import { IRootStore } from "src/stores/RootStore";
 import { colors } from "src/styles/colors";
+import { MagazineScreen, navigateMagazineScreen } from "./MagazineScreen";
 
-interface IProps {
-  navigation: NavigationScreenProp<any, any>;
+interface IParams {
+  onPress: (data: {
+    magazine: Magazine;
+    magazineContent: MagazineContent;
+    index: number;
+  }) => void;
 }
 
-const Container = styled.ScrollView`
+interface IInjectProps {
+  magazineStore: IMagazineStore;
+}
+
+interface IProps extends IInjectProps {
+  navigation: NavigationScreenProp<any, IParams>;
+}
+
+const Container = styled.View`
   width: 100%;
   flex: 1;
   background-color: #ebebeb;
@@ -49,7 +69,7 @@ const SectionText = styled(Text).attrs({ type: "bold" })`
   color: ${colors.white};
 `;
 
-const PrevMagazineContainer = styled.View`
+const PrevMagazineContainer = styled.TouchableOpacity`
   padding: 18px 18px 12px;
   background-color: white;
   margin: 0 12px 8px 9px;
@@ -68,6 +88,13 @@ const Name = styled(Text).attrs({ type: "bold" })`
   flex: 1;
 `;
 
+@inject(
+  ({ store }: { store: IRootStore }): IInjectProps => ({
+    magazineStore: store.magazineStore
+  })
+)
+@withAudioPlayer
+@observer
 export class PrevMagazineScreen extends React.Component<IProps> {
   public static options: IScreenOptions = {
     statusBarProps: {
@@ -77,8 +104,21 @@ export class PrevMagazineScreen extends React.Component<IProps> {
 
   public scroll = new Animated.Value(0);
 
+  @observable public magazines = [] as Magazine[];
+
+  public async componentDidMount() {
+    const { results } = await getMagazines({ page: 1, page_size: 100 });
+    this.magazines = results;
+  }
+
   public render() {
-    const { navigation } = this.props;
+    const {
+      navigation,
+      magazineStore: { fetchMagazine }
+    } = this.props;
+
+    const onPress = navigation.getParam("onPress");
+
     return (
       <Container>
         <Header>
@@ -90,57 +130,64 @@ export class PrevMagazineScreen extends React.Component<IProps> {
           contentContainerStyle={{
             paddingTop: 9
           }}
-          sections={[
-            {
-              data: [
-                {
-                  title: "유명한 일반인으로\n사는 것",
-                  author: "Kimmy Kim"
-                }
-              ],
-              title: "#13 - 글자가 냐하하",
-              color: "rgb(187, 57, 119)"
-            },
-            {
-              data: [
-                {
-                  title: "asdf",
-                  author: "Kimmy Kim"
-                }
-              ],
-              title: "#12 - 호별제목텍스트글자수는최대열여섯",
-              color: "rgb(255,131,80)"
-            }
-          ]}
-          renderItem={({ item }) => {
+          sections={Array.from(this.magazines).map(magazine => ({
+            magazine,
+            title: magazine.title,
+            color: magazine.color,
+            data: magazine.contents
+          }))}
+          renderItem={({
+            item,
+            section,
+            index
+          }: {
+            item: MagazineContent;
+            section: SectionListData<{ magazine: Magazine }>;
+            index: number;
+          }) => {
             return (
-              <PrevMagazineContainer>
+              <PrevMagazineContainer
+                onPress={async () => {
+                  await fetchMagazine(section.magazine.id);
+                  navigateMagazineScreen(navigation, {
+                    magazine: section.magazine
+                  });
+                  onPress({
+                    magazine: section.magazine,
+                    magazineContent: item,
+                    index
+                  });
+                }}
+              >
                 <PrevMagazineTitle>{item.title}</PrevMagazineTitle>
-                <Name>{item.author}</Name>
+                <Name>{item.text}</Name>
               </PrevMagazineContainer>
             );
           }}
-          renderSectionHeader={({ section }) => {
+          renderSectionHeader={({
+            section
+          }: {
+            section: SectionListData<{
+              color: Magazine["color"];
+              title: Magazine["title"];
+            }>;
+          }) => {
             return (
               <SectionHeader backgroundColor={section.color}>
                 <SectionText>{section.title}</SectionText>
               </SectionHeader>
             );
           }}
+          stickySectionHeadersEnabled={false}
         />
       </Container>
     );
   }
-
-  //   public renderSectionHeader: (info: {
-  //     section: SectionListData<IMagazine>;
-  // }) = ({ section }) => {
-  //   section.titl
-  // };
 }
 
 export function navigatePrevMagazineScreen(
-  navigation: NavigationScreenProp<any, any>
+  navigation: NavigationScreenProp<any, any>,
+  params: IParams
 ) {
-  navigation.navigate("PrevMagazineScreen");
+  navigation.navigate("PrevMagazineScreen", params);
 }
