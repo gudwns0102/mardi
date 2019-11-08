@@ -6,21 +6,21 @@ import Video from "react-native-video";
 import { getRootStore } from "src/stores/RootStoreHelper";
 
 export interface IAudio {
-  id: IContent["id"];
-  url: IContent["audio"];
-  heart_by_me: IContent["heart_by_me"];
-  name: IContent["user"]["name"];
-  username: IContent["user"]["username"];
-  photo: IContent["user"]["photo"];
-  title: IContent["title"];
-  questionText: string;
-  num_hearts: IContent["num_hearts"];
-  num_replies: IContent["num_replies"];
-  image: IContent["image"];
-  default_image_color_idx: IContent["default_image_color_idx"];
-  default_image_pattern_idx: IContent["default_image_pattern_idx"];
-  uuid: IContent["user"]["uuid"];
-  audio_duration: IContent["audio_duration"];
+  id: number;
+  type: AudioType;
+  url: string;
+  heart_by_me?: boolean;
+  username: string;
+  photo?: string;
+  title: string;
+  questionText?: string;
+  num_hearts?: number;
+  num_replies?: number;
+  image?: string | null;
+  default_image_color_idx?: number;
+  default_image_pattern_idx?: number;
+  uuid: string;
+  audio_duration: number;
 }
 
 export const audioStoreRef = React.createRef<Video>();
@@ -68,13 +68,13 @@ export const AudioStore = types
       });
     };
 
-    const createAudioFromContent = (content: IContent) => {
+    const createAudioFromContent = (content: IContent): IAudio => {
       return {
         id: content.id,
+        type: "CONTENT",
         url: content.audio,
         heart_by_me: content.heart_by_me,
         title: content.title,
-        name: content.user.name,
         username: content.user.username,
         questionText: _.get(content.question, ["text"], ""),
         photo: content.user.photo,
@@ -105,7 +105,9 @@ export const AudioStore = types
       const currentAudio = getCurrentAudio();
       const alreadyHasAudio = self.audios.length !== 0;
       const incomingAudioIsCurrentAudio =
-        currentAudio && incomingAudioId === currentAudio.id;
+        currentAudio &&
+        currentAudio.type === "CONTENT" &&
+        incomingAudioId === currentAudio.id;
       const currentAudioIsReachEnd = alreadyHasAudio && self.reachEnd;
 
       const playable = checkPlayability();
@@ -131,9 +133,66 @@ export const AudioStore = types
       }
     };
 
+    const pushMagazineContentAudio = ({
+      id,
+      title,
+      text,
+      audio,
+      num_replies,
+      num_played,
+      audio_duration,
+      picture
+    }: MagazineContent) => {
+      const incomingAudioId = id;
+      const currentAudio = getCurrentAudio();
+      const alreadyHasAudio = self.audios.length !== 0;
+      const incomingAudioIsCurrentAudio =
+        currentAudio &&
+        currentAudio.type === "MAGAZINE" &&
+        incomingAudioId === currentAudio.id;
+      const currentAudioIsReachEnd = alreadyHasAudio && self.reachEnd;
+
+      const playable = checkPlayability();
+
+      if (!playable) {
+        showPlayabilityToast();
+        return;
+      }
+      clearInstantAudio();
+
+      if (!alreadyHasAudio || !incomingAudioIsCurrentAudio) {
+        clearAudioMetadata();
+        self.audios.replace([
+          {
+            id,
+            type: "MAGAZINE" as const,
+            url: audio!,
+            audio_duration: audio_duration || Infinity,
+            default_image_color_idx: 0,
+            default_image_pattern_idx: 0,
+            heart_by_me: false,
+            image: picture,
+            title,
+            num_hearts: 0,
+            num_replies,
+            username: "API NOT READY",
+            uuid: "API NOT READY"
+          }
+        ]);
+        self.audioHistory.clear();
+        return;
+      } else if (!currentAudioIsReachEnd) {
+        self.playing = !self.playing;
+        self.reachEnd = false;
+        return;
+      } else {
+        clearAudioMetadata();
+      }
+    };
+
     const popAudio = (contentId: IAudio["id"]) => {
       const targetAudioIndex = self.audios.findIndex(
-        audio => audio.id === contentId
+        audio => audio.type === "CONTENT" && audio.id === contentId
       );
 
       if (targetAudioIndex !== -1) {
@@ -260,7 +319,7 @@ export const AudioStore = types
       audioData: Partial<IAudio>
     ) => {
       const targetAudioIndex = self.audios.findIndex(
-        audio => audio.id === contentId
+        audio => audio.type === "CONTENT" && audio.id === contentId
       );
 
       if (targetAudioIndex !== -1) {
@@ -290,6 +349,7 @@ export const AudioStore = types
     return {
       clearInstantAudio,
       pushAudio,
+      pushMagazineContentAudio,
       popAudio,
       toggleAudio,
       onAudioProgress,

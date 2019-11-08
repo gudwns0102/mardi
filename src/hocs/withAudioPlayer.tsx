@@ -57,10 +57,11 @@ export const withAudioPlayer = <
                       audio={currentAudio}
                       isPlaying={audioStore.playing}
                       onPress={this.onPlayerPress}
-                      onHeartPress={_.partial(
-                        contentStore.clickHeart,
-                        currentAudio.id
-                      )}
+                      onHeartPress={
+                        currentAudio
+                          ? _.partial(contentStore.clickHeart, currentAudio.id)
+                          : _.identity
+                      }
                       onRewindPress={audioStore.rewind}
                       onAudioPress={audioStore.toggleAudio}
                       currentTime={currentTime}
@@ -74,25 +75,26 @@ export const withAudioPlayer = <
                 <Animated.View
                   style={{
                     opacity: this.opacity,
-                    display: this.isAnimating ? "flex" : show ? "flex" : "none"
-                    // transform: [
-                    //   {
-                    //     translateY: this.opacity.interpolate({
-                    //       inputRange: [0, 1],
-                    //       outputRange: [54, 0]
-                    //     })
-                    //   }
-                    // ]
+                    display: this.isAnimating ? "flex" : show ? "flex" : "none",
+                    transform: [
+                      {
+                        translateY: this.opacity.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [0, 1]
+                        })
+                      }
+                    ]
                   }}
                 >
                   <AudioPlayer
                     audio={currentAudio}
                     isPlaying={audioStore.playing}
                     onPress={this.onPlayerPress}
-                    onHeartPress={_.partial(
-                      contentStore.clickHeart,
-                      currentAudio.id
-                    )}
+                    onHeartPress={
+                      currentAudio
+                        ? _.partial(contentStore.clickHeart, currentAudio.id)
+                        : _.identity
+                    }
                     onRewindPress={audioStore.rewind}
                     onAudioPress={audioStore.toggleAudio}
                     currentTime={currentTime}

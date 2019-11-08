@@ -17,8 +17,10 @@ import { navigatePrevMagazineScreen } from "src/screens/PrevMagazineScreen";
 import { IMagazineStore } from "src/stores/MagazineStore";
 import { IRootStore } from "src/stores/RootStore";
 import { colors } from "src/styles/colors";
+import { IAudioStore } from "src/stores/AudioStore";
 
 interface IInjectProps {
+  audioStore: IAudioStore;
   magazineStore: IMagazineStore;
 }
 
@@ -178,6 +180,7 @@ const StyledMagazineCard = styled(MagazineCard)`
 
 @inject(
   ({ store }: { store: IRootStore }): IInjectProps => ({
+    audioStore: store.audioStore,
     magazineStore: store.magazineStore
   })
 )
@@ -281,13 +284,18 @@ export class MagazineScreen extends React.Component<IProps> {
     item,
     index
   }) => {
+    const { audioStore } = this.props;
     return (
       <Page source={item.picture ? { uri: item.picture } : images.airplane}>
         <PageTitleContainer>
           <PageTitle>{item.title}</PageTitle>
         </PageTitleContainer>
         <PageGuideText>재생버튼을 눌러{"\n"}매거진을 들으세요</PageGuideText>
-        <PlayButton>
+        <PlayButton
+          onPress={() => {
+            audioStore.pushMagazineContentAudio(item);
+          }}
+        >
           <PlayButtonBlurView blurAmount={37} blurType="light" />
           <PlayIcon />
           <PlayText>{item.num_played || 0}</PlayText>

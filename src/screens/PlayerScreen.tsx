@@ -229,7 +229,7 @@ export class PlayerScreen extends React.Component<IProps, any> {
       ? {
           uri: audio.image
         }
-      : getBigPatternByIndex(audio.default_image_pattern_idx);
+      : getBigPatternByIndex(audio.default_image_pattern_idx || 0);
 
     const questionText = _.get(audio.title, ["text"], null);
     const avatarSource = audio.photo;
@@ -240,7 +240,7 @@ export class PlayerScreen extends React.Component<IProps, any> {
           backgroundColor={
             audio.image
               ? colors.black
-              : getBackgroundByIndex(audio.default_image_color_idx)
+              : getBackgroundByIndex(audio.default_image_color_idx || 0)
           }
         >
           <BackgroundImage source={backgroundImageSource} resizeMode="cover" />

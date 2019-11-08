@@ -9,6 +9,7 @@ import styled from "styled-components/native";
 
 import { BlurView } from "@react-native-community/blur";
 import { images } from "assets/images";
+import { getRandomContents } from "src/apis/contents/getRandomContents";
 import { Button } from "src/components/buttons/Button";
 import { IconButton } from "src/components/buttons/IconButton";
 import { ClosableToast } from "src/components/ClosableToast";
@@ -213,7 +214,7 @@ export class ListenScreen extends React.Component<IProps> {
         {this.showBanner ? this.NoFollowerBanner : null}
         <RandomButtonContainer>
           <RandomButtonBlurView blurType="light" blurAmount={17} />
-          <RandomButton>
+          <RandomButton onPress={this.onRandomPress}>
             <RandomIcon />
             랜덤 듣기
           </RandomButton>
@@ -291,6 +292,12 @@ export class ListenScreen extends React.Component<IProps> {
   private scrollToTop = () => {
     const contentList = _.invoke(this.contentListRef.current, ["getNode"]);
     _.invoke(contentList, ["root", "scrollToOffset"], { y: 0, animated: true });
+  };
+
+  private onRandomPress = async () => {
+    const { audioStore } = this.props;
+    const contents = await getRandomContents();
+    audioStore.pushAudios(contents);
   };
 }
 

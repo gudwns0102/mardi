@@ -1,5 +1,5 @@
 import { BlurView } from "@react-native-community/blur";
-import React from "react";
+import React, { useState } from "react";
 import { ViewProps } from "react-native";
 import styled from "styled-components/native";
 
@@ -12,7 +12,7 @@ import { isAndroid } from "src/utils/Platform";
 
 interface IProps {
   style?: ViewProps["style"];
-  audio: IAudio;
+  audio: IAudio | null;
   isPlaying?: boolean;
   onPress?: () => any;
   onHeartPress?: () => any;
@@ -120,12 +120,14 @@ export function AudioPlayer({
       <BlurLayer blurAmount={17} blurType="light" />
       <Container>
         <Heart
-          source={audio.heart_by_me ? images.heart36 : images.heart36Off}
+          source={
+            audio && audio.heart_by_me ? images.heart36 : images.heart36Off
+          }
           onPress={onHeartPress}
         />
         <Column>
-          <Title>{audio.title}</Title>
-          <Author>{audio.username}</Author>
+          <Title>{audio ? audio.title : ""}</Title>
+          <Author>{audio ? audio.username : ""}</Author>
         </Column>
         <Rewind onPress={onRewindPress} />
         {isPlaying ? (

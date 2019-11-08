@@ -73,16 +73,6 @@ const ProfileContainer = styled.View`
   padding: 17px 20px 0px;
 `;
 
-const AvatarRecordRow = styled.View<{ hasIntro: boolean }>`
-  flex-direction: row;
-  height: ${props => (props.hasIntro ? 74 : 64)};
-  align-items: ${props => (props.hasIntro ? "flex-start" : "center")};
-  justify-content: ${props => (props.hasIntro ? "flex-start" : "center")};
-  margin-top: 12px;
-  margin-bottom: ${props => (props.hasIntro ? 16 : 34)};
-  margin-right: ${props => (props.hasIntro ? 0 : 9)};
-`;
-
 const Avatar = styled.Image`
   width: 64px;
   height: 64px;
@@ -210,6 +200,11 @@ const StyledUserPageListenButton = styled(UserPageListenButton)`
   margin-bottom: 15px;
 `;
 
+const Spacer = styled.View`
+  width: 100%;
+  flex: 1;
+`;
+
 @inject(
   ({ store }: { store: IRootStore }): IInjectProps => ({
     audioStore: store.audioStore,
@@ -273,7 +268,7 @@ export class UserPageScreen extends React.Component<IProps, IState> {
     userStore.users.forEach($user => $user.follow_by_me);
 
     if (!user) {
-      return null;
+      return <Spacer />;
     }
 
     const source = user.photo ? { uri: user.photo } : images.user;
