@@ -5,10 +5,11 @@ import {
   getContentsAPI,
   getFollowerContentsAPI,
   getHomeContentsAPI,
+  getTop30Contents,
   IContentParams
 } from "src/apis";
 
-export type ContentBundleType = "ALL" | "FOLLOWED" | "HOME";
+export type ContentBundleType = "ALL" | "FOLLOWED" | "HOME" | "TOP30";
 
 const INITIAL_PAGE = 1;
 const DEFAULT_PAGE_SIZE = 15;
@@ -46,7 +47,8 @@ const ContentBundle = types
         return {
           ALL: getContentsAPI,
           FOLLOWED: getFollowerContentsAPI,
-          HOME: getHomeContentsAPI
+          HOME: getHomeContentsAPI,
+          TOP30: getTop30Contents
         }[self.type];
       },
 

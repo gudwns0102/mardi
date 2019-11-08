@@ -20,7 +20,17 @@ const Item = styled(CurationCard)`
 
 class CurationListClass extends React.Component<IProps> {
   public render() {
-    const { innerRef } = this.props;
+    const { innerRef, onCurationPress } = this.props;
+    const top30Curation = {
+      id: 0,
+      num_contents: 30,
+      question: {
+        audio: null,
+        category: "",
+        id: null,
+        text: "금주 인기 Top 30"
+      }
+    };
     return (
       <List
         {...this.props}
@@ -35,6 +45,12 @@ class CurationListClass extends React.Component<IProps> {
           paddingVertical: 30,
           alignItems: "center"
         }}
+        ListHeaderComponent={
+          <Item
+            curation={top30Curation}
+            onPress={_.partial(onCurationPress, top30Curation, 0)}
+          />
+        }
       />
     );
   }

@@ -232,14 +232,14 @@ export class ListenScreen extends React.Component<IProps> {
       >
         <CurationList
           ref={this.curationListRef}
-          data={curations}
+          data={[...curations]}
           onCurationPress={this.onCurationPress}
         />
       </CurationListContainer>
     );
   }
 
-  private onCurationPress = (curation: ICuration, index: number) => {
+  private onCurationPress = (curation: ICuration, index: number | null) => {
     const { navigation } = this.props;
     navigateSearchQuestionScreen(navigation, {
       questionId: curation.question.id,

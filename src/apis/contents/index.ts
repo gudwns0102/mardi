@@ -14,3 +14,4 @@ export * from "src/apis/contents/postContentHeart";
 export * from "src/apis/contents/postContentPlay";
 export * from "src/apis/contents/postContentPlayHalf";
 export * from "src/apis/contents/postTextReply";
+export * from "src/apis/contents/getTop30Contents";

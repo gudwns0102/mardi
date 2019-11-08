@@ -1,0 +1,1 @@
+type AudioType = "CONTENT" | "MAGAZINE";

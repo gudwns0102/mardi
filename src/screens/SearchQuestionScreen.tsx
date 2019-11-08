@@ -28,7 +28,7 @@ interface IInjectProps {
 }
 
 interface IParams {
-  questionId: IQuestion["id"];
+  questionId: IQuestion["id"] | null;
   questionText: IQuestion["text"];
 }
 
@@ -195,9 +195,16 @@ export class SearchQuestionScreen extends React.Component<IProps, IState> {
 
   public componentDidMount() {
     const { navigation } = this.props;
-    this.contentBundle.initializeContents({
-      question: navigation.getParam("questionId")
-    });
+
+    const questionId = navigation.getParam("questionId");
+
+    if (questionId !== null) {
+      this.contentBundle.initializeContents({
+        question: questionId
+      });
+    } else {
+      this.contentBundle.initializeContents({}, "TOP30");
+    }
   }
 
   public render() {
@@ -208,10 +215,14 @@ export class SearchQuestionScreen extends React.Component<IProps, IState> {
         <PlainHeader>
           <BackButton onPress={this.goBack} />
           <React.Fragment />
-          <RecordButtonContainer onPress={this.onQuestionPress}>
-            <RedCircle />
-            <RecordButtonText>이 주제 녹음하기</RecordButtonText>
-          </RecordButtonContainer>
+          {this.questionId !== null ? (
+            <RecordButtonContainer onPress={this.onQuestionPress}>
+              <RedCircle />
+              <RecordButtonText>이 주제 녹음하기</RecordButtonText>
+            </RecordButtonContainer>
+          ) : (
+            <></>
+          )}
         </PlainHeader>
         <BodyContainer>
           <BackgroundImage source={images.pattern4} />
@@ -314,17 +325,17 @@ export class SearchQuestionScreen extends React.Component<IProps, IState> {
   };
 
   private onQuestionPress = () => {
-    navigateRecordScreen(this.navigation, {
-      questionId: this.questionId,
-      questionText: this.questionText
-    });
+    if (this.questionId !== null) {
+      navigateRecordScreen(this.navigation, {
+        questionId: this.questionId,
+        questionText: this.questionText
+      });
+    }
   };
 
   private onContentLayoutPress = (contentLayoutType: ContentLayoutType) => {
     this.setState({ contentLayoutType });
   };
-
-  private onRecordPress = () => {};
 
   private goBack = () => {
     this.navigation.goBack(null);

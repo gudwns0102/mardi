@@ -14,13 +14,13 @@ interface IProps {
 }
 
 const Padding = styled.View`
-  width: 220px;
+  width: 176px;
   height: 64px;
   padding-left: 10px;
 `;
 
 const Container = styled.View`
-  width: 200px;
+  width: 156px;
   height: 64px;
   align-items: center;
   text-align: center;
@@ -32,17 +32,19 @@ const TouchableOpacity = styled.TouchableOpacity<{
 }>`
   align-items: center;
   justify-content: center;
-  width: 200px;
+  width: 156px;
   height: 64px;
-  padding: 0 18px;
+  padding: 0 6px;
   border-radius: 14px;
   background-color: ${props => props.activeBackgroundColor};
   overflow: hidden;
 `;
 
 const Content = styled(Text).attrs({ type: "bold" })`
+  width: 120px;
   font-size: 16px;
   color: ${colors.white};
+  text-align: center;
 `;
 
 const BackgroundImage = styled.Image`
@@ -54,7 +56,7 @@ const BackgroundImage = styled.Image`
 `;
 
 const createShadowOpt = (color: string) => ({
-  width: 196,
+  width: 156,
   height: 64,
   color,
   border: 8,

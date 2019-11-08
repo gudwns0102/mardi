@@ -1,7 +1,7 @@
 interface ICuration {
   id: number;
   question: {
-    id: number;
+    id: number | null;
     category: string;
     text: string;
     audio: string | null;
