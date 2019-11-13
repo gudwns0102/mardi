@@ -83,10 +83,10 @@ const ListenNavigator = createStackNavigator(
     },
     CameraScreen: {
       screen: Screens.CameraScreen
-    },
-    OtherUserScreen: {
-      screen: Screens.UserPageScreen
     }
+    // OtherUserScreen: {
+    //   screen: Screens.UserPageScreen
+    // }
   },
   {
     headerMode: "none",

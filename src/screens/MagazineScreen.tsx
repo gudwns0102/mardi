@@ -7,17 +7,18 @@ import styled from "styled-components/native";
 
 import { images } from "assets/images";
 import { observable } from "mobx";
-import { inject, observer } from "mobx-react";
-import { getLatestMagazine } from "src/apis/magazines/getLatestMagazine";
+import { inject, observer, Observer } from "mobx-react";
 import { MagazineCard } from "src/components/cards/MagazineCard";
 import { PlainHeader } from "src/components/PlainHeader";
 import { Text } from "src/components/Text";
 import { withAudioPlayer } from "src/hocs/withAudioPlayer";
+import { IMagazineContent } from "src/models/MagazineContent";
 import { navigatePrevMagazineScreen } from "src/screens/PrevMagazineScreen";
+import { IAudioStore } from "src/stores/AudioStore";
 import { IMagazineStore } from "src/stores/MagazineStore";
 import { IRootStore } from "src/stores/RootStore";
 import { colors } from "src/styles/colors";
-import { IAudioStore } from "src/stores/AudioStore";
+import { navigateUserPageScreen } from "./UserPageScreen";
 
 interface IInjectProps {
   audioStore: IAudioStore;
@@ -199,7 +200,6 @@ export class MagazineScreen extends React.Component<IProps> {
   @observable public magazineContentIndex = 0;
 
   public async componentDidMount() {
-    // this.props.navigation.addListener("didFocus", console.log);
     this.props.magazineStore.fetchLatestMagazine();
   }
 
@@ -221,11 +221,15 @@ export class MagazineScreen extends React.Component<IProps> {
           <PrevText
             onPress={() =>
               navigatePrevMagazineScreen(navigation, {
-                onPress: ({ magazineContent, index }) => {
-                  this.magazineContentsRef.current!.scrollToIndex({
-                    animated: true,
-                    index
-                  });
+                onPress: ({ index }) => {
+                  setTimeout(
+                    () =>
+                      this.magazineContentsRef.current!.scrollToIndex({
+                        animated: true,
+                        index
+                      }),
+                    100
+                  );
                 }
               })
             }
@@ -238,7 +242,7 @@ export class MagazineScreen extends React.Component<IProps> {
           style={{ flex: 1 }}
           horizontal={true}
           pagingEnabled={true}
-          data={this.magazine.contents}
+          data={Array.from(this.magazine.contents)}
           renderItem={this.renderMagazineContent}
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
@@ -271,6 +275,16 @@ export class MagazineScreen extends React.Component<IProps> {
         </IndicatorRow>
         <StyledMagazineCard
           magazineContent={this.magazine.contents[this.magazineContentIndex]}
+          onAvatarPress={() => {
+            if (this.magazine) {
+              const link_user = this.magazine.contents[
+                this.magazineContentIndex
+              ].link_user;
+              if (link_user && link_user.uuid) {
+                navigateUserPageScreen(navigation, { uuid: link_user.uuid });
+              }
+            }
+          }}
         />
       </Container>
     );
@@ -280,27 +294,38 @@ export class MagazineScreen extends React.Component<IProps> {
     return this.props.magazineStore.currentMagazine;
   }
 
-  public renderMagazineContent: ListRenderItem<MagazineContent> = ({
+  public renderMagazineContent: ListRenderItem<IMagazineContent> = ({
     item,
     index
   }) => {
     const { audioStore } = this.props;
     return (
-      <Page source={item.picture ? { uri: item.picture } : images.airplane}>
-        <PageTitleContainer>
-          <PageTitle>{item.title}</PageTitle>
-        </PageTitleContainer>
-        <PageGuideText>재생버튼을 눌러{"\n"}매거진을 들으세요</PageGuideText>
-        <PlayButton
-          onPress={() => {
-            audioStore.pushMagazineContentAudio(item);
-          }}
-        >
-          <PlayButtonBlurView blurAmount={37} blurType="light" />
-          <PlayIcon />
-          <PlayText>{item.num_played || 0}</PlayText>
-        </PlayButton>
-      </Page>
+      <Observer>
+        {() => (
+          <Page source={item.picture ? { uri: item.picture } : images.airplane}>
+            <PageTitleContainer>
+              <PageTitle>{item.title}</PageTitle>
+            </PageTitleContainer>
+            <PageGuideText>
+              재생버튼을 눌러{"\n"}매거진을 들으세요
+            </PageGuideText>
+            <PlayButton
+              onPress={() => {
+                if (this.magazine) {
+                  audioStore.pushMagazineContentAudio({
+                    ...item,
+                    magazineId: this.magazine.id
+                  });
+                }
+              }}
+            >
+              <PlayButtonBlurView blurAmount={37} blurType="light" />
+              <PlayIcon />
+              <PlayText>{item.num_played || 0}</PlayText>
+            </PlayButton>
+          </Page>
+        )}
+      </Observer>
     );
   };
 

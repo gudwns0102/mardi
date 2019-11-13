@@ -5,10 +5,12 @@ import styled from "styled-components/native";
 import { images } from "assets/images";
 import { Button } from "src/components/buttons/Button";
 import { Text } from "src/components/Text";
+import { IMagazineContent } from "src/models/MagazineContent";
 import { shadow } from "src/utils/Shadow";
 
 interface IProps extends ViewProps {
-  magazineContent: MagazineContent;
+  magazineContent: IMagazineContent;
+  onAvatarPress: () => void;
 }
 
 const Container = styled.View`
@@ -35,6 +37,8 @@ const Footer = styled.View`
   align-items: center;
   width: 100%;
 `;
+
+const AvatarWrapper = styled.TouchableOpacity``;
 
 const Avatar = styled.Image.attrs({ source: images.airplane })`
   width: 26px;
@@ -83,14 +87,26 @@ const ShareIcon = styled.Image.attrs({ source: images.btnCommonShare })`
   height: 24px;
 `;
 
-export function MagazineCard({ magazineContent, ...props }: IProps) {
+export function MagazineCard({
+  magazineContent,
+  onAvatarPress,
+  ...props
+}: IProps) {
   return (
     <Container {...props}>
       <Title numberOfLines={2}>{magazineContent.title}</Title>
       <Content numberOfLines={2}>{magazineContent.text}</Content>
       <Footer>
-        <Avatar />
-        <Name>{magazineContent.title}</Name>
+        <AvatarWrapper onPress={onAvatarPress}>
+          <Avatar
+            source={
+              magazineContent.picture
+                ? { uri: magazineContent.picture }
+                : images.airplane
+            }
+          />
+        </AvatarWrapper>
+        <Name>{magazineContent.user_name}</Name>
         <CommentButton>
           <CommentIcon />
           <CommentText>{magazineContent.num_replies || 0}</CommentText>

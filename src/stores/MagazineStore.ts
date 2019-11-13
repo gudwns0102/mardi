@@ -1,10 +1,14 @@
+import _ from "lodash";
 import { flow, types } from "mobx-state-tree";
 import { getLatestMagazine } from "src/apis/magazines/getLatestMagazine";
 import { getMagazine } from "src/apis/magazines/getMagazine";
+import { postMagazineContentPlay } from "src/apis/magazines/postMagazineContentPlay";
+import { Magazine } from "src/models/Magazine";
+import { MagazineContent } from "src/models/MagazineContent";
 
 export const MagazineStore = types
   .model({
-    magazines: types.optional(types.map(types.frozen<Magazine>()), {}),
+    magazines: types.optional(types.map(Magazine), {}),
     currentMagazineId: types.maybeNull(types.number)
   })
   .views(self => {
@@ -21,7 +25,14 @@ export const MagazineStore = types
       const magazine: RetrieveAsyncFunc<
         typeof getLatestMagazine
       > = yield getLatestMagazine();
-      self.magazines.set(magazine.id.toString(), magazine);
+      const magazineContentModels = magazine.contents.map(content =>
+        MagazineContent.create({ ...content })
+      );
+      const magazineModel = Magazine.create({
+        ...magazine,
+        contents: magazineContentModels
+      });
+      self.magazines.set(magazine.id.toString(), magazineModel);
       self.currentMagazineId = magazine.id;
     });
 
@@ -29,13 +40,45 @@ export const MagazineStore = types
       const magazine: RetrieveAsyncFunc<typeof getMagazine> = yield getMagazine(
         id
       );
-      self.magazines.set(magazine.id.toString(), magazine);
+      const magazineContentModels = magazine.contents.map(content =>
+        MagazineContent.create({ ...content })
+      );
+      const magazineModel = Magazine.create({
+        ...magazine,
+        contents: magazineContentModels
+      });
+      self.magazines.set(magazine.id.toString(), magazineModel);
       self.currentMagazineId = magazine.id;
+    });
+
+    const increasePlayCount = flow(function*({
+      magazineId,
+      magazineContentId
+    }: {
+      magazineId: number;
+      magazineContentId: number;
+    }) {
+      const {
+        num_played
+      }: RetrieveAsyncFunc<
+        typeof postMagazineContentPlay
+      > = yield postMagazineContentPlay({ magazineId, magazineContentId });
+      const magazine = self.magazines.get(magazineId.toString());
+      if (magazine) {
+        const magazineContent = magazine.contents.find(
+          content => content.id === magazineContentId
+        );
+
+        if (magazineContent) {
+          magazineContent.increasePlayCount(num_played || 0);
+        }
+      }
     });
 
     return {
       fetchLatestMagazine,
-      fetchMagazine
+      fetchMagazine,
+      increasePlayCount
     };
   });
 

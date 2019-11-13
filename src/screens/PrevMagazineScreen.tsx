@@ -95,7 +95,10 @@ const Name = styled(Text).attrs({ type: "bold" })`
 )
 @withAudioPlayer
 @observer
-export class PrevMagazineScreen extends React.Component<IProps> {
+export class PrevMagazineScreen extends React.Component<
+  IProps,
+  { magazines: Magazine[] }
+> {
   public static options: IScreenOptions = {
     statusBarProps: {
       backgroundColor: "rgba(247, 247, 247, 0.8)"
@@ -104,11 +107,16 @@ export class PrevMagazineScreen extends React.Component<IProps> {
 
   public scroll = new Animated.Value(0);
 
-  @observable public magazines = [] as Magazine[];
+  // @observable public magazines = [] as Magazine[];
+
+  public state = {
+    magazines: [] as Magazine[]
+  };
 
   public async componentDidMount() {
     const { results } = await getMagazines({ page: 1, page_size: 100 });
-    this.magazines = results;
+    this.setState({ magazines: results });
+    // this.magazines = results;
   }
 
   public render() {
@@ -116,6 +124,7 @@ export class PrevMagazineScreen extends React.Component<IProps> {
       navigation,
       magazineStore: { fetchMagazine }
     } = this.props;
+    const { magazines } = this.state;
 
     const onPress = navigation.getParam("onPress");
 
@@ -130,7 +139,7 @@ export class PrevMagazineScreen extends React.Component<IProps> {
           contentContainerStyle={{
             paddingTop: 9
           }}
-          sections={Array.from(this.magazines).map(magazine => ({
+          sections={magazines.map(magazine => ({
             magazine,
             title: magazine.title,
             color: magazine.color,
@@ -160,7 +169,7 @@ export class PrevMagazineScreen extends React.Component<IProps> {
                 }}
               >
                 <PrevMagazineTitle>{item.title}</PrevMagazineTitle>
-                <Name>{item.text}</Name>
+                <Name>{item.user_name}</Name>
               </PrevMagazineContainer>
             );
           }}

@@ -3,6 +3,7 @@ import { types } from "mobx-state-tree";
 import React from "react";
 import Video from "react-native-video";
 
+import { IMagazineContent } from "src/models/MagazineContent";
 import { getRootStore } from "src/stores/RootStoreHelper";
 
 export interface IAudio {
@@ -21,6 +22,7 @@ export interface IAudio {
   default_image_pattern_idx?: number;
   uuid: string;
   audio_duration: number;
+  magazineId?: number;
 }
 
 export const audioStoreRef = React.createRef<Video>();
@@ -141,8 +143,9 @@ export const AudioStore = types
       num_replies,
       num_played,
       audio_duration,
-      picture
-    }: MagazineContent) => {
+      picture,
+      magazineId
+    }: IMagazineContent & { magazineId: number }) => {
       const incomingAudioId = id;
       const currentAudio = getCurrentAudio();
       const alreadyHasAudio = self.audios.length !== 0;
@@ -176,7 +179,8 @@ export const AudioStore = types
             num_hearts: 0,
             num_replies,
             username: "API NOT READY",
-            uuid: "API NOT READY"
+            uuid: "API NOT READY",
+            magazineId
           }
         ]);
         self.audioHistory.clear();

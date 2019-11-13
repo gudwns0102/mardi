@@ -29,7 +29,8 @@ export const withAudio = <T extends object>(
         audioStore,
         contentStore,
         userStore,
-        netStatusStore
+        netStatusStore,
+        magazineStore
       } = getStore();
 
       const { isWifiConnection } = netStatusStore;
@@ -60,7 +61,16 @@ export const withAudio = <T extends object>(
                     onLoad={() => {
                       this.isListenProgress = false;
                       this.isHalfPlayed = false;
-                      contentStore.increasePlayCount(currentAudio.id);
+
+                      if (currentAudio.type === "CONTENT") {
+                        contentStore.increasePlayCount(currentAudio.id);
+                      } else {
+                        magazineStore.increasePlayCount({
+                          magazineId: currentAudio.magazineId!,
+                          magazineContentId: currentAudio.id
+                        });
+                      }
+
                       checkPlayCountForRating();
                     }}
                     onProgress={e => {
@@ -78,7 +88,10 @@ export const withAudio = <T extends object>(
                         currentTime > playableDuration / 2
                       ) {
                         this.isHalfPlayed = true;
-                        contentStore.increaseHalfPlayCount(currentAudio.id);
+
+                        if (currentAudio.type === "CONTENT") {
+                          contentStore.increaseHalfPlayCount(currentAudio.id);
+                        }
                       }
                     }}
                     onEnd={() => {
