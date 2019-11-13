@@ -136,18 +136,21 @@ export const AudioStore = types
     };
 
     const pushMagazineContentAudio = ({
-      id,
-      title,
-      text,
-      audio,
-      num_replies,
-      num_played,
-      audio_duration,
-      picture,
-      magazineId,
-      user_name,
-      link_user
-    }: IMagazineContent & { magazineId: number }) => {
+      magazineContent: {
+        id,
+        title,
+        audio,
+        num_replies,
+        audio_duration,
+        picture,
+        user_name,
+        link_user
+      },
+      magazineId
+    }: {
+      magazineContent: MagazineContent;
+      magazineId: number;
+    }) => {
       const incomingAudioId = id;
       const currentAudio = getCurrentAudio();
       const alreadyHasAudio = self.audios.length !== 0;

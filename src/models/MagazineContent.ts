@@ -15,12 +15,12 @@ export const MagazineContent = types
     title: types.string,
     text: types.string,
     audio: types.maybe(types.string),
-    num_replies: types.optional(types.number, 0),
-    num_played: types.optional(types.number, 0),
-    audio_duration: types.optional(types.number, 0),
+    num_replies: types.number,
+    num_played: types.number,
+    audio_duration: types.number,
     picture: types.maybeNull(types.string),
-    user_name: types.maybeNull(types.string),
-    link_user: types.maybeNull(types.frozen<LinkUser>())
+    user_name: types.maybe(types.string),
+    link_user: types.maybe(types.frozen<LinkUser>())
   })
   .actions(self => {
     const increasePlayCount = (count: number) => {

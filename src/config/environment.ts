@@ -9,7 +9,7 @@ const development = {
 };
 
 const production = {
-  baseURL: "https://api.mardi.life/v2",
+  baseURL: "https://api-dev.mardi.life",
   privacyPolicy: "https://mardi.life/privacy-policy",
   termsOfUse: "https://mardi.life/terms-of-use",
   share: (id: number) => `https://mardi.life/share?id=${id}`,

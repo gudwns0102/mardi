@@ -13,7 +13,6 @@ import { PlainHeader } from "src/components/PlainHeader";
 import { Text } from "src/components/Text";
 import { withAudioPlayer } from "src/hocs/withAudioPlayer";
 import { IMagazine } from "src/models/Magazine";
-import { IMagazineContent } from "src/models/MagazineContent";
 import { navigatePrevMagazineScreen } from "src/screens/PrevMagazineScreen";
 import { IAudioStore } from "src/stores/AudioStore";
 import { IMagazineStore } from "src/stores/MagazineStore";
@@ -231,8 +230,42 @@ export class MagazineScreen extends React.Component<IProps> {
           style={{ flex: 1 }}
           horizontal={true}
           pagingEnabled={true}
-          data={Array.from(this.magazine.contents)}
-          renderItem={this.renderMagazineContent}
+          data={this.magazine.contents}
+          renderItem={({ item, index }) => {
+            const { audioStore } = this.props;
+            return (
+              <Observer>
+                {() => (
+                  <Page
+                    source={
+                      item.picture ? { uri: item.picture } : images.airplane
+                    }
+                  >
+                    <PageTitleContainer themeColor={this.magazine!.color}>
+                      <PageTitle>{item.title}</PageTitle>
+                    </PageTitleContainer>
+                    <PageGuideText>
+                      재생버튼을 눌러{"\n"}매거진을 들으세요
+                    </PageGuideText>
+                    <PlayButton
+                      onPress={() => {
+                        if (this.magazine) {
+                          audioStore.pushMagazineContentAudio({
+                            magazineContent: item,
+                            magazineId: this.magazine.id
+                          });
+                        }
+                      }}
+                    >
+                      <PlayButtonBlurView blurAmount={37} blurType="light" />
+                      <PlayIcon />
+                      <PlayText>{item.num_played || 0}</PlayText>
+                    </PlayButton>
+                  </Page>
+                )}
+              </Observer>
+            );
+          }}
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
           onScroll={Animated.event([
@@ -270,41 +303,6 @@ export class MagazineScreen extends React.Component<IProps> {
       </Container>
     );
   }
-
-  public renderMagazineContent: ListRenderItem<IMagazineContent> = ({
-    item,
-    index
-  }) => {
-    const { audioStore } = this.props;
-    return (
-      <Observer>
-        {() => (
-          <Page source={item.picture ? { uri: item.picture } : images.airplane}>
-            <PageTitleContainer themeColor={this.magazine!.color}>
-              <PageTitle>{item.title}</PageTitle>
-            </PageTitleContainer>
-            <PageGuideText>
-              재생버튼을 눌러{"\n"}매거진을 들으세요
-            </PageGuideText>
-            <PlayButton
-              onPress={() => {
-                if (this.magazine) {
-                  audioStore.pushMagazineContentAudio({
-                    ...item,
-                    magazineId: this.magazine.id
-                  });
-                }
-              }}
-            >
-              <PlayButtonBlurView blurAmount={37} blurType="light" />
-              <PlayIcon />
-              <PlayText>{item.num_played || 0}</PlayText>
-            </PlayButton>
-          </Page>
-        )}
-      </Observer>
-    );
-  };
 
   public onViewableItemChanged = ({
     viewableItems
