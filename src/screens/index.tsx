@@ -26,8 +26,11 @@ import { IntroRecordScreen as $IntroRecordScreen } from "src/screens/IntroRecord
 import { KeywordScreen as $KeywordScreen } from "src/screens/KeywordScreen";
 import { ListenDetailScreen as $ListenDetailScreen } from "src/screens/ListenDetailScreen";
 import { ListenScreen as $ListenScreen } from "src/screens/ListenScreen";
+import { MagazineReplyScreen as $MagazineReplyScreen } from "src/screens/MagazineReplyScreen";
 import { MagazineScreen as $MagazineScreen } from "src/screens/MagazineScreen";
 import { PlayerScreen as $PlayerScreen } from "src/screens/PlayerScreen";
+import { PrevMagazineDetailScreen as $PrevMagazineDetailScreen } from "src/screens/PrevMagazineDetailScreen";
+import { PrevMagazineScreen as $PrevMagazineScreen } from "src/screens/PrevMagazineScreen";
 import { ProfileEditScreen as $ProfileEditScreen } from "src/screens/ProfileEditScreen";
 import { ProfileResetPasswordScreen as $ProfileResetPasswordScreen } from "src/screens/ProfileResetPasswordScreen";
 import { QuestionScreen as $QuestionScreen } from "src/screens/QuestionScreen";
@@ -40,7 +43,7 @@ import { SettingScreen as $SettingScreen } from "src/screens/SettingScreen";
 import { SplashScreen as $SplashScreen } from "src/screens/SplashScreen";
 import { UserPageScreen as $UserPageScreen } from "src/screens/UserPageScreen";
 import { WebViewScreen as $WebViewScreen } from "src/screens/WebViewScreen";
-import { PrevMagazineScreen as $PrevMagazineScreen } from "src/screens/PrevMagazineScreen";
+
 import { isAndroid } from "src/utils/Platform";
 
 const Container = styled(SafeAreaView)<{
@@ -156,3 +159,7 @@ export const FollowRecommendScreen = decorateScreen($FollowRecommendScreen);
 export const PlayerScreen = decorateScreen($PlayerScreen);
 export const MagazineScreen = decorateScreen($MagazineScreen);
 export const PrevMagazineScreen = decorateScreen($PrevMagazineScreen);
+export const MagazineReplyScreen = decorateScreen($MagazineReplyScreen);
+export const PrevMagazineDetailScreen = decorateScreen(
+  $PrevMagazineDetailScreen
+);

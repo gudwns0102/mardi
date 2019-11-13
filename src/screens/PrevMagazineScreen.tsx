@@ -1,12 +1,11 @@
 import _ from "lodash";
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { Animated, Dimensions, SectionListData } from "react-native";
+import { Animated, SectionListData } from "react-native";
 import { NavigationScreenProp, SectionList } from "react-navigation";
 import styled from "styled-components/native";
 
 import { images } from "assets/images";
-import { observable } from "mobx";
 import { getMagazines } from "src/apis/magazines/getMagazines";
 import { getPastMagazines } from "src/apis/magazines/getPastMagazines";
 import { IconButton } from "src/components/buttons/IconButton";
@@ -16,15 +15,9 @@ import { withAudioPlayer } from "src/hocs/withAudioPlayer";
 import { IMagazineStore } from "src/stores/MagazineStore";
 import { IRootStore } from "src/stores/RootStore";
 import { colors } from "src/styles/colors";
-import { MagazineScreen, navigateMagazineScreen } from "./MagazineScreen";
+import { navigatePrevMagazineDetailScreen } from "./PrevMagazineDetailScreen";
 
-interface IParams {
-  onPress: (data: {
-    magazine: Magazine;
-    magazineContent: MagazineContent;
-    index: number;
-  }) => void;
-}
+interface IParams {}
 
 interface IInjectProps {
   magazineStore: IMagazineStore;
@@ -102,21 +95,21 @@ export class PrevMagazineScreen extends React.Component<
   public static options: IScreenOptions = {
     statusBarProps: {
       backgroundColor: "rgba(247, 247, 247, 0.8)"
+    },
+    forceInset: {
+      bottom: "always"
     }
   };
 
   public scroll = new Animated.Value(0);
-
-  // @observable public magazines = [] as Magazine[];
 
   public state = {
     magazines: [] as Magazine[]
   };
 
   public async componentDidMount() {
-    const { results } = await getMagazines({ page: 1, page_size: 100 });
+    const { results } = await getPastMagazines({ page: 1, page_size: 100 });
     this.setState({ magazines: results });
-    // this.magazines = results;
   }
 
   public render() {
@@ -125,8 +118,6 @@ export class PrevMagazineScreen extends React.Component<
       magazineStore: { fetchMagazine }
     } = this.props;
     const { magazines } = this.state;
-
-    const onPress = navigation.getParam("onPress");
 
     return (
       <Container>
@@ -158,13 +149,9 @@ export class PrevMagazineScreen extends React.Component<
               <PrevMagazineContainer
                 onPress={async () => {
                   await fetchMagazine(section.magazine.id);
-                  navigateMagazineScreen(navigation, {
-                    magazine: section.magazine
-                  });
-                  onPress({
-                    magazine: section.magazine,
-                    magazineContent: item,
-                    index
+                  navigatePrevMagazineDetailScreen(navigation, {
+                    magazineId: section.magazine.id,
+                    magazineContentId: item.id
                   });
                 }}
               >

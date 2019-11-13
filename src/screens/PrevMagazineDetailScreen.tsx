@@ -8,13 +8,13 @@ import styled from "styled-components/native";
 import { images } from "assets/images";
 import { observable } from "mobx";
 import { inject, observer, Observer } from "mobx-react";
+import { IconButton } from "src/components/buttons/IconButton";
 import { MagazineContentCard } from "src/components/cards/MagazineContentCard";
 import { PlainHeader } from "src/components/PlainHeader";
 import { Text } from "src/components/Text";
 import { withAudioPlayer } from "src/hocs/withAudioPlayer";
 import { IMagazine } from "src/models/Magazine";
 import { IMagazineContent } from "src/models/MagazineContent";
-import { navigatePrevMagazineScreen } from "src/screens/PrevMagazineScreen";
 import { IAudioStore } from "src/stores/AudioStore";
 import { IMagazineStore } from "src/stores/MagazineStore";
 import { IRootStore } from "src/stores/RootStore";
@@ -25,8 +25,13 @@ interface IInjectProps {
   magazineStore: IMagazineStore;
 }
 
+interface IParams {
+  magazineId: number;
+  magazineContentId?: number;
+}
+
 interface IProps extends IInjectProps {
-  navigation: NavigationScreenProp<any, any>;
+  navigation: NavigationScreenProp<any, IParams>;
 }
 
 const { width } = Dimensions.get("window");
@@ -37,44 +42,15 @@ const Container = styled.View`
   background-color: #ebebeb;
 `;
 
-const Logo = styled.View`
-  flex-direction: row;
-  align-items: center;
+const Back = styled(IconButton).attrs({ source: images.btnCommonBack })`
+  width: 24px;
+  height: 24px;
 `;
 
-const LogoImage = styled.Image.attrs({
-  source: images.icLogoBigBlue
-})<{ themeColor: string }>`
-  width: 90px;
-  height: 20px;
-  tint-color: ${props => props.themeColor};
-`;
-
-const LifeText = styled(Text).attrs({ type: "bradley" })`
-  font-size: 30px;
-  line-height: 38px;
-  color: #000000;
-  margin-top: 7px;
-  margin-left: 4px;
-`;
-
-const PrevText = styled(Text).attrs({ type: "bold" })<{ themeColor: string }>`
-  font-size: 16px;
-  line-height: 27px;
-  color: ${props => props.themeColor};
-`;
-
-const PageScrollView = styled.ScrollView.attrs({
-  horizontal: true,
-  pagingEnabled: true
-})`
-  width: 100%;
-  height: 310px;
-`;
-
-const MagazineContentContainer = styled.View`
-  width: 100%;
-  height: 100%;
+const HeaderTitle = styled(Text).attrs({ type: "bold" })`
+  font-size: 15px;
+  line-height: 24px;
+  color: rgb(69, 69, 69);
 `;
 
 const Page = styled.ImageBackground`
@@ -185,10 +161,13 @@ const StyledMagazineCard = styled(MagazineContentCard)`
 )
 @withAudioPlayer
 @observer
-export class MagazineScreen extends React.Component<IProps> {
+export class PrevMagazineDetailScreen extends React.Component<IProps> {
   public static options: IScreenOptions = {
     statusBarProps: {
       backgroundColor: "#ebebeb"
+    },
+    forceInset: {
+      bottom: "always"
     }
   };
 
@@ -196,10 +175,19 @@ export class MagazineScreen extends React.Component<IProps> {
   public scroll = new Animated.Value(0);
 
   @observable public magazineContentIndex = 0;
-  @observable public magazine = null as IMagazine | null;
+  @observable public magazine = null as null | IMagazine;
 
   public async componentDidMount() {
-    this.magazine = await this.props.magazineStore.fetchLatestMagazine();
+    const { navigation } = this.props;
+    this.magazine = await this.props.magazineStore.fetchMagazine(
+      navigation.getParam("magazineId")
+    );
+
+    const magazineContentId = navigation.getParam("magazineContentId");
+
+    if (magazineContentId) {
+      this.scrollToMagazineContent(magazineContentId);
+    }
   }
 
   public render() {
@@ -214,17 +202,9 @@ export class MagazineScreen extends React.Component<IProps> {
     return (
       <Container>
         <PlainHeader>
+          <Back onPress={() => navigation.goBack(null)} />
+          <HeaderTitle>지난호 보기</HeaderTitle>
           <React.Fragment />
-          <Logo>
-            <LogoImage themeColor={themeColor} />
-            <LifeText>life</LifeText>
-          </Logo>
-          <PrevText
-            themeColor={themeColor}
-            onPress={() => navigatePrevMagazineScreen(navigation, {})}
-          >
-            지난호
-          </PrevText>
         </PlainHeader>
         <FlatList
           ref={this.magazineContentsRef}
@@ -272,8 +252,7 @@ export class MagazineScreen extends React.Component<IProps> {
   }
 
   public renderMagazineContent: ListRenderItem<IMagazineContent> = ({
-    item,
-    index
+    item
   }) => {
     const { audioStore } = this.props;
     return (
@@ -315,11 +294,32 @@ export class MagazineScreen extends React.Component<IProps> {
       this.magazineContentIndex = viewableItems[0].index!;
     }
   };
+
+  public scrollToMagazineContent = (magazineContentId: number) => {
+    if (!this.magazine) {
+      return;
+    }
+
+    const index = this.magazine.contents.findIndex(
+      content => content.id === magazineContentId
+    );
+
+    if (index !== -1) {
+      setTimeout(
+        () =>
+          _.invoke(this.magazineContentsRef.current, ["scrollToIndex"], {
+            animated: true,
+            index
+          }),
+        100
+      );
+    }
+  };
 }
 
-export function navigateMagazineScreen(
+export function navigatePrevMagazineDetailScreen(
   navigation: NavigationScreenProp<any, any>,
-  params: any
+  params: IParams
 ) {
-  navigation.navigate("MagazineScreen", params);
+  navigation.navigate("PrevMagazineDetailScreen", params);
 }

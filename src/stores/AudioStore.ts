@@ -12,7 +12,7 @@ export interface IAudio {
   url: string;
   heart_by_me?: boolean;
   username: string;
-  photo?: string;
+  photo?: string | null;
   title: string;
   questionText?: string;
   num_hearts?: number;
@@ -20,7 +20,7 @@ export interface IAudio {
   image?: string | null;
   default_image_color_idx?: number;
   default_image_pattern_idx?: number;
-  uuid: string;
+  uuid: string | null;
   audio_duration: number;
   magazineId?: number;
 }
@@ -144,7 +144,9 @@ export const AudioStore = types
       num_played,
       audio_duration,
       picture,
-      magazineId
+      magazineId,
+      user_name,
+      link_user
     }: IMagazineContent & { magazineId: number }) => {
       const incomingAudioId = id;
       const currentAudio = getCurrentAudio();
@@ -178,9 +180,10 @@ export const AudioStore = types
             title,
             num_hearts: 0,
             num_replies,
-            username: "API NOT READY",
-            uuid: "API NOT READY",
-            magazineId
+            username: user_name || "",
+            uuid: link_user ? link_user.uuid || null : null,
+            magazineId,
+            photo: picture
           }
         ]);
         self.audioHistory.clear();

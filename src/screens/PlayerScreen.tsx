@@ -2,7 +2,7 @@ import _ from "lodash";
 import { inject, observer } from "mobx-react";
 import React from "react";
 import { Share, View } from "react-native";
-import { NavigationScreenProp, SafeAreaView } from "react-navigation";
+import { NavigationScreenProp } from "react-navigation";
 import styled from "styled-components/native";
 
 import { images } from "assets/images";
@@ -21,6 +21,7 @@ import { IRootStore } from "src/stores/RootStore";
 import { colors, getBackgroundByIndex } from "src/styles/colors";
 import { getBigPatternByIndex } from "src/utils/ContentPattern";
 import { deviceHeight, deviceWidth } from "src/utils/Dimensions";
+import { navigateMagazineReplyScreen } from "./MagazineReplyScreen";
 
 interface IInjectProps {
   audioStore: IAudioStore;
@@ -248,7 +249,11 @@ export class PlayerScreen extends React.Component<IProps, any> {
             <Row style={{ marginBottom: 96, marginTop: 28 }}>
               <PlayerAvatar
                 photo={avatarSource}
-                onPress={_.partial(this.onAvatarPress, audio.uuid)}
+                onPress={
+                  audio.uuid
+                    ? _.partial(this.onAvatarPress, audio.uuid)
+                    : undefined
+                }
               />
               <Name numberOfLines={1}>{audio.username}</Name>
               <TouchableOpacity onPress={this.goBack}>
@@ -339,11 +344,21 @@ export class PlayerScreen extends React.Component<IProps, any> {
       return;
     }
     navigation.goBack(null);
-    navigateReplyScreen(navigation, {
-      contentId: audio.id,
-      mode: "audio",
-      showRecorder: true
-    });
+
+    if (audio.type === "CONTENT") {
+      navigateReplyScreen(navigation, {
+        contentId: audio.id,
+        mode: "audio",
+        showRecorder: true
+      });
+    } else {
+      navigateMagazineReplyScreen(navigation, {
+        magazineId: audio.magazineId!,
+        magazineContentId: audio.id,
+        mode: "audio",
+        showRecorder: true
+      });
+    }
   };
 
   private onSharePress = () => {

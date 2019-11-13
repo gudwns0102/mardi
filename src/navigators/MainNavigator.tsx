@@ -390,6 +390,12 @@ const CommonStackNavigator = createStackNavigator(
     },
     PrevMagazineScreen: {
       screen: Screens.PrevMagazineScreen
+    },
+    MagazineReplyScreen: {
+      screen: Screens.MagazineReplyScreen
+    },
+    PrevMagazineDetailScreen: {
+      screen: Screens.PrevMagazineDetailScreen
     }
   },
   {

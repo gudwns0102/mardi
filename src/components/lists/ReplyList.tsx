@@ -117,7 +117,6 @@ class ReplyListClass extends React.Component<IProps, any> {
         onNamePress={_.partial(this.onAvatarPress, item.user.uuid)}
         onTagPress={this.onTagPress}
         onLinkPress={this.onLinkPress}
-        onPlayPress={audioStore.pushInstantAudio}
         onUserTagPress={
           item.tagged_user
             ? _.partial(this.onUserPress, item.tagged_user.uuid)
@@ -260,7 +259,7 @@ class ReplyListClass extends React.Component<IProps, any> {
 
   private swipeBackReplyByRef = (ref: any) => {
     _.invoke(ref, ["current", "swipeBack"]);
-  }
+  };
 }
 
 export const ReplyList = withNavigation(

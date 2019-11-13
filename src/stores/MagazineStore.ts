@@ -8,18 +8,18 @@ import { MagazineContent } from "src/models/MagazineContent";
 
 export const MagazineStore = types
   .model({
-    magazines: types.optional(types.map(Magazine), {}),
-    currentMagazineId: types.maybeNull(types.number)
+    magazines: types.optional(types.map(Magazine), {})
+    // currentMagazineId: types.maybeNull(types.number)
   })
-  .views(self => {
-    return {
-      get currentMagazine() {
-        return self.currentMagazineId !== null
-          ? self.magazines.get(self.currentMagazineId.toString())
-          : undefined;
-      }
-    };
-  })
+  // .views(self => {
+  //   return {
+  //     get currentMagazine() {
+  //       return self.currentMagazineId !== null
+  //         ? self.magazines.get(self.currentMagazineId.toString())
+  //         : undefined;
+  //     }
+  //   };
+  // })
   .actions(self => {
     const fetchLatestMagazine = flow(function*() {
       const magazine: RetrieveAsyncFunc<
@@ -33,7 +33,7 @@ export const MagazineStore = types
         contents: magazineContentModels
       });
       self.magazines.set(magazine.id.toString(), magazineModel);
-      self.currentMagazineId = magazine.id;
+      return magazineModel;
     });
 
     const fetchMagazine = flow(function*(id: number) {
@@ -48,7 +48,7 @@ export const MagazineStore = types
         contents: magazineContentModels
       });
       self.magazines.set(magazine.id.toString(), magazineModel);
-      self.currentMagazineId = magazine.id;
+      return magazineModel;
     });
 
     const increasePlayCount = flow(function*({

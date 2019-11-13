@@ -10,3 +10,5 @@ export const Magazine = types.model({
   exposed_at: types.optional(types.string, ""),
   created_at: types.optional(types.string, "")
 });
+
+export type IMagazine = typeof Magazine.Type;

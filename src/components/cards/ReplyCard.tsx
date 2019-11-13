@@ -11,13 +11,12 @@ import { IReplyButtonsProps, ReplyButtonsCard } from "./ReplyButtonsCard";
 
 interface IProps extends IReplyButtonsProps {
   reply: ITextReply | IAudioReply;
-  isPlaying?: boolean;
+  isPlaying: boolean;
   scrollEnabled?: boolean;
   swipeBackOnButtonPress?: boolean;
   onPress?: () => any;
   onAvatarPress?: () => any;
   onNamePress?: () => any;
-  onPlayPress?: (audio: string) => any;
   onLinkPress?: (url: string) => any;
   onUserTagPress?: () => any;
   onTagPress?: (tag: string) => any;
@@ -64,7 +63,6 @@ export class ReplyCard extends React.Component<IProps> {
       onPress,
       onAvatarPress,
       onNamePress,
-      onPlayPress,
       onLinkPress,
       onTagPress,
       onUserTagPress
@@ -89,9 +87,6 @@ export class ReplyCard extends React.Component<IProps> {
           isPlaying={isPlaying}
           onPress={onPress}
           onAvatarPress={onAvatarPress}
-          onPlayPress={
-            onPlayPress ? _.partial(onPlayPress, reply.audio) : undefined
-          }
           onNamePress={onNamePress}
           onUserTagPress={onUserTagPress}
         />
@@ -132,7 +127,7 @@ export class ReplyCard extends React.Component<IProps> {
   };
 
   private swipeBack = (animated = true) => {
-    _.invoke(this.scrollViewRef.current, [ "scrollTo"], {
+    _.invoke(this.scrollViewRef.current, ["scrollTo"], {
       x: 0,
       animated
     });

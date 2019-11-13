@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { ViewProps } from "react-native";
 import styled from "styled-components/native";
 
 import { images } from "assets/images";
+import { NavigationScreenProp, withNavigation } from "react-navigation";
 import { Button } from "src/components/buttons/Button";
 import { Text } from "src/components/Text";
 import { IMagazineContent } from "src/models/MagazineContent";
+import { navigateMagazineReplyScreen } from "src/screens/MagazineReplyScreen";
+import { navigateUserPageScreen } from "src/screens/UserPageScreen";
 import { shadow } from "src/utils/Shadow";
 
 interface IProps extends ViewProps {
+  navigation: NavigationScreenProp<any, any>;
+  magazineId: number;
   magazineContent: IMagazineContent;
-  onAvatarPress: () => void;
 }
 
 const Container = styled.View`
@@ -87,34 +91,48 @@ const ShareIcon = styled.Image.attrs({ source: images.btnCommonShare })`
   height: 24px;
 `;
 
-export function MagazineCard({
-  magazineContent,
-  onAvatarPress,
-  ...props
-}: IProps) {
-  return (
-    <Container {...props}>
-      <Title numberOfLines={2}>{magazineContent.title}</Title>
-      <Content numberOfLines={2}>{magazineContent.text}</Content>
-      <Footer>
-        <AvatarWrapper onPress={onAvatarPress}>
-          <Avatar
-            source={
-              magazineContent.picture
-                ? { uri: magazineContent.picture }
-                : images.airplane
-            }
-          />
-        </AvatarWrapper>
-        <Name>{magazineContent.user_name}</Name>
-        <CommentButton>
-          <CommentIcon />
-          <CommentText>{magazineContent.num_replies || 0}</CommentText>
-        </CommentButton>
-        <ShareButton>
-          <ShareIcon />
-        </ShareButton>
-      </Footer>
-    </Container>
-  );
-}
+export const MagazineContentCard = withNavigation(
+  ({ navigation, magazineId, magazineContent, ...props }: IProps) => {
+    const onAvatarPress = useCallback(() => {
+      const { link_user } = magazineContent;
+      if (link_user && link_user.uuid) {
+        navigateUserPageScreen(navigation, { uuid: link_user.uuid });
+      }
+    }, []);
+
+    const onCommentPress = useCallback(() => {
+      navigateMagazineReplyScreen(navigation, {
+        magazineId,
+        magazineContentId: magazineContent.id,
+        mode: "audio",
+        showRecorder: true
+      });
+    }, []);
+
+    return (
+      <Container {...props}>
+        <Title numberOfLines={2}>{magazineContent.title}</Title>
+        <Content numberOfLines={2}>{magazineContent.text}</Content>
+        <Footer>
+          <AvatarWrapper onPress={onAvatarPress}>
+            <Avatar
+              source={
+                magazineContent.picture
+                  ? { uri: magazineContent.picture }
+                  : images.airplane
+              }
+            />
+          </AvatarWrapper>
+          <Name>{magazineContent.user_name}</Name>
+          <CommentButton onPress={onCommentPress}>
+            <CommentIcon />
+            <CommentText>{magazineContent.num_replies || 0}</CommentText>
+          </CommentButton>
+          <ShareButton>
+            <ShareIcon />
+          </ShareButton>
+        </Footer>
+      </Container>
+    );
+  }
+);

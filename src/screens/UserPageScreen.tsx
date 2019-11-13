@@ -219,6 +219,9 @@ export class UserPageScreen extends React.Component<IProps, IState> {
   public static options: IScreenOptions = {
     statusBarProps: {
       backgroundColor: "rgba(247, 247, 247, 0.8)"
+    },
+    forceInset: {
+      bottom: "always"
     }
   };
 

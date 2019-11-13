@@ -6,6 +6,7 @@ import { images } from "assets/images";
 import { IconButton } from "src/components/buttons/IconButton";
 import { Text } from "src/components/Text";
 import { ReplyText } from "src/components/texts/ReplyText";
+import { getStore } from "src/stores/RootStore";
 import { colors } from "src/styles/colors";
 import { deviceWidth } from "src/utils/Dimensions";
 import { toMSS } from "src/utils/Number";
@@ -16,12 +17,11 @@ export interface IAudioReplyCallbackProps {
   onAvatarPress?: () => any;
   onNamePress?: () => any;
   onUserTagPress?: () => any;
-  onPlayPress?: () => any;
 }
 
 export interface IAudioReplyCardProps extends IAudioReplyCallbackProps {
   reply: IAudioReply;
-  isPlaying?: boolean;
+  isPlaying: boolean;
 }
 
 const ContentContainer = styled.TouchableOpacity.attrs({ activeOpacity: 1 })`
@@ -109,8 +109,7 @@ export function AudioReplyCardContent({
   onPress,
   onAvatarPress,
   onNamePress,
-  onUserTagPress,
-  onPlayPress
+  onUserTagPress
 }: IAudioReplyCardProps) {
   const photo = reply.user.photo;
   const source = photo ? { uri: photo } : images.user;
@@ -137,7 +136,11 @@ export function AudioReplyCardContent({
       </Column>
       <PlayButton
         source={isPlaying ? images.btnCommentsPlaying : images.btnCommentsPlay}
-        onPress={onPlayPress ? _.partial(onPlayPress, reply.audio) : undefined}
+        onPress={() => {
+          if (reply.audio) {
+            getStore().audioStore.pushInstantAudio(reply.audio);
+          }
+        }}
       />
       <DateText>
         {formatDiffTime(new Date(reply.created_at).getTime())}
