@@ -9,17 +9,7 @@ import { MagazineContent } from "src/models/MagazineContent";
 export const MagazineStore = types
   .model({
     magazines: types.optional(types.map(Magazine), {})
-    // currentMagazineId: types.maybeNull(types.number)
   })
-  // .views(self => {
-  //   return {
-  //     get currentMagazine() {
-  //       return self.currentMagazineId !== null
-  //         ? self.magazines.get(self.currentMagazineId.toString())
-  //         : undefined;
-  //     }
-  //   };
-  // })
   .actions(self => {
     const fetchLatestMagazine = flow(function*() {
       const magazine: RetrieveAsyncFunc<

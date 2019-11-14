@@ -1,7 +1,7 @@
 import { BlurView } from "@react-native-community/blur";
 import _ from "lodash";
 import React from "react";
-import { Animated, Dimensions, ListRenderItem, ViewToken } from "react-native";
+import { Animated, Dimensions, ViewToken } from "react-native";
 import { FlatList, NavigationScreenProp } from "react-navigation";
 import styled from "styled-components/native";
 
@@ -9,6 +9,7 @@ import { images } from "assets/images";
 import { observable } from "mobx";
 import { inject, observer, Observer } from "mobx-react";
 import { MagazineContentCard } from "src/components/cards/MagazineContentCard";
+import { MagazineContentList } from "src/components/lists/MagazineContentList";
 import { PlainHeader } from "src/components/PlainHeader";
 import { Text } from "src/components/Text";
 import { withAudioPlayer } from "src/hocs/withAudioPlayer";
@@ -63,80 +64,25 @@ const PrevText = styled(Text).attrs({ type: "bold" })<{ themeColor: string }>`
   color: ${props => props.themeColor};
 `;
 
-const PageScrollView = styled.ScrollView.attrs({
-  horizontal: true,
-  pagingEnabled: true
-})`
+const BodyContainer = styled.View`
   width: 100%;
-  height: 310px;
-`;
-
-const MagazineContentContainer = styled.View`
-  width: 100%;
-  height: 100%;
-`;
-
-const Page = styled.ImageBackground`
-  justify-content: space-between;
-  width: ${width}px;
   flex: 1;
-  padding-top: 9px;
-  padding-bottom: 12px;
-  background: powderblue;
 `;
 
-const PageTitleContainer = styled.View<{ themeColor: string }>`
+const MagazineTitleContainer = styled.View<{ themeColor: string }>`
+  position: absolute;
+  top: 9px;
   justify-content: center;
-  width: 284px;
+  min-width: 284px;
   height: 32px;
-  padding-left: 9px;
+  padding: 0 9px;
   background-color: ${props => props.themeColor};
+  z-index: 1;
 `;
 
-const PageTitle = styled(Text).attrs({ type: "bold" })`
+const MagazineTitle = styled(Text).attrs({ type: "bold" })`
   font-size: 15px;
   color: ${colors.white};
-`;
-
-const PageGuideText = styled(Text).attrs({ type: "bold" })`
-  font-size: 16px;
-  color: ${colors.white};
-  opacity: 0.7;
-  padding-left: 14px;
-`;
-
-const PlayButton = styled.TouchableOpacity.attrs({ activeOpacity: 0.8 })`
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  align-items: center;
-  width: 86px;
-  height: 79px;
-  padding-top: 16px;
-  padding-bottom: 4px;
-  border: -0.5px solid white;
-  border-radius: 16px;
-  overflow: hidden;
-  background-color: transparent;
-`;
-
-const PlayIcon = styled.Image.attrs({ source: images.playBlue })`
-  width: 24px;
-  height: 26px;
-`;
-
-const PlayText = styled(Text).attrs({ type: "bold" })`
-  font-size: 16px;
-  color: #000000;
-`;
-
-const PlayButtonBlurView = styled(BlurView)`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgb(255, 255, 255);
 `;
 
 const IndicatorRow = styled.View`
@@ -225,81 +171,48 @@ export class MagazineScreen extends React.Component<IProps> {
             지난호
           </PrevText>
         </PlainHeader>
-        <FlatList
-          ref={this.magazineContentsRef}
-          style={{ flex: 1 }}
-          horizontal={true}
-          pagingEnabled={true}
-          data={this.magazine.contents}
-          renderItem={({ item, index }) => {
-            const { audioStore } = this.props;
-            return (
-              <Observer>
-                {() => (
-                  <Page
-                    source={
-                      item.picture ? { uri: item.picture } : images.airplane
-                    }
-                  >
-                    <PageTitleContainer themeColor={this.magazine!.color}>
-                      <PageTitle>{item.title}</PageTitle>
-                    </PageTitleContainer>
-                    <PageGuideText>
-                      재생버튼을 눌러{"\n"}매거진을 들으세요
-                    </PageGuideText>
-                    <PlayButton
-                      onPress={() => {
-                        if (this.magazine) {
-                          audioStore.pushMagazineContentAudio({
-                            magazineContent: item,
-                            magazineId: this.magazine.id
-                          });
+        <BodyContainer>
+          <MagazineContentList
+            ref={this.magazineContentsRef}
+            data={this.magazine.contents}
+            magazineId={this.magazine.id}
+            scrollEventThrottle={16}
+            onScroll={Animated.event([
+              {
+                nativeEvent: { contentOffset: { x: this.scroll } }
+              }
+            ])}
+            onViewableItemsChanged={this.onViewableItemChanged}
+          />
+          <IndicatorRow>
+            <IndicatorContainer>
+              {_.range(this.magazine.contents.length).map(index => (
+                <Indicator key={index} isLast={index === 2}>
+                  <ActiveIndicator
+                    themeColor={themeColor}
+                    style={{
+                      transform: [
+                        {
+                          translateX: this.scroll.interpolate({
+                            inputRange: [0, 2 * width],
+                            outputRange: [8 * -index, 8 * (2 - index)]
+                          })
                         }
-                      }}
-                    >
-                      <PlayButtonBlurView blurAmount={37} blurType="light" />
-                      <PlayIcon />
-                      <PlayText>{item.num_played || 0}</PlayText>
-                    </PlayButton>
-                  </Page>
-                )}
-              </Observer>
-            );
-          }}
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={16}
-          onScroll={Animated.event([
-            {
-              nativeEvent: { contentOffset: { x: this.scroll } }
-            }
-          ])}
-          onViewableItemsChanged={this.onViewableItemChanged}
-        />
-        <IndicatorRow>
-          <IndicatorContainer>
-            {_.range(this.magazine.contents.length).map(index => (
-              <Indicator key={index} isLast={index === 2}>
-                <ActiveIndicator
-                  themeColor={themeColor}
-                  style={{
-                    transform: [
-                      {
-                        translateX: this.scroll.interpolate({
-                          inputRange: [0, 2 * width],
-                          outputRange: [8 * -index, 8 * (2 - index)]
-                        })
-                      }
-                    ]
-                  }}
-                />
-              </Indicator>
-            ))}
-          </IndicatorContainer>
-        </IndicatorRow>
-        <StyledMagazineCard
-          magazineId={this.magazine.id}
-          magazineContent={this.magazine.contents[this.magazineContentIndex]}
-        />
+                      ]
+                    }}
+                  />
+                </Indicator>
+              ))}
+            </IndicatorContainer>
+          </IndicatorRow>
+          <StyledMagazineCard
+            magazineId={this.magazine.id}
+            magazineContent={this.magazine.contents[this.magazineContentIndex]}
+          />
+          <MagazineTitleContainer themeColor={this.magazine.color}>
+            <MagazineTitle>{this.magazine.title}</MagazineTitle>
+          </MagazineTitleContainer>
+        </BodyContainer>
       </Container>
     );
   }

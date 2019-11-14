@@ -27,8 +27,18 @@ export const MagazineContent = types
       self.num_played = count;
     };
 
+    const increaseReplyCount = () => {
+      self.num_replies = self.num_replies + 1;
+    };
+
+    const decreaseReplyCount = () => {
+      self.num_replies = self.num_replies - 1;
+    };
+
     return {
-      increasePlayCount
+      increasePlayCount,
+      increaseReplyCount,
+      decreaseReplyCount
     };
   });
 

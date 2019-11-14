@@ -3,6 +3,7 @@ import { ViewProps } from "react-native";
 import styled from "styled-components/native";
 
 import { images } from "assets/images";
+import { Observer } from "mobx-react";
 import { NavigationScreenProp, withNavigation } from "react-navigation";
 import { Button } from "src/components/buttons/Button";
 import { Text } from "src/components/Text";
@@ -98,7 +99,7 @@ export const MagazineContentCard = withNavigation(
       if (link_user && link_user.uuid) {
         navigateUserPageScreen(navigation, { uuid: link_user.uuid });
       }
-    }, []);
+    }, [magazineContent]);
 
     const onCommentPress = useCallback(() => {
       navigateMagazineReplyScreen(navigation, {
@@ -107,32 +108,39 @@ export const MagazineContentCard = withNavigation(
         mode: "audio",
         showRecorder: true
       });
-    }, []);
+    }, [magazineContent]);
 
     return (
-      <Container {...props}>
-        <Title numberOfLines={2}>{magazineContent.title}</Title>
-        <Content numberOfLines={2}>{magazineContent.text}</Content>
-        <Footer>
-          <AvatarWrapper onPress={onAvatarPress}>
-            <Avatar
-              source={
-                magazineContent.picture
-                  ? { uri: magazineContent.picture }
-                  : images.airplane
-              }
-            />
-          </AvatarWrapper>
-          <Name>{magazineContent.user_name}</Name>
-          <CommentButton onPress={onCommentPress}>
-            <CommentIcon />
-            <CommentText>{magazineContent.num_replies || 0}</CommentText>
-          </CommentButton>
-          <ShareButton>
-            <ShareIcon />
-          </ShareButton>
-        </Footer>
-      </Container>
+      <Observer>
+        {() => (
+          <Container {...props}>
+            <Title numberOfLines={2}>{magazineContent.title}</Title>
+            <Content numberOfLines={2}>{magazineContent.text}</Content>
+            <Footer>
+              <AvatarWrapper
+                disabled={!magazineContent.link_user}
+                onPress={onAvatarPress}
+              >
+                <Avatar
+                  source={
+                    magazineContent.picture
+                      ? { uri: magazineContent.picture }
+                      : images.airplane
+                  }
+                />
+              </AvatarWrapper>
+              <Name>{magazineContent.user_name}</Name>
+              <CommentButton onPress={onCommentPress}>
+                <CommentIcon />
+                <CommentText>{magazineContent.num_replies || 0}</CommentText>
+              </CommentButton>
+              <ShareButton>
+                <ShareIcon />
+              </ShareButton>
+            </Footer>
+          </Container>
+        )}
+      </Observer>
     );
   }
 );

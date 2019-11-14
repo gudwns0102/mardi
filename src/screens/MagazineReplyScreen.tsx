@@ -26,7 +26,7 @@ import { Bold } from "src/components/texts/Bold";
 import { injectLoading } from "src/decorators/injectLoading";
 import { IAudioStore } from "src/stores/AudioStore";
 import { IContentStore } from "src/stores/ContentStore";
-import { IReplyBundle } from "src/stores/ReplyBundle";
+import { IMagazineStore } from "src/stores/MagazineStore";
 import { IReplyStore } from "src/stores/ReplyStore";
 import { IRootStore } from "src/stores/RootStore";
 import { IToastStore } from "src/stores/ToastStore";
@@ -42,6 +42,7 @@ interface IInjectProps {
   userStore: IUserStore;
   replyStore: IReplyStore;
   toastStore: IToastStore;
+  magazineStore: IMagazineStore;
 }
 
 interface IParams {
@@ -131,7 +132,8 @@ const TaggedUserText = styled(Text)`
     contentStore: store.contentStore,
     userStore: store.userStore,
     replyStore: store.replyStore,
-    toastStore: store.toastStore
+    toastStore: store.toastStore,
+    magazineStore: store.magazineStore
   })
 )
 @observer
@@ -194,6 +196,7 @@ export class MagazineReplyScreen extends React.Component<IProps, IState> {
             onAudioPress={this.startAudioReplyMode}
             onDeletePress={this.deleteReply}
             onReportPress={() => {}}
+            onScrollBeginDrag={this.hideRecorder}
           />
           {/* <ReplyList
             onRef={this.replyListRef}
@@ -273,7 +276,6 @@ export class MagazineReplyScreen extends React.Component<IProps, IState> {
 
   @injectLoading
   private onPostPress = async () => {
-    const { replyStore } = this.props;
     const { mode, text, hidden, tagged_user } = this.state;
 
     if (!this.canPostReply) {
@@ -345,6 +347,10 @@ export class MagazineReplyScreen extends React.Component<IProps, IState> {
       content: "댓글이 등록되었습니다.",
       type: "INFO"
     });
+
+    if (this.magazineContent) {
+      this.magazineContent.increaseReplyCount();
+    }
   };
 
   private onPostPressFail = () => {
@@ -388,6 +394,7 @@ export class MagazineReplyScreen extends React.Component<IProps, IState> {
 
   private deleteReply = async (reply: IReply) => {
     const { replies } = this.state;
+
     await deleteMagazineContentReply({
       magazineId: this.magazineId,
       magazineContentId: this.magazineContentId,
@@ -402,6 +409,10 @@ export class MagazineReplyScreen extends React.Component<IProps, IState> {
       this.setState({
         replies: [...newReplies]
       });
+
+      if (this.magazineContent) {
+        this.magazineContent.decreaseReplyCount();
+      }
     }
   };
 
@@ -453,6 +464,22 @@ export class MagazineReplyScreen extends React.Component<IProps, IState> {
 
   public get magazineContentId() {
     return this.props.navigation.getParam("magazineContentId");
+  }
+
+  public get magazine() {
+    return this.props.magazineStore.magazines.get(this.magazineId.toString());
+  }
+
+  public get magazineContent() {
+    if (this.magazine) {
+      return (
+        this.magazine.contents.find(
+          content => content.id === this.magazineContentId
+        ) || null
+      );
+    }
+
+    return null;
   }
 }
 

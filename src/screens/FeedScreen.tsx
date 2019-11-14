@@ -101,6 +101,7 @@ export class FeedScreen extends React.Component<IProps> {
       if (userStore.client && userStore.client.has_unread_feeds) {
         feedStore.initializeFeeds();
       }
+
       userStore.upsertUserById(userStore.clientId!, {
         has_unread_feeds: false
       });
