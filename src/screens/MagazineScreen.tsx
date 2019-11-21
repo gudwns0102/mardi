@@ -1,18 +1,17 @@
-import { BlurView } from "@react-native-community/blur";
 import _ from "lodash";
 import React from "react";
 import { Animated, Dimensions, ViewToken } from "react-native";
-import { FlatList, NavigationScreenProp } from "react-navigation";
+import { NavigationScreenProp } from "react-navigation";
 import styled from "styled-components/native";
 
 import { images } from "assets/images";
 import { observable } from "mobx";
-import { inject, observer, Observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import { MagazineContentCard } from "src/components/cards/MagazineContentCard";
 import { MagazineContentList } from "src/components/lists/MagazineContentList";
 import { PlainHeader } from "src/components/PlainHeader";
 import { Text } from "src/components/Text";
-import { withAudioPlayer } from "src/hocs/withAudioPlayer";
+import { WrappedAudioPlayer } from "src/components/WrappedAudioPlayer";
 import { IMagazine } from "src/models/Magazine";
 import { navigatePrevMagazineScreen } from "src/screens/PrevMagazineScreen";
 import { IAudioStore } from "src/stores/AudioStore";
@@ -128,7 +127,6 @@ const StyledMagazineCard = styled(MagazineContentCard)`
     magazineStore: store.magazineStore
   })
 )
-@withAudioPlayer
 @observer
 export class MagazineScreen extends React.Component<IProps> {
   public static options: IScreenOptions = {
@@ -213,6 +211,7 @@ export class MagazineScreen extends React.Component<IProps> {
             <MagazineTitle>{this.magazine.title}</MagazineTitle>
           </MagazineTitleContainer>
         </BodyContainer>
+        <WrappedAudioPlayer />
       </Container>
     );
   }

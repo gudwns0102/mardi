@@ -28,9 +28,7 @@ interface IInjectProps {
   contentStore: IContentStore;
 }
 
-interface IParams {
-  id: IContent["id"];
-}
+interface IParams {}
 
 interface IProps extends IInjectProps {
   navigation: NavigationScreenProp<any, IParams>;
@@ -330,7 +328,8 @@ export class PlayerScreen extends React.Component<IProps, any> {
   private onHeartPress = () => {
     const { audioStore, contentStore } = this.props;
     const audio = audioStore.currentAudio;
-    if (!audio) {
+
+    if (!audio || audio.type !== "CONTENT") {
       return;
     }
 

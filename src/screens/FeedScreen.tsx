@@ -15,6 +15,7 @@ import { IContentStore } from "src/stores/ContentStore";
 import { IFeedStore } from "src/stores/FeedStore";
 import { IRootStore } from "src/stores/RootStore";
 import { IUserStore } from "src/stores/UserStore";
+import { navigateListenDetailScreen } from "./ListenDetailScreen";
 
 interface IInjectProps {
   contentStore: IContentStore;
@@ -129,7 +130,16 @@ export class FeedScreen extends React.Component<IProps> {
   }
 
   public get FollowingSection() {
-    return <ContentList contentBundle={this.contentBundle} type="CARD" />;
+    const { navigation } = this.props;
+    return (
+      <ContentList
+        contentBundle={this.contentBundle}
+        type="CARD"
+        onCardPress={item => {
+          navigateListenDetailScreen(navigation, { contentId: item.id });
+        }}
+      />
+    );
   }
 
   public get FeedSection() {

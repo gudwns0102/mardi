@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { ViewProps } from "react-native";
+import { Share } from "react-native";
 import styled from "styled-components/native";
 
 import { images } from "assets/images";
@@ -7,6 +8,7 @@ import { Observer } from "mobx-react";
 import { NavigationScreenProp, withNavigation } from "react-navigation";
 import { Button } from "src/components/buttons/Button";
 import { Text } from "src/components/Text";
+import { environment } from "src/config/environment";
 import { IMagazineContent } from "src/models/MagazineContent";
 import { navigateMagazineReplyScreen } from "src/screens/MagazineReplyScreen";
 import { navigateUserPageScreen } from "src/screens/UserPageScreen";
@@ -134,7 +136,16 @@ export const MagazineContentCard = withNavigation(
                 <CommentIcon />
                 <CommentText>{magazineContent.num_replies || 0}</CommentText>
               </CommentButton>
-              <ShareButton>
+              <ShareButton
+                onPress={() => {
+                  Share.share({
+                    title: magazineContent.title,
+                    message:
+                      environment.web +
+                      `share-magazine?magazineId=${magazineId}&magazineContentId=${magazineContent.id}`
+                  });
+                }}
+              >
                 <ShareIcon />
               </ShareButton>
             </Footer>

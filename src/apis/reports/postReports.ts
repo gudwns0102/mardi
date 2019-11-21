@@ -1,6 +1,6 @@
 import { call } from "src/apis/call";
 
-type ReportType = "reply" | "content";
+type ReportType = "reply" | "content" | "magazine_content_reply";
 
 export function postReportsAPI(data: {
   type: ReportType;
