@@ -131,24 +131,22 @@ export class ButtonModalScreen extends React.Component<IProps> {
     const rightText = _.defaultTo(navigation.getParam("rightText"), "예");
 
     return (
-      <React.Fragment>
-        <Container onPress={this.goBack}>
-          <Overlay />
-          <BoxContainer>
-            <BodyContainer>
-              <BodyText>{content}</BodyText>
-            </BodyContainer>
-            <FooterContainer>
-              <LeftButtonWrapper onPress={onLeftPress}>
-                <FooterText>{leftText}</FooterText>
-              </LeftButtonWrapper>
-              <ButtonWrapper onPress={onRightPress}>
-                <FooterText modalType={modalType}>{rightText}</FooterText>
-              </ButtonWrapper>
-            </FooterContainer>
-          </BoxContainer>
-        </Container>
-      </React.Fragment>
+      <Container onPress={this.goBack}>
+        <Overlay />
+        <BoxContainer>
+          <BodyContainer>
+            <BodyText>{content}</BodyText>
+          </BodyContainer>
+          <FooterContainer>
+            <LeftButtonWrapper onPress={onLeftPress}>
+              <FooterText>{leftText}</FooterText>
+            </LeftButtonWrapper>
+            <ButtonWrapper onPress={onRightPress}>
+              <FooterText modalType={modalType}>{rightText}</FooterText>
+            </ButtonWrapper>
+          </FooterContainer>
+        </BoxContainer>
+      </Container>
     );
   }
 

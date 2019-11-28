@@ -17,6 +17,7 @@ import { navigateReplyScreen } from "src/screens/ReplyScreen";
 import { navigateUserPageScreen } from "src/screens/UserPageScreen";
 import { IAudioStore } from "src/stores/AudioStore";
 import { IContentStore } from "src/stores/ContentStore";
+import { IMagazineStore } from "src/stores/MagazineStore";
 import { IRootStore } from "src/stores/RootStore";
 import { colors, getBackgroundByIndex } from "src/styles/colors";
 import { getBigPatternByIndex } from "src/utils/ContentPattern";
@@ -26,6 +27,7 @@ import { navigateMagazineReplyScreen } from "./MagazineReplyScreen";
 interface IInjectProps {
   audioStore: IAudioStore;
   contentStore: IContentStore;
+  magazineStore: IMagazineStore;
 }
 
 interface IParams {}
@@ -187,7 +189,8 @@ const TouchableWrapper = styled.TouchableOpacity`
 @inject(
   ({ store }: { store: IRootStore }): IInjectProps => ({
     audioStore: store.audioStore,
-    contentStore: store.contentStore
+    contentStore: store.contentStore,
+    magazineStore: store.magazineStore
   })
 )
 @observer
@@ -326,14 +329,21 @@ export class PlayerScreen extends React.Component<IProps, any> {
   };
 
   private onHeartPress = () => {
-    const { audioStore, contentStore } = this.props;
+    const { audioStore, contentStore, magazineStore } = this.props;
     const audio = audioStore.currentAudio;
 
-    if (!audio || audio.type !== "CONTENT") {
+    if (!audio) {
       return;
     }
 
-    contentStore.clickHeart(audio.id);
+    if (audio.type === "CONTENT") {
+      contentStore.clickHeart(audio.id);
+    } else {
+      magazineStore.clickHeart({
+        magazineId: audio.magazineId!,
+        magazineContentId: audio.id
+      });
+    }
   };
 
   private onReplyPress = () => {

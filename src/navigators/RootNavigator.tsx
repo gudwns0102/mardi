@@ -30,6 +30,9 @@ export const RootNavigator = createStackNavigator(
     },
     ActionSheetModalScreen: {
       screen: Screens.ActionSheetModalScreen
+    },
+    MagazineInfoModal: {
+      screen: Screens.MagazineInfoModal
     }
   },
   {

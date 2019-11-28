@@ -58,7 +58,9 @@ export const ContentStore = types
         > = yield postContentHeartAPI({ contentId });
 
         updateAllContentBundles(contentId, newContent);
-        rootStore.audioStore.updateAudioIfExist(contentId, {
+        rootStore.audioStore.updateAudioIfExist({
+          type: "CONTENT",
+          id: contentId,
           heart_by_me: newContent.heart_by_me,
           num_hearts: newContent.num_hearts
         });

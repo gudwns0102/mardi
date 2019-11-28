@@ -53,58 +53,56 @@ export const withAudio = <T extends object>(
               }
 
               return (
-                <React.Fragment>
-                  <MainAudio
-                    ref={audioStoreRef}
-                    source={{ uri: currentAudio.url }}
-                    paused={audioStore.instantPlaying || !audioStore.playing}
-                    onLoad={() => {
-                      this.isListenProgress = false;
-                      this.isHalfPlayed = false;
+                <MainAudio
+                  ref={audioStoreRef}
+                  source={{ uri: currentAudio.url }}
+                  paused={audioStore.instantPlaying || !audioStore.playing}
+                  onLoad={() => {
+                    this.isListenProgress = false;
+                    this.isHalfPlayed = false;
+
+                    if (currentAudio.type === "CONTENT") {
+                      contentStore.increasePlayCount(currentAudio.id);
+                    } else {
+                      magazineStore.increasePlayCount({
+                        magazineId: currentAudio.magazineId!,
+                        magazineContentId: currentAudio.id
+                      });
+                    }
+
+                    checkPlayCountForRating();
+                  }}
+                  onProgress={e => {
+                    const { currentTime, playableDuration } = audioStore;
+                    if (this.isListenProgress) {
+                      return;
+                    }
+                    audioStore.onAudioProgress(e);
+
+                    this.isListenProgress = true;
+                    setTimeout(() => (this.isListenProgress = false), 14);
+
+                    if (
+                      !this.isHalfPlayed &&
+                      currentTime > playableDuration / 2
+                    ) {
+                      this.isHalfPlayed = true;
 
                       if (currentAudio.type === "CONTENT") {
-                        contentStore.increasePlayCount(currentAudio.id);
-                      } else {
-                        magazineStore.increasePlayCount({
-                          magazineId: currentAudio.magazineId!,
-                          magazineContentId: currentAudio.id
-                        });
+                        contentStore.increaseHalfPlayCount(currentAudio.id);
                       }
-
-                      checkPlayCountForRating();
-                    }}
-                    onProgress={e => {
-                      const { currentTime, playableDuration } = audioStore;
-                      if (this.isListenProgress) {
-                        return;
-                      }
-                      audioStore.onAudioProgress(e);
-
-                      this.isListenProgress = true;
-                      setTimeout(() => (this.isListenProgress = false), 14);
-
-                      if (
-                        !this.isHalfPlayed &&
-                        currentTime > playableDuration / 2
-                      ) {
-                        this.isHalfPlayed = true;
-
-                        if (currentAudio.type === "CONTENT") {
-                          contentStore.increaseHalfPlayCount(currentAudio.id);
-                        }
-                      }
-                    }}
-                    onEnd={() => {
-                      this.isListenProgress = false;
-                      this.isHalfPlayed = false;
-                      this.onEndAudio();
-                    }}
-                    playInBackground={true}
-                    progressUpdateInterval={16}
-                    ignoreSilentSwitch="ignore"
-                    audioOnly={true}
-                  />
-                </React.Fragment>
+                    }
+                  }}
+                  onEnd={() => {
+                    this.isListenProgress = false;
+                    this.isHalfPlayed = false;
+                    this.onEndAudio();
+                  }}
+                  playInBackground={true}
+                  progressUpdateInterval={16}
+                  ignoreSilentSwitch="ignore"
+                  audioOnly={true}
+                />
               );
             }}
           </Observer>

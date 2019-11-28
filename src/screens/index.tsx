@@ -26,6 +26,7 @@ import { IntroRecordScreen as $IntroRecordScreen } from "src/screens/IntroRecord
 import { KeywordScreen as $KeywordScreen } from "src/screens/KeywordScreen";
 import { ListenDetailScreen as $ListenDetailScreen } from "src/screens/ListenDetailScreen";
 import { ListenScreen as $ListenScreen } from "src/screens/ListenScreen";
+import { MagazineInfoModal as $MagazineInfoModal } from "src/screens/MagazineInfoModal";
 import { MagazineReplyScreen as $MagazineReplyScreen } from "src/screens/MagazineReplyScreen";
 import { MagazineScreen as $MagazineScreen } from "src/screens/MagazineScreen";
 import { PlayerScreen as $PlayerScreen } from "src/screens/PlayerScreen";
@@ -163,3 +164,4 @@ export const MagazineReplyScreen = decorateScreen($MagazineReplyScreen);
 export const PrevMagazineDetailScreen = decorateScreen(
   $PrevMagazineDetailScreen
 );
+export const MagazineInfoModal = decorateScreen($MagazineInfoModal);

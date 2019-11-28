@@ -6,6 +6,7 @@ import styled from "styled-components/native";
 import { BlurView } from "@react-native-community/blur";
 import { images } from "assets/images";
 import { Text } from "src/components/Text";
+import { IMagazine } from "src/models/Magazine";
 import { IMagazineContent } from "src/models/MagazineContent";
 import { IRootStore } from "src/stores/RootStore";
 import { colors } from "src/styles/colors";
@@ -13,6 +14,7 @@ import { colors } from "src/styles/colors";
 interface IProps
   extends RemoveKeys<FlatListProps<IMagazineContent>, ["renderItem"]> {
   innerRef?: any;
+  magazine: IMagazine;
   magazineId: number;
   store: IRootStore;
 }
@@ -73,7 +75,7 @@ const PlayButtonBlurView = styled(BlurView)`
 @observer
 class Component extends React.Component<IProps> {
   public render() {
-    const { magazineId, innerRef, ...props } = this.props;
+    const { magazine, magazineId, innerRef, ...props } = this.props;
     return (
       <FlatList
         {...props}
@@ -91,9 +93,7 @@ class Component extends React.Component<IProps> {
                     item.picture ? { uri: item.picture } : images.airplane
                   }
                 >
-                  <PageGuideText>
-                    재생버튼을 눌러{"\n"}매거진을 들으세요
-                  </PageGuideText>
+                  <PageGuideText>{magazine.guide_text}</PageGuideText>
                   <PlayButton
                     onPress={() => {
                       this.props.store.audioStore.pushMagazineContentAudio({

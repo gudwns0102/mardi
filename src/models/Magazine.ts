@@ -7,6 +7,8 @@ export const Magazine = types.model({
   id: types.identifierNumber,
   title: types.string,
   color: types.string,
+  guide_text: types.string,
+  info_modal_text: types.string,
   exposed_at: types.optional(types.string, ""),
   created_at: types.optional(types.string, "")
 });

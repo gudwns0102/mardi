@@ -177,6 +177,7 @@ export class PrevMagazineDetailScreen extends React.Component<IProps> {
           <MagazineContentList
             ref={this.magazineContentsRef}
             data={this.magazine.contents}
+            magazine={this.magazine}
             magazineId={this.magazine.id}
             scrollEventThrottle={16}
             onScroll={Animated.event([

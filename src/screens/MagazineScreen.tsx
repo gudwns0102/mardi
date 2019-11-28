@@ -7,6 +7,7 @@ import styled from "styled-components/native";
 import { images } from "assets/images";
 import { observable } from "mobx";
 import { inject, observer } from "mobx-react";
+import { IconButton } from "src/components/buttons/IconButton";
 import { MagazineContentCard } from "src/components/cards/MagazineContentCard";
 import { MagazineContentList } from "src/components/lists/MagazineContentList";
 import { PlainHeader } from "src/components/PlainHeader";
@@ -18,6 +19,10 @@ import { IAudioStore } from "src/stores/AudioStore";
 import { IMagazineStore } from "src/stores/MagazineStore";
 import { IRootStore } from "src/stores/RootStore";
 import { colors } from "src/styles/colors";
+import {
+  MagazineInfoModal,
+  navigateMagazineInfoModal
+} from "./MagazineInfoModal";
 
 interface IInjectProps {
   audioStore: IAudioStore;
@@ -36,6 +41,20 @@ const Container = styled.View`
   background-color: #ebebeb;
 `;
 
+const InfoButton = styled(IconButton).attrs((props: any) => ({
+  source: images.btnCommonInfo,
+  imageProps: {
+    style: {
+      tintColor: props.themeColor
+    }
+  }
+}))<{
+  themeColor: string;
+}>`
+  width: 21px;
+  height: 21px;
+`;
+
 const Logo = styled.View`
   flex-direction: row;
   align-items: center;
@@ -50,8 +69,8 @@ const LogoImage = styled.Image.attrs({
 `;
 
 const LifeText = styled(Text).attrs({ type: "bradley" })`
-  font-size: 30px;
-  line-height: 38px;
+  font-size: 28px;
+  line-height: 36px;
   color: #000000;
   margin-top: 7px;
   margin-left: 4px;
@@ -156,8 +175,15 @@ export class MagazineScreen extends React.Component<IProps> {
 
     return (
       <Container>
-        <PlainHeader>
-          <React.Fragment />
+        <PlainHeader style={{ paddingHorizontal: 8 }}>
+          <InfoButton
+            themeColor={themeColor}
+            onPress={() => {
+              navigateMagazineInfoModal(navigation, {
+                content: this.magazine!.info_modal_text
+              });
+            }}
+          />
           <Logo>
             <LogoImage themeColor={themeColor} />
             <LifeText>life</LifeText>
@@ -173,6 +199,7 @@ export class MagazineScreen extends React.Component<IProps> {
           <MagazineContentList
             ref={this.magazineContentsRef}
             data={this.magazine.contents}
+            magazine={this.magazine}
             magazineId={this.magazine.id}
             scrollEventThrottle={16}
             onScroll={Animated.event([

@@ -8,12 +8,17 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent
 } from "react-native";
+import { NavigationScreenProp, withNavigation } from "react-navigation";
 
 import { ReplyCard } from "src/components/cards/ReplyCard";
+import { navigateButtonModalScreen } from "src/screens/ButtonModalScreen";
+import { navigateUserPageScreen } from "src/screens/UserPageScreen";
+import { navigateWebViewScreen } from "src/screens/WebViewScreen";
 import { getStore } from "src/stores/RootStore";
 
 interface IProps extends RemoveKeys<FlatListProps<IReply>, ["renderItem"]> {
   innerRef?: any;
+  navigation: NavigationScreenProp<any, any>;
   onAvatarPress: (item: IReply) => void;
   onTextPress: (item: IReply) => void;
   onAudioPress: (item: IReply) => void;
@@ -73,15 +78,14 @@ export class List extends React.Component<IProps> {
             swipeBackOnButtonPress={true}
             // onPress={onPress}
             onAvatarPress={_.partial(onAvatarPress, item)}
-            // onNamePress={_.partial(this.onAvatarPress, item.user.uuid)}
-            // onTagPress={this.onTagPress}
-            // onLinkPress={this.onLinkPress}
-            // onPlayPress={audioStore.pushInstantAudio}
-            // onUserTagPress={
-            //   item.tagged_user
-            //     ? _.partial(this.onUserPress, item.tagged_user.uuid)
-            //     : undefined
-            // }
+            onNamePress={_.partial(this.onAvatarPress, item.user.uuid)}
+            onTagPress={this.onTagPress}
+            onLinkPress={this.onLinkPress}
+            onUserTagPress={
+              item.tagged_user
+                ? _.partial(this.onUserPress, item.tagged_user.uuid)
+                : undefined
+            }
             onTextPress={_.partial(onTextPress, item)}
             onAudioPress={_.partial(onAudioPress, item)}
             onDeletePress={_.partial(onDeletePress, item)}
@@ -91,6 +95,64 @@ export class List extends React.Component<IProps> {
         )}
       </Observer>
     );
+  };
+
+  private onAvatarPress = (uuid: string) => {
+    const { navigation } = this.props;
+    navigateUserPageScreen(navigation, { uuid });
+  };
+
+  private onLinkPress = (uri: string) => {
+    const { navigation } = this.props;
+    navigateWebViewScreen(navigation, { uri });
+  };
+
+  // private onDeletePress = ({
+  //   contentId,
+  //   replyId
+  // }: {
+  //   contentId: IContent["id"];
+  //   replyId: IReply["id"];
+  // }) => {
+  //   const { replyStore } = getStore();
+  //   const { navigation } = this.props;
+  //   navigateButtonModalScreen(navigation, {
+  //     type: "ERROR",
+  //     content: "댓글을 삭제하시겠습니까?",
+  //     rightText: "예",
+  //     onRightPress: () => {
+  //       replyStore.deleteReply({ contentId, replyId });
+  //       navigation.goBack(null);
+  //     }
+  //   });
+  // };
+
+  // private onReportPress = ({ replyId }: { replyId: IReply["id"] }) => {
+  //   const { replyStore, userStore } = getStore();
+  //   const { navigation } = this.props;
+  //   navigateButtonModalScreen(navigation, {
+  //     type: "ERROR",
+  //     content: "댓글을 신고하시겠습니까?",
+  //     rightText: "예",
+  //     onRightPress: () => {
+  //       replyStore.reportReply({
+  //         uuid: userStore.clientId!,
+  //         content: "신고",
+  //         replyId
+  //       });
+  //       navigation.goBack(null);
+  //     }
+  //   });
+  // };
+
+  private onTagPress = (text: string) => {
+    const { navigation } = this.props;
+    navigation.navigate("SearchScreen", { defaultText: text });
+  };
+
+  private onUserPress = (uuid: string) => {
+    const { navigation } = this.props;
+    navigateUserPageScreen(navigation, { uuid });
   };
 
   private swipeBackOtherReplies = (
@@ -115,8 +177,10 @@ export class List extends React.Component<IProps> {
   };
 }
 
-export const MagazineReplyList = React.forwardRef(
-  (props: Omit<IProps, "innerRef">, ref: React.Ref<FlatList<IReply>>) => {
-    return <List {...props} innerRef={ref} />;
-  }
+export const MagazineReplyList = withNavigation(
+  React.forwardRef(
+    (props: Omit<IProps, "innerRef">, ref: React.Ref<FlatList<IReply>>) => {
+      return <List {...props} innerRef={ref} />;
+    }
+  )
 );

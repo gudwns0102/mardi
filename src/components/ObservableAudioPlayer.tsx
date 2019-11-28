@@ -43,7 +43,7 @@ class Component extends React.Component<IProps, IState> {
 
   public render() {
     const { audio } = this.props;
-    const { audioStore, contentStore } = getStore();
+    const { audioStore, contentStore, magazineStore } = getStore();
 
     return (
       <Observer>
@@ -81,9 +81,12 @@ class Component extends React.Component<IProps, IState> {
                   isPlaying={audioStore.playing}
                   onPress={this.onPlayerPress}
                   onHeartPress={
-                    audio
+                    audio.type === "CONTENT"
                       ? _.partial(contentStore.clickHeart, audio.id)
-                      : _.identity
+                      : _.partial(magazineStore.clickHeart, {
+                          magazineId: audio.magazineId!,
+                          magazineContentId: audio.id
+                        })
                   }
                   onRewindPress={audioStore.rewind}
                   onAudioPress={audioStore.toggleAudio}
@@ -110,9 +113,12 @@ class Component extends React.Component<IProps, IState> {
                 isPlaying={audioStore.playing}
                 onPress={this.onPlayerPress}
                 onHeartPress={
-                  audio
+                  audio.type === "CONTENT"
                     ? _.partial(contentStore.clickHeart, audio.id)
-                    : _.identity
+                    : _.partial(magazineStore.clickHeart, {
+                        magazineId: audio.magazineId!,
+                        magazineContentId: audio.id
+                      })
                 }
                 onRewindPress={audioStore.rewind}
                 onAudioPress={audioStore.toggleAudio}

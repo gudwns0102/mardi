@@ -3,20 +3,19 @@ import { types } from "mobx-state-tree";
 import React from "react";
 import Video from "react-native-video";
 
-import { IMagazineContent } from "src/models/MagazineContent";
 import { getRootStore } from "src/stores/RootStoreHelper";
 
 export interface IAudio {
   id: number;
   type: AudioType;
   url: string;
-  heart_by_me?: boolean;
+  heart_by_me: boolean;
   username: string;
   photo?: string | null;
   title: string;
   questionText?: string;
-  num_hearts?: number;
-  num_replies?: number;
+  num_hearts: number;
+  num_replies: number;
   image?: string | null;
   default_image_color_idx?: number;
   default_image_pattern_idx?: number;
@@ -93,7 +92,7 @@ export const AudioStore = types
     const clearAudioMetadata = () => {
       self.playing = true;
       self.currentTime = 0;
-      self.playableDuration = 0;
+      self.playableDuration = Infinity;
       self.reachEnd = false;
     };
 
@@ -122,6 +121,7 @@ export const AudioStore = types
       clearInstantAudio();
 
       if (!alreadyHasAudio || !incomingAudioIsCurrentAudio) {
+        self.currentTime = 0;
         clearAudioMetadata();
         self.audios.replace([createAudioFromContent(content)]);
         self.audioHistory.clear();
@@ -144,7 +144,9 @@ export const AudioStore = types
         audio_duration,
         picture,
         user_name,
-        link_user
+        link_user,
+        num_hearts,
+        heart_by_me
       },
       magazineId
     }: {
@@ -169,6 +171,7 @@ export const AudioStore = types
       clearInstantAudio();
 
       if (!alreadyHasAudio || !incomingAudioIsCurrentAudio) {
+        self.currentTime = 0;
         clearAudioMetadata();
         self.audios.replace([
           {
@@ -178,10 +181,10 @@ export const AudioStore = types
             audio_duration: audio_duration || Infinity,
             default_image_color_idx: 0,
             default_image_pattern_idx: 0,
-            heart_by_me: false,
+            heart_by_me,
             image: picture,
             title,
-            num_hearts: 0,
+            num_hearts,
             num_replies,
             username: user_name || "",
             uuid: link_user ? link_user.uuid || null : null,
@@ -238,7 +241,7 @@ export const AudioStore = types
       playableDuration: number;
     }) => {
       self.currentTime = currentTime;
-      self.playableDuration = playableDuration;
+      self.playableDuration = playableDuration || Infinity;
     };
 
     const onAudioEnd = () => {
@@ -324,12 +327,16 @@ export const AudioStore = types
       clearInstantAudio();
     };
 
-    const updateAudioIfExist = (
-      contentId: IContent["id"],
-      audioData: Partial<IAudio>
-    ) => {
+    const updateAudioIfExist = ({
+      type,
+      id,
+      ...audioData
+    }: {
+      type: AudioType;
+      id: number;
+    } & Partial<IAudio>) => {
       const targetAudioIndex = self.audios.findIndex(
-        audio => audio.type === "CONTENT" && audio.id === contentId
+        audio => audio.type === type && audio.id === id
       );
 
       if (targetAudioIndex !== -1) {

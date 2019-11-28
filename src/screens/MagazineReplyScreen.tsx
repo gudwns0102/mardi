@@ -11,6 +11,7 @@ import styled from "styled-components/native";
 
 import { images } from "assets/images";
 import { NavigationScreenProp } from "react-navigation";
+import { postReportsAPI } from "src/apis";
 import { deleteMagazineContentReply } from "src/apis/magazines/deleteMagazineContentReply";
 import { getMagazineContentReplies } from "src/apis/magazines/getMagazineContentReplies";
 import { postMagazineContentAudioReply } from "src/apis/magazines/postMagazineContentAudioReply";
@@ -34,6 +35,7 @@ import { IUserStore } from "src/stores/UserStore";
 import { colors } from "src/styles/colors";
 import { isIos } from "src/utils/Platform";
 import { shadow } from "src/utils/Shadow";
+import { navigateButtonModalScreen } from "./ButtonModalScreen";
 import { navigateUserPageScreen } from "./UserPageScreen";
 
 interface IInjectProps {
@@ -195,7 +197,7 @@ export class MagazineReplyScreen extends React.Component<IProps, IState> {
             onTextPress={this.startTextReplyMode}
             onAudioPress={this.startAudioReplyMode}
             onDeletePress={this.deleteReply}
-            onReportPress={() => {}}
+            onReportPress={this.reportReply}
             onScrollBeginDrag={this.hideRecorder}
           />
           {/* <ReplyList
@@ -414,6 +416,35 @@ export class MagazineReplyScreen extends React.Component<IProps, IState> {
         this.magazineContent.decreaseReplyCount();
       }
     }
+  };
+
+  private reportReply = async (reply: IReply) => {
+    const {
+      navigation,
+      replyStore,
+      userStore: { client }
+    } = this.props;
+
+    if (!client) {
+      return;
+    }
+
+    const { uuid } = client;
+
+    navigateButtonModalScreen(navigation, {
+      type: "ERROR",
+      content: "댓글을 신고하시겠습니까?",
+      rightText: "예",
+      onRightPress: () => {
+        postReportsAPI({
+          type: "magazine_content_reply",
+          target_id: reply.id,
+          user: uuid,
+          content: "신고"
+        });
+        navigation.goBack(null);
+      }
+    });
   };
 
   private onChangeText = (text: string) => {

@@ -17,6 +17,8 @@ export const MagazineContent = types
     audio: types.maybe(types.string),
     num_replies: types.number,
     num_played: types.number,
+    num_hearts: types.number,
+    heart_by_me: types.boolean,
     audio_duration: types.number,
     picture: types.maybeNull(types.string),
     user_name: types.maybe(types.string),
@@ -35,10 +37,19 @@ export const MagazineContent = types
       self.num_replies = self.num_replies - 1;
     };
 
+    const updateHeart = (data: {
+      heart_by_me: boolean;
+      num_hearts: number;
+    }) => {
+      self.heart_by_me = data.heart_by_me;
+      self.num_hearts = data.num_hearts;
+    };
+
     return {
       increasePlayCount,
       increaseReplyCount,
-      decreaseReplyCount
+      decreaseReplyCount,
+      updateHeart
     };
   });
 
